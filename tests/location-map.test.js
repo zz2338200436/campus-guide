@@ -176,6 +176,21 @@ runTest('location map helper uses gate fallback for off-campus developer locatio
   assert.equal(location.isFallback, true);
 });
 
+runTest('location map helper keeps off-campus real device locations when fallback is disabled', () => {
+  const location = locationMapHelper.resolveCurrentLocation({
+    latitude: 23.117,
+    longitude: 113.264,
+    accuracy: 65
+  }, {
+    useCampusFallback: false
+  });
+
+  assert.equal(location.name, '当前位置');
+  assert.equal(location.latitude, 23.117);
+  assert.equal(location.longitude, 113.264);
+  assert.equal(location.isFallback, false);
+});
+
 runTest('location map helper keeps real campus locations', () => {
   const location = locationMapHelper.resolveCampusTestLocation({
     latitude: 23.2647,

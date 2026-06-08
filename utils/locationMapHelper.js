@@ -286,8 +286,21 @@ function formatSelectedLocation(location) {
 }
 
 function resolveCampusTestLocation(location) {
+  return resolveCurrentLocation(location, {
+    useCampusFallback: true
+  });
+}
+
+function resolveCurrentLocation(location, options) {
   const coordinate = normalizeCoordinate(location);
-  if (!coordinate || !isInsideCampusBounds(coordinate)) {
+  const useCampusFallback = !options || options.useCampusFallback !== false;
+  if (!coordinate) {
+    if (!useCampusFallback) {
+      return null;
+    }
+    return Object.assign({ isFallback: true }, CAMPUS_GATE_LOCATION);
+  }
+  if (useCampusFallback && !isInsideCampusBounds(coordinate)) {
     return Object.assign({ isFallback: true }, CAMPUS_GATE_LOCATION);
   }
   return {
@@ -448,6 +461,7 @@ module.exports = {
   buildNavigationMarkers,
   buildNavigationState,
   buildNavigationViewportState,
+  resolveCurrentLocation,
   resolveCampusTestLocation,
   isInsideCampusBounds,
   calculateDistance,

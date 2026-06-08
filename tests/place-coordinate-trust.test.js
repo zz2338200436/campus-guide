@@ -292,10 +292,12 @@ runTest('map page exposes a review-only coordinate trust filter', () => {
   assert.ok(js.includes("nextReviewOnly ? 'review' : '全部'"), 'review toggle should switch to review-only filtering');
 });
 
-runTest('map search copy teaches coordinate trust keywords', () => {
+runTest('map search copy stays student-facing while review filter keeps maintenance access', () => {
   const wxml = read('pages/map/map.wxml');
 
-  assert.ok(wxml.includes('搜索地点、楼栋、坐标来源、待复核或高德'), 'search placeholder should mention coordinate trust keywords');
+  assert.ok(wxml.includes('搜索地点、楼栋或高德来源'), 'search placeholder should use student-facing place search copy');
+  assert.ok(wxml.includes('待复核 {{reviewPlaceCount}}'), 'review-only filter should keep coordinate maintenance access');
+  assert.ok(!wxml.includes('搜索地点、楼栋、坐标来源、待复核或高德'), 'search placeholder should not expose maintenance-heavy keywords');
   assert.ok(!wxml.includes('支持按地点、服务、楼栋、坐标来源和复核状态检索'), 'coordinate trust copy should not require a second helper row');
 });
 

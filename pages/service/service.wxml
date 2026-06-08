@@ -1,48 +1,45 @@
 <view class="page service-hall-page">
   <view class="service-summary card">
     <view class="service-summary__main">
-      <view class="service-summary__eyebrow">智慧校园服务门户</view>
-      <view class="service-summary__title">办事大厅</view>
-      <view class="service-summary__desc">统一受理学籍、后勤、网络、生活与安全事务。</view>
+      <view class="service-summary__eyebrow">校园通</view>
+      <view class="service-summary__title">校园服务</view>
+      <view class="service-summary__desc">遇到校园卡、网络、证明、失物这些事，先看去哪办、带什么。</view>
     </view>
-    <view class="service-summary__stats">
-      <view class="service-summary__stat">
-        <text class="service-summary__stat-num">{{list.length}}</text>
-        <text class="service-summary__stat-label">当前服务</text>
+    <view class="service-summary__metrics">
+      <view class="service-summary__metric">
+        <text class="service-summary__metric-num">{{list.length}}</text>
+        <text class="service-summary__metric-label">服务</text>
       </view>
-      <view class="service-summary__stat">
-        <text class="service-summary__stat-num">{{quickList.length}}</text>
-        <text class="service-summary__stat-label">高频事项</text>
+      <view class="service-summary__metric">
+        <text class="service-summary__metric-num">{{quickList.length}}</text>
+        <text class="service-summary__metric-label">常用</text>
       </view>
-      <view class="service-summary__stat">
-        <text class="service-summary__stat-num">{{urgentList.length}}</text>
-        <text class="service-summary__stat-label">应急入口</text>
+      <view class="service-summary__metric">
+        <text class="service-summary__metric-num">{{urgentList.length}}</text>
+        <text class="service-summary__metric-label">紧急</text>
       </view>
     </view>
   </view>
 
-  <view class="ticket-board card">
-    <view class="ticket-board__head">
-      <view>
-        <view class="ticket-board__label">校园服务工单</view>
-        <view class="ticket-board__title">选择事项后可咨询、报修或查看进度</view>
-      </view>
-      <view class="ticket-board__status">模拟办理</view>
+  <view class="ticket-bar card">
+    <view class="ticket-bar__main">
+      <view class="ticket-bar__label">咨询与报修</view>
+      <view class="ticket-bar__status">本地模拟</view>
     </view>
-    <view class="ticket-actions">
-      <view class="ticket-action ticket-action--primary" bindtap="openConsultEntry">我要咨询</view>
-      <view class="ticket-action" data-scene="repair" bindtap="openSurvivalRoute">我要报修</view>
-      <view class="ticket-action" bindtap="openTicketProgress">查看进度</view>
+    <view class="ticket-bar__actions">
+      <view class="ticket-bar__action ticket-bar__action--primary" bindtap="openConsultEntry">我要咨询</view>
+      <view class="ticket-bar__action" data-scene="repair" bindtap="openSurvivalRoute">我要报修</view>
+      <view class="ticket-bar__action" bindtap="openTicketProgress">办理进度</view>
     </view>
   </view>
 
   <view class="issue-solver card" wx:if="{{issueTabs.length}}">
     <view class="issue-solver__head">
       <view>
-        <view class="issue-solver__label">问题分流</view>
-        <view class="issue-solver__title">按问题直接匹配办理入口</view>
+        <view class="issue-solver__label">遇到问题</view>
+        <view class="issue-solver__title">按问题找入口</view>
       </view>
-      <view class="issue-solver__count">{{issueTabs.length}} 类场景</view>
+      <view class="issue-solver__count">{{issueTabs.length}} 类问题</view>
     </view>
     <scroll-view class="issue-tabs" scroll-x enable-flex>
       <view
@@ -73,7 +70,7 @@
             <view class="issue-service__tag">{{item.category}} · {{item.tag}}</view>
             <view class="issue-service__title">{{item.title}}</view>
             <view class="issue-service__desc">{{item.content}}</view>
-            <view class="issue-service__meta">办理地点：{{item.location}} · 处理时限：{{item.time}}</view>
+            <view class="issue-service__meta">地点：{{item.location}} · 开放时间：{{item.time}}</view>
           </view>
           <view class="issue-service__actions">
             <view class="issue-service__action">{{item.primaryPlaceName ? '查看地点' : item.actionText}}</view>
@@ -85,17 +82,22 @@
   </view>
 
   <view class="service-alert card" wx:if="{{urgentList.length}}">
-    <view class="service-alert__label">安全应急</view>
-    <view class="service-alert__title">失物、断网、设备异常和紧急联系</view>
+    <view class="service-alert__head">
+      <view>
+        <view class="service-alert__label">安全应急</view>
+        <view class="service-alert__title">失物、断网、设备异常和紧急联系</view>
+      </view>
+      <view class="service-alert__count">{{urgentList.length}} 项</view>
+    </view>
     <view class="service-alert__list">
-      <view class="service-alert__item" wx:for="{{urgentList}}" wx:key="id" data-place-id="{{item.primaryPlaceId}}" bindtap="openServicePlace">
-        <view>
-          <view class="service-alert__name">{{item.title}}</view>
-          <view class="service-alert__meta">处理时限：{{item.time}}</view>
+      <view class="service-alert-row" wx:for="{{urgentList}}" wx:key="id" data-place-id="{{item.primaryPlaceId}}" bindtap="openServicePlace">
+        <view class="service-alert-row__main">
+          <view class="service-alert-row__name">{{item.title}}</view>
+          <view class="service-alert-row__meta">开放时间：{{item.time}}</view>
         </view>
-        <view class="service-alert__actions">
-          <view class="service-alert__action">{{item.actionText}}</view>
-          <view class="service-alert__phone" data-phone="{{item.phone}}" catchtap="callServicePhone">拨打 {{item.phone}}</view>
+        <view class="service-alert-row__actions">
+          <view class="service-alert-row__action">{{item.actionText}}</view>
+          <view class="service-alert-row__phone" data-phone="{{item.phone}}" catchtap="callServicePhone">拨打</view>
         </view>
       </view>
     </view>
@@ -128,7 +130,7 @@
             <view class="service-row__title">{{item.title}}</view>
             <text class="tag service-row__tag">{{item.tag}}</text>
           </view>
-          <view class="service-row__meta">办理地点：{{item.location}} · 处理时限：{{item.time}}</view>
+          <view class="service-row__meta">地点：{{item.location}} · 开放时间：{{item.time}}</view>
           <view class="service-row__materials">所需材料：{{item.materials.join('、')}}</view>
         </view>
         <view class="service-row__actions">
@@ -143,6 +145,6 @@
     wx:if="{{!loading && list.length === 0}}"
     statusText="暂无匹配服务"
     title="当前分类暂无服务"
-    description="可以切换到全部分类查看，也可以在运营中心补充新的服务入口"
+    description="可以切换到全部分类查看，或稍后再试。"
   />
 </view>

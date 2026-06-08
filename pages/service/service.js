@@ -72,7 +72,7 @@ Page({
   },
   openTicketProgress() {
     wx.showToast({
-      title: '暂无进行中工单',
+      title: '暂无办理进度',
       icon: 'none'
     });
   },

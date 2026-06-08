@@ -153,6 +153,71 @@ runTest('coordinate writeback apply mode updates only ready records and returns 
   assert.ok(result.updatedSource.includes('name: "待处理点"'));
 });
 
+runTest('coordinate writeback apply mode updates the matched id block without changing earlier places', () => {
+  const source = [
+    'module.exports = [',
+    '  {',
+    '    id: 1,',
+    '    name: "图书馆",',
+    '    latitude: 23.2720399,',
+    '    longitude: 112.6800859,',
+    '    reviewRequired: false',
+    '  },',
+    '  {',
+    '    id: 28,',
+    '    name: "学生交流中心",',
+    '    latitude: 23.270575,',
+    '    longitude: 112.678675,',
+    '    reviewRequired: true',
+    '  }',
+    '];'
+  ].join('\n');
+  const plan = {
+    items: [
+      {
+        id: 28,
+        name: '学生交流中心',
+        ready: true,
+        reviewQuality: '备注:合格',
+        suggestedPatch: 'id: 28\nname: "学生交流中心"\nlatitude: 23.2706\nlongitude: 112.6787\ncoordinateSystem: "GCJ-02"\nsource: "人工校准"\nreviewRequired: false\nreviewNote: "现场入口在道路东侧"'
+      }
+    ]
+  };
+  const result = writebackPlan.applyReadyUpdatesToSource(source, plan);
+
+  assert.ok(result.updatedSource.includes('id: 1,\n    name: "图书馆",\n    latitude: 23.2720399,\n    longitude: 112.6800859'));
+  assert.ok(result.updatedSource.includes('id: 28,\n    name: "学生交流中心",\n    latitude: 23.2706,\n    longitude: 112.6787'));
+  assert.ok(result.updatedSource.includes('source: "人工校准"'));
+  assert.equal(result.appliedCount, 1);
+});
+
+runTest('coordinate writeback apply mode refuses stale ready records with mismatched names', () => {
+  const source = [
+    'module.exports = [',
+    '  {',
+    '    id: 28,',
+    '    name: "学生交流中心",',
+    '    latitude: 23.270575,',
+    '    longitude: 112.678675,',
+    '    reviewRequired: true',
+    '  }',
+    '];'
+  ].join('\n');
+  const plan = {
+    items: [
+      {
+        id: 28,
+        name: '明德楼',
+        ready: true,
+        reviewQuality: '备注:合格',
+        suggestedPatch: 'id: 28\nname: "明德楼"\nlatitude: 23.2698269\nlongitude: 112.6814309\ncoordinateSystem: "GCJ-02"\nsource: "高德地图POI"\nreviewRequired: false\nreviewNote: "现场入口在道路东侧"'
+      }
+    ]
+  };
+
+  assert.throws(() => writebackPlan.applyReadyUpdatesToSource(source, plan), /坐标回写身份不匹配：ID 28 当前是"学生交流中心"，模板是"明德楼"/);
+});
+
 runTest('coordinate writeback script is present and non-destructive', () => {
   const script = read('scripts/build-coordinate-writeback-plan.js');
 
@@ -266,6 +331,38 @@ runTest('coordinate writeback apply mode refuses ready items without review qual
   assert.ok(result.stderr.includes('ready 点位缺少备注质量'));
   assert.ok(result.stderr.includes('明德楼'));
   assert.ok(fs.existsSync(path.join(outputDir, 'place-coordinate-writeback.patch')));
+  assert.equal(fs.readdirSync(outputDir).filter((file) => file.startsWith('placeData.backup.')).length, 0);
+});
+
+runTest('coordinate writeback apply mode refuses stale plans when id now belongs to another place', () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'coordinate-stale-plan-'));
+  const planPath = path.join(tempDir, 'place-coordinate-writeback-plan.json');
+  const placeDataPath = path.join(tempDir, 'placeData.js');
+  const outputDir = path.join(tempDir, 'generated');
+  fs.writeFileSync(placeDataPath, read('utils/placeData.js'), 'utf8');
+  fs.writeFileSync(planPath, JSON.stringify({
+    readyCount: 1,
+    blockedCount: 0,
+    items: [
+      {
+        id: 28,
+        name: '明德楼',
+        ready: true,
+        reviewQuality: '备注:合格',
+        suggestedPatch: 'id: 28\nname: "明德楼"\nlatitude: 23.2698269\nlongitude: 112.6814309\ncoordinateSystem: "GCJ-02"\nsource: "高德地图POI"\nreviewRequired: false\nreviewNote: "现场入口在道路东侧"'
+      }
+    ]
+  }, null, 2), 'utf8');
+
+  const result = spawnSync(process.execPath, ['scripts\\build-coordinate-writeback-patch.js', '--apply', '--place-data', placeDataPath, '--output-dir', outputDir, planPath], {
+    cwd: root,
+    encoding: 'utf8'
+  });
+
+  assert.notEqual(result.status, 0);
+  assert.ok(result.stderr.includes('坐标回写身份不匹配'));
+  assert.ok(result.stderr.includes('当前是"学生交流中心"'));
+  assert.ok(result.stderr.includes('模板是"明德楼"'));
   assert.equal(fs.readdirSync(outputDir).filter((file) => file.startsWith('placeData.backup.')).length, 0);
 });
 

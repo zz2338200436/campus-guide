@@ -46,7 +46,7 @@ function buildHomeData() {
   return {
     banners: [
       { id: 1, image: '', title: '校园地图服务', desc: '统一查看楼栋、服务地点和导航入口' },
-      { id: 2, image: '', title: '办事大厅', desc: '整合办事、生活、后勤和应急支持' },
+      { id: 2, image: '', title: '常用服务', desc: '查看办事、生活、后勤和应急入口' },
       { id: 3, image: '', title: '学习资源', desc: '保留学习记录，继续推进个人成长任务' }
     ],
     notices,
@@ -56,7 +56,7 @@ function buildHomeData() {
     quickActions: [
       { id: 'survival', title: '推荐路线', desc: '按场景生成行动路线', url: '/pages/survivalRoute/survivalRoute' },
       { id: 'map', title: '地图导览', desc: '查看楼栋与导航', url: '/pages/map/map', tab: true },
-      { id: 'service', title: '办事大厅', desc: '办事与日常支持', url: '/pages/service/service' },
+      { id: 'service', title: '常用服务', desc: '办事与日常支持', url: '/pages/service/service' },
       { id: 'notice', title: '公告通知', desc: '查看重要提醒', url: '/pages/notice/notice' },
       { id: 'study', title: '学习资源', desc: '进入成长路径', url: '/pages/study/study', tab: true },
       { id: 'favorite', title: '我的收藏', desc: '回看重要内容', url: '/pages/favorite/favorite' },

@@ -134,6 +134,7 @@ function applyReadyUpdatesToSource(sourceText, plan) {
       skippedCount += 1;
       return;
     }
+    assertMatchingPlaceIdentity(block, item);
     const nextBlock = applySuggestedPatchToBlock(block, item.suggestedPatch);
     updatedSource = updatedSource.replace(block, nextBlock);
     appliedCount += 1;
@@ -146,10 +147,23 @@ function applyReadyUpdatesToSource(sourceText, plan) {
   };
 }
 
+function assertMatchingPlaceIdentity(block, item) {
+  const currentName = readString(block, 'name');
+  const expectedName = item && item.name ? item.name : readPatchString(item && item.suggestedPatch, 'name');
+  if (!currentName || !expectedName) {
+    return;
+  }
+  if (normalizePlaceName(currentName) !== normalizePlaceName(expectedName)) {
+    throw new Error('坐标回写身份不匹配：ID ' + Number(item.id) + ' 当前是"' + currentName + '"，模板是"' + expectedName + '"');
+  }
+}
+
 function findPlaceBlock(sourceText, id) {
-  const pattern = new RegExp('\\{[\\s\\S]*?id:\\s*' + Number(id) + ',[\\s\\S]*?\\n\\s*\\}', 'm');
-  const match = pattern.exec(sourceText);
-  return match ? match[0] : '';
+  const blocks = String(sourceText || '').match(/\{\s*id:\s*\d+,[\s\S]*?\n\s*\}/g) || [];
+  return blocks.find((block) => {
+    const match = /id:\s*(\d+)/.exec(block);
+    return match && Number(match[1]) === Number(id);
+  }) || '';
 }
 
 function applySuggestedPatchToBlock(block, patchText) {
@@ -173,6 +187,12 @@ function readPatchValue(patchText, key) {
   return match ? match[1].trim() : '';
 }
 
+function readPatchString(patchText, key) {
+  const value = readPatchValue(patchText, key);
+  const match = /^"((?:\\.|[^"])*)"$/.exec(value);
+  return match ? unescapeText(match[1]) : '';
+}
+
 function readNumber(block, key) {
   const match = new RegExp(key + '\\s*:\\s*([-\\d.]+)').exec(block);
   return match ? match[1] : '';
@@ -189,6 +209,13 @@ function escapeText(value) {
 
 function unescapeText(value) {
   return String(value || '').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+}
+
+function normalizePlaceName(value) {
+  return String(value || '')
+    .replace(/广州应用科技学院(?:\(|（)?肇庆校区(?:\)|）)?/g, '')
+    .replace(/[（）()·\s-]/g, '')
+    .toLowerCase();
 }
 
 module.exports = {

@@ -250,12 +250,31 @@ Page({
       return;
     }
     const coordinateReviews = coordinateReviewStore.getAllReviews();
-    const focusCopy = buildOperationsFocusCopy(target && target.source, place.name);
     this.setData({
       selectedPlace: decoratePlaceWithCoordinateReview(place, coordinateReviews),
       latitude: Number(place.latitude),
       longitude: Number(place.longitude),
-      scale: 18
+      scale: 18,
+      mapCenterText: '已定位：' + place.name
+    });
+  },
+  focusPlaceOnMap(event) {
+    const dataset = event.currentTarget ? event.currentTarget.dataset : {};
+    const place = this.data.places.find((item) => Number(item.id) === Number(dataset.id));
+    if (!place) {
+      wx.showToast({
+        title: '地点不存在',
+        icon: 'none'
+      });
+      return;
+    }
+    const coordinateReviews = coordinateReviewStore.getAllReviews();
+    this.setData({
+      selectedPlace: decoratePlaceWithCoordinateReview(place, coordinateReviews),
+      latitude: Number(place.latitude),
+      longitude: Number(place.longitude),
+      scale: 18,
+      mapCenterText: '已定位：' + place.name
     });
   },
   handlePoiTap(event) {
@@ -276,12 +295,25 @@ Page({
     wx.getLocation({
       type: 'gcj02',
       success: (res) => {
-        const currentLocation = locationMapHelper.resolveCampusTestLocation({
+        const currentLocation = locationMapHelper.resolveCurrentLocation({
           latitude: res.latitude,
           longitude: res.longitude,
           speed: res.speed,
           accuracy: res.accuracy
+        }, {
+          useCampusFallback: isDeveloperTool
         });
+        if (!currentLocation) {
+          this.setData({
+            currentLocation: null,
+            mapCenterText: '定位失败，请检查位置授权后重试'
+          });
+          wx.showToast({
+            title: '定位失败，请检查授权',
+            icon: 'none'
+          });
+          return;
+        }
         this.setData({
           currentLocation,
           latitude: currentLocation.latitude,
@@ -294,6 +326,17 @@ Page({
         });
       },
       fail: () => {
+        if (!isDeveloperTool) {
+          this.setData({
+            currentLocation: null,
+            mapCenterText: '定位失败，请检查位置授权后重试'
+          });
+          wx.showToast({
+            title: '定位失败，请检查授权',
+            icon: 'none'
+          });
+          return;
+        }
         // 开发者工具定位失败时，使用学校门口作为模拟位置，便于测试校内导航。
         const mockLocation = locationMapHelper.CAMPUS_GATE_LOCATION;
         this.setData({
@@ -489,6 +532,7 @@ Page({
       return;
     }
     const coordinateReviews = coordinateReviewStore.getAllReviews();
+    const focusCopy = buildOperationsFocusCopy(target && target.source, place.name);
     this.setData({
       reviewOnly: true,
       currentType: '全部',
@@ -592,15 +636,25 @@ Page({
     wx.getLocation({
       type: 'gcj02',
       success: (res) => {
-        const current = locationMapHelper.resolveCampusTestLocation({
+        const current = locationMapHelper.resolveCurrentLocation({
           latitude: res.latitude,
           longitude: res.longitude,
           speed: res.speed,
           accuracy: res.accuracy
+        }, {
+          useCampusFallback: isDeveloperTool
         });
+        if (!current) {
+          wx.showToast({ title: '定位失败，请检查授权', icon: 'none' });
+          return;
+        }
         this._applyNavigation(current, destination);
       },
       fail: () => {
+        if (!isDeveloperTool) {
+          wx.showToast({ title: '定位失败，请检查授权', icon: 'none' });
+          return;
+        }
         // 开发者工具定位失败时，使用学校门口作为模拟位置，便于测试校内导航。
         const mockCurrent = locationMapHelper.CAMPUS_GATE_LOCATION;
         this._applyNavigation(mockCurrent, destination);

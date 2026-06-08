@@ -106,7 +106,7 @@
 
     <view class="search-card">
       <view class="search-card__main">
-        <input class="search-card__input" placeholder="搜索地点、楼栋、坐标来源、待复核或高德" confirm-type="search" value="{{keyword}}" bindinput="handleKeywordInput" bindconfirm="submitSearch" />
+        <input class="search-card__input" placeholder="搜索地点、楼栋或高德来源" confirm-type="search" value="{{keyword}}" bindinput="handleKeywordInput" bindconfirm="submitSearch" />
         <view class="search-card__button" bindtap="submitSearch">搜索</view>
         <text wx:if="{{keyword}}" class="search-card__clear" bindtap="clearSearch">清空</text>
       </view>
@@ -154,6 +154,7 @@
         </view>
       </view>
       <view class="directory-item__actions">
+        <view class="directory-item__locate" data-id="{{item.id}}" catchtap="focusPlaceOnMap">定位</view>
         <view wx:if="{{item.coordinateTrust.level === 'review'}}" class="directory-item__review" data-id="{{item.id}}" catchtap="openCoordinateReview">校准</view>
         <button class="directory-item__nav" data-id="{{item.id}}" catchtap="startPlaceNavigation">导航</button>
       </view>

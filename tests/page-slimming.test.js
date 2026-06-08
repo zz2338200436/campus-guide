@@ -43,4 +43,4 @@ assert.ok(/\.issue-tab\s*\{[\s\S]*width:\s*220rpx;/.test(serviceWxss), 'issue ta
 assert.ok(/\.issue-tab\s*\{[\s\S]*height:\s*126rpx;/.test(serviceWxss), 'issue tab cards should have a fixed compact height');
 assert.ok(!/\.issue-tab\s*\{[\s\S]*min-height:\s*126rpx;/.test(serviceWxss), 'issue tab cards should not rely on stretchable min-height');
 
-console.log('PASS core pages are slimmed to task-focused enterprise surfaces');
+console.log('PASS core pages are slimmed to task-focused student surfaces');

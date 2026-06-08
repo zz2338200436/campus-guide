@@ -4,12 +4,17 @@ const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
 const runtimeFiles = [
+  'app.js',
+  'pages/index/index.wxml',
   'pages/map/map.wxml',
+  'pages/operations/operations.wxml',
   'pages/placeDetail/placeDetail.wxml',
+  'pages/service/service.wxml',
   'pages/study/study.wxml',
   'pages/studyDetail/studyDetail.wxml',
   'pages/survivalRoute/survivalRoute.wxml',
   'pages/user/user.wxml',
+  'utils/services/homeService.js',
   'utils/noticeData.js',
   'utils/placeData.js',
   'utils/serviceData.js',
@@ -19,11 +24,16 @@ const runtimeFiles = [
 ];
 
 const bannedCopies = [
-  '新生',
-  '生存路线',
-  '学习专区',
-  '探索',
-  '打卡'
+  '智慧校园服务门户',
+  '校园服务工作台',
+  '企业级',
+  '旗舰',
+  '统一聚合',
+  '支撑学生日常事务',
+  '校园服务工单',
+  '运营数据看板',
+  '业务指标',
+  'SLA'
 ];
 
 const violations = [];
@@ -38,4 +48,13 @@ runtimeFiles.forEach((file) => {
 });
 
 assert.deepEqual(violations, []);
-console.log('PASS enterprise runtime copy has no student-assistant leftovers');
+
+[
+  'pages/index/index.wxml',
+  'pages/index/index.wxss'
+].forEach((file) => {
+  const content = fs.readFileSync(path.join(root, file), 'utf8');
+  assert.ok(!content.includes('enterprise-'), file + ' should not keep enterprise class names on the student home page');
+});
+
+console.log('PASS runtime copy avoids over-polished enterprise wording');

@@ -9,14 +9,14 @@
 
   <view wx:if="{{authorized}}">
     <view class="operations-hero">
-      <view class="operations-hero__eyebrow">智慧校园服务门户</view>
-      <view class="operations-hero__title">运营数据看板</view>
-      <view class="operations-hero__desc">统一观察访问、服务、地点、公告和内容健康，辅助管理员维护企业级校园服务平台。</view>
+      <view class="operations-hero__eyebrow">管理员工具</view>
+      <view class="operations-hero__title">内容维护</view>
+      <view class="operations-hero__desc">查看访问、服务、地点和公告情况，方便及时补充校园内容。</view>
     </view>
 
     <view class="section-title">
-      <text class="section-title__text">业务指标</text>
-      <text class="section-title__action">实时概览</text>
+      <text class="section-title__text">页面数据</text>
+      <text class="section-title__action">当前概览</text>
     </view>
     <view class="operations-kpi-note">今日访问 · 服务点击 · 热门地点 · 公告阅读</view>
     <view class="operations-grid">
@@ -29,8 +29,8 @@
 
     <view class="operations-panel card" wx:if="{{serviceQuality}}">
       <view class="operations-panel__head">
-        <view><view class="operations-panel__label">服务质量</view><view class="operations-panel__title">工单响应与超时监控</view></view>
-        <view class="operations-panel__badge">SLA</view>
+        <view><view class="operations-panel__label">服务记录</view><view class="operations-panel__title">咨询处理情况</view></view>
+        <view class="operations-panel__badge">本地统计</view>
       </view>
       <view class="quality-grid">
         <view class="quality-card" wx:for="{{serviceQuality.cards}}" wx:key="label">
@@ -43,7 +43,7 @@
 
     <view class="operations-panel card" wx:if="{{placeQuality}}">
       <view class="operations-panel__head">
-        <view><view class="operations-panel__label">点位质量</view><view class="operations-panel__title">地图数据来源与复核状态</view></view>
+        <view><view class="operations-panel__label">地图点位</view><view class="operations-panel__title">坐标来源与复核状态</view></view>
         <view class="operations-panel__badge">{{placeQuality.reviewRequiredCount}} 待复核</view>
       </view>
       <view class="place-quality-grid">
@@ -90,7 +90,7 @@
 
     <view class="operations-panel card" wx:if="{{health}}">
       <view class="operations-panel__head">
-        <view><view class="operations-panel__label">内容健康</view><view class="operations-panel__title">{{health.issueCount ? '发现 ' + health.issueCount + ' 项待优化' : '内容结构健康'}}</view></view>
+        <view><view class="operations-panel__label">需要补充的内容</view><view class="operations-panel__title">{{health.issueCount ? '发现 ' + health.issueCount + ' 项待补充' : '内容结构正常'}}</view></view>
         <view class="operations-panel__badge">{{health.issueCount ? '待处理' : '良好'}}</view>
       </view>
       <view class="health-list" wx:if="{{health.items.length}}">

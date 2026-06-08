@@ -502,7 +502,7 @@ page,
 .footprint-empty,
 .growth-next,
 .health-empty {
-  background: #f8fafc;
+  background: #f7f9fb;
   border-color: #e5e7eb;
 }
 
@@ -638,7 +638,7 @@ page,
 .footprint-empty,
 .growth-next,
 .health-empty {
-  background: #f8fafc;
+  background: #f7f9fb;
   border-color: #edf2f7;
 }
 
@@ -646,7 +646,7 @@ page,
 .type-pill,
 .guide-chip,
 .btn-secondary {
-  background: #f8fafc;
+  background: #f7f9fb;
   border-color: #edf2f7;
   color: #475569;
   box-shadow: none;
@@ -661,12 +661,12 @@ page,
   box-shadow: none;
 }
 
-/* Enterprise service portal system */
+/* Calm student helper system */
 page,
 .page {
   min-height: 100vh;
-  background: #f8fafc;
-  color: #0f172a;
+  background: #f7f9fb;
+  color: #1f2937;
 }
 
 .page {
@@ -686,7 +686,7 @@ page,
 .section-title__text {
   position: relative;
   padding-left: 18rpx;
-  color: #0f172a;
+  color: #1f2937;
   font-size: 32rpx;
   font-weight: 900;
   letter-spacing: 0;
@@ -697,16 +697,16 @@ page,
   width: 8rpx;
   height: 28rpx;
   border-radius: 4rpx;
-  background: #0369a1;
+  background: #0f766e;
   box-shadow: none;
 }
 
 .section-title__action,
 .link-row__action {
   padding: 8rpx 16rpx;
-  border-radius: 12rpx;
-  background: #eff6ff;
-  color: #0369a1;
+  border-radius: 14rpx;
+  background: #ecfdf5;
+  color: #0f766e;
   font-weight: 800;
 }
 
@@ -725,10 +725,10 @@ page,
 .notice-detail,
 .operations-panel,
 .operations-denied {
-  border-radius: 16rpx;
+  border-radius: 18rpx;
   background: #ffffff;
-  border: 1rpx solid #e2e8f0;
-  box-shadow: 0 8rpx 22rpx rgba(15, 23, 42, 0.04);
+  border: 1rpx solid #e5edf0;
+  box-shadow: 0 8rpx 22rpx rgba(31, 41, 55, 0.035);
 }
 
 .surface-soft,
@@ -745,8 +745,8 @@ page,
 .footprint-empty,
 .growth-next,
 .health-empty {
-  background: #f1f5f9;
-  border-color: #e2e8f0;
+  background: #f7f9fb;
+  border-color: #e5edf0;
 }
 
 .tag,
@@ -754,18 +754,18 @@ page,
 .guide-chip,
 .btn-secondary {
   background: #ffffff;
-  border: 1rpx solid #cbd5e1;
-  color: #334155;
+  border: 1rpx solid #d7e2e7;
+  color: #425466;
   box-shadow: none;
 }
 
 .tag--active,
 .type-pill--active,
 .btn-primary {
-  background: #0369a1;
-  border-color: #0369a1;
+  background: #0f766e;
+  border-color: #0f766e;
   color: #ffffff;
-  box-shadow: 0 10rpx 24rpx rgba(3, 105, 161, 0.14);
+  box-shadow: 0 10rpx 24rpx rgba(15, 118, 110, 0.12);
 }
 
 .page-head {
@@ -785,14 +785,14 @@ page,
 .search-card__clear,
 .reading-entry__duration,
 .reading-entry__action {
-  color: #0369a1;
+  color: #0f766e;
 }
 
 .page-head__title,
 .card-title,
 .feature-place__title,
 .link-row__title {
-  color: #0f172a;
+  color: #1f2937;
 }
 
 .card-desc,

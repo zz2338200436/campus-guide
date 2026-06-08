@@ -72,7 +72,7 @@ function runTest(name, testFn) {
   }
 }
 
-runTest('operations data exposes enterprise dashboard sections', () => {
+runTest('operations data exposes admin maintenance sections', () => {
   const data = operationsCenter.buildOperationsData({
     places: placeData,
     services: serviceData,
@@ -95,18 +95,26 @@ runTest('operations data exposes enterprise dashboard sections', () => {
   assert.ok(data.hotPlaces.length > 0);
 });
 
-runTest('operations page copy presents enterprise operations dashboard', () => {
+runTest('operations page copy presents a plain content maintenance panel', () => {
   const wxml = read('pages/operations/operations.wxml');
   [
-    '运营数据看板',
+    '内容维护',
     '今日访问',
     '服务点击',
     '热门地点',
     '公告阅读',
-    '服务质量',
-    '点位质量',
-    '内容健康'
+    '服务记录',
+    '地图点位',
+    '需要补充的内容'
   ].forEach((copy) => assert.ok(wxml.includes(copy), 'operations.wxml should include ' + copy));
+
+  [
+    '智慧校园服务门户',
+    '企业级',
+    '业务指标',
+    'SLA',
+    '运营数据看板'
+  ].forEach((copy) => assert.ok(!wxml.includes(copy), 'operations.wxml should not include ' + copy));
 });
 
 runTest('operations page presents coordinate reviews as a clear workflow panel', () => {

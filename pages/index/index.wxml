@@ -1,4 +1,4 @@
-<view class="page enterprise-page">
+<view class="page home-page">
   <view class="skeleton-panel card" wx:if="{{loading}}">
     <view class="skeleton-line skeleton-line--hero"></view>
     <view class="skeleton-grid">
@@ -9,35 +9,35 @@
     <view class="skeleton-line"></view>
   </view>
 
-  <view class="enterprise-hero">
-    <view class="enterprise-hero__top">
+  <view class="home-hero">
+    <view class="home-hero__top">
       <view>
-        <view class="enterprise-hero__eyebrow">智慧校园服务门户</view>
-        <view class="enterprise-hero__title">校园服务工作台</view>
-        <view class="enterprise-hero__desc">统一聚合地图导览、办事服务、公告通知和学习资源，支撑学生日常事务与校园运营管理。</view>
+        <view class="home-hero__eyebrow">校园通</view>
+        <view class="home-hero__title">今天先去哪</view>
+        <view class="home-hero__desc">查地点、找服务、看通知和继续学习，都可以从这里开始。</view>
       </view>
-      <view class="enterprise-hero__role">
-        <text class="enterprise-hero__role-label">当前身份</text>
-        <text class="enterprise-hero__role-value">学生</text>
+      <view class="home-hero__role">
+        <text class="home-hero__role-label">当前身份</text>
+        <text class="home-hero__role-value">学生</text>
       </view>
     </view>
-    <view class="enterprise-hero__campus">广州应用科技学院肇庆校区</view>
-    <view class="enterprise-metrics">
-      <view class="enterprise-metric">
-        <text class="enterprise-metric__num">{{notices.length}}</text>
-        <text class="enterprise-metric__label">未读通知</text>
+    <view class="home-hero__campus">广州应用科技学院肇庆校区</view>
+    <view class="home-metrics">
+      <view class="home-metric">
+        <text class="home-metric__num">{{notices.length}}</text>
+        <text class="home-metric__label">最近通知</text>
       </view>
-      <view class="enterprise-metric">
-        <text class="enterprise-metric__num">{{explorationSummary ? explorationSummary.routeProgressText : '0/3'}}</text>
-        <text class="enterprise-metric__label">路线进度</text>
+      <view class="home-metric">
+        <text class="home-metric__num">{{explorationSummary ? explorationSummary.routeProgressText : '0/3'}}</text>
+        <text class="home-metric__label">路线进度</text>
       </view>
-      <view class="enterprise-metric">
-        <text class="enterprise-metric__num">{{studySummary ? studySummary.viewedCount : 0}}</text>
-        <text class="enterprise-metric__label">学习访问</text>
+      <view class="home-metric">
+        <text class="home-metric__num">{{studySummary ? studySummary.viewedCount : 0}}</text>
+        <text class="home-metric__label">看过内容</text>
       </view>
-      <view class="enterprise-metric">
-        <text class="enterprise-metric__num">0</text>
-        <text class="enterprise-metric__label">我的工单</text>
+      <view class="home-metric">
+        <text class="home-metric__num">{{quickActions.length}}</text>
+        <text class="home-metric__label">常用入口</text>
       </view>
     </view>
   </view>
@@ -51,7 +51,7 @@
         <view class="workbench-card__footer">{{todayAction.progressText}}</view>
       </view>
       <view class="workbench-card card" wx:if="{{notices.length}}" data-id="{{notices[0].id}}" bindtap="openNotice">
-        <view class="workbench-card__label">紧急通知</view>
+        <view class="workbench-card__label">最近通知</view>
         <view class="workbench-card__title">{{notices[0].title}}</view>
         <view class="workbench-card__desc">{{notices[0].summary}}</view>
         <view class="workbench-card__footer">查看详情</view>
@@ -61,7 +61,7 @@
 
   <view class="section">
     <view class="section-title">
-      <text class="section-title__text">常用服务</text>
+      <text class="section-title__text">常用入口</text>
       <text class="section-title__action" data-url="/pages/service/service" bindtap="openQuickAction">全部服务</text>
     </view>
     <view class="service-grid">
@@ -93,8 +93,8 @@
       </view>
       <view class="recent-panel__main" wx:else>
         <view class="recent-panel__label">暂无访问记录</view>
-        <view class="recent-panel__title">进入服务或学习资源后会在这里沉淀记录</view>
-        <view class="recent-panel__desc">用于快速回到最近办理、查看或学习的内容。</view>
+        <view class="recent-panel__title">看过的内容会放在这里</view>
+        <view class="recent-panel__desc">方便下次继续查看地点、服务或学习资料。</view>
       </view>
     </view>
   </view>

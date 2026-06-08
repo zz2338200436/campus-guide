@@ -134,7 +134,7 @@ runTest('home service returns continueStudy for logged-in history', async () => 
   assert.equal(data.continueStudy.id, 3);
 });
 
-runTest('home service returns flagship summary blocks', async () => {
+runTest('home service returns student helper summary blocks', async () => {
   clearProjectModules();
   const { wx } = createWxMock();
   global.wx = wx;

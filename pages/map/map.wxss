@@ -428,15 +428,24 @@
   font-size: 20rpx;
   line-height: 36rpx;
 }
+.directory-item__locate,
 .directory-item__nav {
   min-width: 104rpx;
   height: 52rpx;
   border-radius: 8rpx;
-  background: #0369a1;
-  color: #ffffff;
   font-size: 22rpx;
   font-weight: 800;
   line-height: 52rpx;
+  text-align: center;
+}
+.directory-item__locate {
+  border: 1rpx solid #bae6fd;
+  background: #f0f9ff;
+  color: #0369a1;
+}
+.directory-item__nav {
+  background: #0369a1;
+  color: #ffffff;
 }
 .directory-item__review {
   min-width: 104rpx; height: 48rpx; border: 1rpx solid #fed7aa; border-radius: 8rpx;

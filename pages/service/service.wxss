@@ -1,5 +1,5 @@
 .service-hall-page {
-  background: #f8fafc;
+  background: #f7f9fb;
 }
 
 .service-summary {
@@ -17,7 +17,7 @@
 }
 
 .service-summary__eyebrow {
-  color: #0369a1;
+  color: #0f766e;
   font-size: 22rpx;
   font-weight: 800;
   line-height: 1.4;
@@ -25,7 +25,7 @@
 
 .service-summary__title {
   margin-top: 10rpx;
-  color: #0f172a;
+  color: #1f2937;
   font-size: 34rpx;
   font-weight: 850;
   line-height: 1.3;
@@ -41,52 +41,52 @@
   white-space: nowrap;
 }
 
-.service-summary__stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.service-summary__metrics {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   flex-shrink: 0;
-  width: 316rpx;
-  gap: 10rpx;
+  gap: 18rpx;
 }
 
-.service-summary__stat {
-  min-height: 96rpx;
-  padding: 12rpx 8rpx;
-  border-radius: 12rpx;
-  background: #f8fafc;
-  border: 1rpx solid #e2e8f0;
-  box-sizing: border-box;
+.service-summary__metric {
+  min-width: 82rpx;
+  padding-left: 18rpx;
+  border-left: 1rpx solid #e2e8f0;
 }
 
-.service-summary__stat-num {
+.service-summary__metric:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.service-summary__metric-num {
   display: block;
-  color: #0f172a;
+  color: #1f2937;
   font-size: 26rpx;
   font-weight: 850;
-  text-align: center;
+  text-align: right;
 }
 
-.service-summary__stat-label {
+.service-summary__metric-label {
   display: block;
-  margin-top: 6rpx;
+  margin-top: 4rpx;
   color: #64748b;
   font-size: 20rpx;
   line-height: 1.35;
-  text-align: center;
+  text-align: right;
 }
 
-.ticket-board,
+.ticket-bar,
 .issue-solver,
-.service-priority,
 .service-alert,
 .service-group {
   margin-bottom: 24rpx;
   padding: 26rpx;
 }
 
-.ticket-board__head,
 .issue-solver__head,
-.service-priority__head,
+.service-alert__head,
 .service-group__head {
   display: flex;
   align-items: flex-start;
@@ -94,70 +94,97 @@
   gap: 20rpx;
 }
 
-.ticket-board__label,
 .issue-solver__label,
-.service-priority__label,
 .service-alert__label,
 .service-group__label,
-.service-quick-card__tag,
 .issue-service__tag {
-  color: #0369a1;
+  color: #0f766e;
   font-size: 22rpx;
   font-weight: 800;
   line-height: 1.4;
 }
 
-.ticket-board__title,
 .issue-solver__title,
-.service-priority__title,
 .service-alert__title,
 .service-group__title,
 .service-row__title,
 .issue-service__title,
-.service-quick-card__title {
+.service-alert-row__name {
   margin-top: 10rpx;
-  color: #0f172a;
+  color: #1f2937;
   font-size: 30rpx;
   font-weight: 850;
   line-height: 1.42;
 }
 
-.ticket-board__status,
 .issue-solver__count,
-.service-priority__hint,
+.service-alert__count,
 .service-group__count {
   flex-shrink: 0;
   padding: 8rpx 14rpx;
   border-radius: 12rpx;
-  background: #eff6ff;
-  color: #0369a1;
+  background: #ecfdf5;
+  color: #0f766e;
   font-size: 21rpx;
   font-weight: 800;
 }
 
-.ticket-actions {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12rpx;
-  margin-top: 20rpx;
+.ticket-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  padding: 20rpx 22rpx;
 }
 
-.ticket-action {
-  min-height: 70rpx;
-  padding: 0 12rpx;
-  border-radius: 14rpx;
-  background: #f8fafc;
+.ticket-bar__main {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 12rpx;
+}
+
+.ticket-bar__label {
+  color: #1f2937;
+  font-size: 25rpx;
+  font-weight: 850;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.ticket-bar__status {
+  flex-shrink: 0;
+  padding: 6rpx 12rpx;
+  border-radius: 10rpx;
+  background: #ecfdf5;
+  color: #0f766e;
+  font-size: 20rpx;
+  font-weight: 800;
+}
+
+.ticket-bar__actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 10rpx;
+}
+
+.ticket-bar__action {
+  padding: 9rpx 13rpx;
+  border-radius: 12rpx;
+  background: #f7f9fb;
   border: 1rpx solid #e2e8f0;
   color: #334155;
-  font-size: 23rpx;
+  font-size: 21rpx;
   font-weight: 800;
-  line-height: 70rpx;
+  line-height: 1.35;
   text-align: center;
+  white-space: nowrap;
 }
 
-.ticket-action--primary {
-  background: #0369a1;
-  border-color: #0369a1;
+.ticket-bar__action--primary {
+  background: #0f766e;
+  border-color: #0f766e;
   color: #ffffff;
 }
 
@@ -192,12 +219,12 @@
 }
 
 .issue-tab--active {
-  background: #0369a1;
-  border-color: #0369a1;
+  background: #0f766e;
+  border-color: #0f766e;
 }
 
 .issue-tab__question {
-  color: #0369a1;
+  color: #0f766e;
   font-size: 20rpx;
   font-weight: 800;
   line-height: 1.3;
@@ -208,7 +235,7 @@
 
 .issue-tab__title {
   margin-top: 6rpx;
-  color: #0f172a;
+  color: #1f2937;
   font-size: 24rpx;
   font-weight: 800;
   line-height: 1.32;
@@ -228,19 +255,18 @@
   margin-top: 18rpx;
   padding: 20rpx;
   border-radius: 16rpx;
-  background: #f8fafc;
+  background: #f7f9fb;
   border: 1rpx solid #e2e8f0;
 }
 
 .issue-panel__title {
-  color: #0f172a;
+  color: #1f2937;
   font-size: 28rpx;
   font-weight: 850;
   line-height: 1.42;
 }
 
 .issue-panel__desc,
-.service-quick-card__desc,
 .issue-service__desc {
   margin-top: 8rpx;
   color: #475569;
@@ -256,7 +282,7 @@
 }
 
 .issue-service,
-.service-alert__item {
+.service-alert-row {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
@@ -272,11 +298,21 @@
   min-width: 0;
 }
 
+.service-alert-row__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.service-alert-row__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .issue-service__meta,
-.service-quick-card__meta,
 .service-row__meta,
 .service-row__materials,
-.service-alert__meta {
+.service-alert-row__meta {
   margin-top: 8rpx;
   color: #64748b;
   font-size: 21rpx;
@@ -284,29 +320,29 @@
 }
 
 .issue-service__actions,
-.service-alert__actions {
+.service-alert-row__actions,
+.service-row__actions {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
   flex-shrink: 0;
-  max-width: 150rpx;
+  width: 128rpx;
   gap: 10rpx;
   text-align: right;
 }
 
 .issue-service__action,
-.service-quick-card__action,
 .service-row__action,
-.service-alert__action {
-  color: #0369a1;
+.service-alert-row__action {
+  color: #0f766e;
   font-size: 22rpx;
   font-weight: 800;
   line-height: 1.45;
 }
 
 .issue-service__phone,
-.service-alert__phone,
+.service-alert-row__phone,
 .service-row__call {
   display: inline-flex;
   align-items: center;
@@ -314,28 +350,15 @@
   min-height: 48rpx;
   padding: 0 16rpx;
   border-radius: 12rpx;
-  background: #0369a1;
+  background: #0f766e;
   color: #ffffff;
   font-size: 21rpx;
   font-weight: 800;
   line-height: 48rpx;
 }
 
-.service-quick-card {
-  display: inline-flex;
-  flex-direction: column;
-  width: 430rpx;
-  min-height: 284rpx;
-  margin-right: 18rpx;
-  padding: 22rpx;
-  border-radius: 16rpx;
-  background: #f8fafc;
-  border: 1rpx solid #e2e8f0;
-  white-space: normal;
-}
-
-.service-alert__name {
-  color: #0f172a;
+.service-alert-row__name {
+  color: #1f2937;
   font-size: 26rpx;
   font-weight: 850;
   line-height: 1.45;
@@ -386,17 +409,7 @@
   white-space: nowrap;
 }
 
-.service-row__actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 128rpx;
-  gap: 10rpx;
-  text-align: right;
-}
-
-.service-row__call {
+.service-row__call,
+.service-alert-row__phone {
   min-width: 84rpx;
 }
