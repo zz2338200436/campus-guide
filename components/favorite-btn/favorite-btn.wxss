@@ -1,0 +1,18 @@
+.favorite {
+  width: 168rpx;
+  height: 64rpx;
+  padding: 0;
+  border: 1rpx solid #dbeafe;
+  border-radius: 8rpx;
+  background: #ffffff;
+  color: #0369a1;
+  font-size: 24rpx;
+  font-weight: 800;
+  line-height: 64rpx;
+}
+
+.favorite--active {
+  border-color: #0369a1;
+  background: #0369a1;
+  color: #ffffff;
+}

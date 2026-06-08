@@ -1,0 +1,83 @@
+<view class="page">
+  <view class="loading-text" wx:if="{{loading}}">学习详情加载中...</view>
+
+  <view wx:if="{{detail}}">
+    <view class="article-hero">
+      <view class="article-hero__eyebrow">{{detail.category}} · {{detail.stageLabel || detail.stage}}</view>
+      <view class="article-hero__title">{{detail.title}}</view>
+      <view class="article-hero__summary">{{detail.summary}}</view>
+    </view>
+
+    <view class="article-card">
+      <view class="article-card__head">
+        <view class="article-card__title">知识说明</view>
+        <favorite-btn
+          id="favoriteBtn"
+          type="study"
+          targetId="{{detail.id}}"
+          title="{{detail.title}}"
+          summary="{{detail.summary}}"
+        />
+      </view>
+      <view class="article-card__content">{{detail.content}}</view>
+    </view>
+
+    <view class="article-card article-card--soft">
+      <view class="article-card__title">学习建议</view>
+      <view class="article-card__content">建议花 {{detail.duration}} 完成这一条内容，并结合下方代码示例或相关知识一起复习。</view>
+    </view>
+
+    <view class="article-card task-status-card">
+      <view>
+        <view class="task-status-card__label">任务状态</view>
+        <view class="task-status-card__title">{{completed ? '这条任务已经完成' : '读完后可以标记完成'}}</view>
+        <view class="task-status-card__desc">{{completed ? '完成记录会同步到学习页、首页和个人中心。' : '完成后会进入你的成长进度，并解锁路径徽章条件。'}}</view>
+      </view>
+      <button class="{{completed ? 'btn-secondary' : 'btn-primary'}} task-status-card__btn" bindtap="markCompleted">{{completed ? '已完成' : '标记完成'}}</button>
+    </view>
+
+    <view class="section-title">
+      <text class="section-title__text">代码示例</text>
+      <text class="section-title__action" bindtap="copyCode">复制代码</text>
+    </view>
+    <view class="code-panel">{{detail.code}}</view>
+
+    <view class="section-title" wx:if="{{relatedList.length}}">
+      <text class="section-title__text">相关知识</text>
+    </view>
+    <view class="panel-grid" wx:if="{{relatedList.length}}">
+      <study-card
+        wx:for="{{relatedList}}"
+        wx:key="id"
+        item="{{item}}"
+        bind:tap="openRelated"
+      />
+    </view>
+
+    <view class="article-card next-step-card" wx:if="{{nextStudyList.length}}">
+      <view class="article-card__title">下一步建议</view>
+      <view
+        wx:for="{{nextStudyList}}"
+        wx:key="id"
+        class="link-row"
+        data-id="{{item.id}}"
+        bindtap="openRelated"
+      >
+        <view>
+          <view class="link-row__title">{{item.title}}</view>
+          <view class="link-row__meta">{{item.category}} · {{item.duration}}</view>
+        </view>
+        <view class="link-row__action">进入</view>
+      </view>
+    </view>
+  </view>
+
+  <empty-state
+    wx:if="{{!loading && !detail}}"
+    statusText="内容未找到"
+    title="内容不存在"
+    description="请返回学习资源页重新选择内容"
+    buttonText="返回学习页"
+    url="/pages/study/study"
+  />
+</view>

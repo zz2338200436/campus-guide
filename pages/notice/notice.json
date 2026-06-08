@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "公告通知",
+  "usingComponents": {
+    "notice-item": "/components/notice-item/notice-item",
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

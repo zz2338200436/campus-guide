@@ -1,0 +1,15 @@
+<view class="empty">
+  <view class="empty__status-bar">
+    <view class="empty__icon">i</view>
+    <view class="empty__status">{{statusText}}</view>
+  </view>
+  <view class="empty__title">{{title}}</view>
+  <view class="empty__desc">{{description}}</view>
+  <button
+    wx:if="{{buttonText}}"
+    class="empty__btn"
+    bindtap="handleTap"
+  >
+    {{buttonText}}
+  </button>
+</view>

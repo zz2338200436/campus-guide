@@ -1,0 +1,13 @@
+<view class="notice-item {{item.isTop ? 'notice-item--top' : ''}}" bindtap="handleTap">
+  <view class="notice-item__main">
+    <view class="notice-item__row">
+      <text wx:if="{{item.isTop}}" class="notice-item__top">置顶</text>
+      <text class="notice-item__type">{{item.type}}</text>
+      <text wx:if="{{item.priorityLabel}}" class="notice-item__priority">{{item.priorityLabel}}</text>
+    </view>
+    <view class="notice-item__title">{{item.title}}</view>
+    <view class="notice-item__summary" wx:if="{{item.summary}}">{{item.summary}}</view>
+    <view class="notice-item__meta">{{item.publisher}} · {{item.date}}</view>
+  </view>
+  <text class="notice-item__arrow">查看</text>
+</view>

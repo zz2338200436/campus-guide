@@ -1,0 +1,55 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="80" x2="1480" y2="820" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E6FAFF"/>
+      <stop offset="0.42" stop-color="#F3FFF8"/>
+      <stop offset="1" stop-color="#F7FBFF"/>
+    </linearGradient>
+    <linearGradient id="hero" x1="240" y1="160" x2="1220" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0891B2"/>
+      <stop offset="0.52" stop-color="#14B8A6"/>
+      <stop offset="1" stop-color="#86EFAC"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1600" height="900" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="20" stdDeviation="30" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" rx="36" fill="url(#bg)"/>
+  <circle cx="1360" cy="140" r="180" fill="#D8F7FF"/>
+  <circle cx="220" cy="760" r="220" fill="#E7FBF1"/>
+
+  <g filter="url(#shadow)">
+    <rect x="84" y="76" width="1432" height="748" rx="36" fill="white" fill-opacity="0.92"/>
+  </g>
+
+  <rect x="124" y="116" width="760" height="300" rx="34" fill="url(#hero)"/>
+  <text x="168" y="180" fill="white" font-size="28" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-weight="700">Campus Guide · 课程作业展示版</text>
+  <text x="168" y="252" fill="white" font-size="64" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-weight="700">校园通</text>
+  <text x="168" y="320" fill="white" font-size="30" font-family="Microsoft YaHei, PingFang SC, sans-serif" opacity="0.96">智慧校园与前端学习服务小程序</text>
+  <text x="168" y="374" fill="white" font-size="24" font-family="Microsoft YaHei, PingFang SC, sans-serif" opacity="0.9">清爽校园卡片风 · Mock 数据驱动 · 可运行可答辩</text>
+
+  <rect x="124" y="454" width="420" height="154" rx="28" fill="#F8FEFF" stroke="#D6F1F7"/>
+  <text x="156" y="506" fill="#0891B2" font-size="24" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-weight="700">核心亮点</text>
+  <text x="156" y="548" fill="#0F3F52" font-size="26" font-family="Microsoft YaHei, PingFang SC, sans-serif">1. 首页、导览、学习、我的风格统一</text>
+  <text x="156" y="586" fill="#0F3F52" font-size="26" font-family="Microsoft YaHei, PingFang SC, sans-serif">2. 收藏与学习记录按账号隔离</text>
+
+  <rect x="574" y="454" width="420" height="154" rx="28" fill="#F8FEFF" stroke="#D6F1F7"/>
+  <text x="606" y="506" fill="#0891B2" font-size="24" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-weight="700">体验链路</text>
+  <text x="606" y="548" fill="#0F3F52" font-size="26" font-family="Microsoft YaHei, PingFang SC, sans-serif">首页 → 导览 → 地点详情收藏</text>
+  <text x="606" y="586" fill="#0F3F52" font-size="26" font-family="Microsoft YaHei, PingFang SC, sans-serif">学习详情 → 学习记录 → 继续学习</text>
+
+  <rect x="1034" y="116" width="406" height="492" rx="34" fill="#F7FCFD" stroke="#DCEFF4"/>
+  <text x="1070" y="174" fill="#0891B2" font-size="26" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-weight="700">功能模块</text>
+  <text x="1070" y="228" fill="#0F3F52" font-size="28" font-family="Microsoft YaHei, PingFang SC, sans-serif">• 首页与继续学习</text>
+  <text x="1070" y="278" fill="#0F3F52" font-size="28" font-family="Microsoft YaHei, PingFang SC, sans-serif">• 校园导览与地点详情</text>
+  <text x="1070" y="328" fill="#0F3F52" font-size="28" font-family="Microsoft YaHei, PingFang SC, sans-serif">• 学习专区与知识卡片</text>
+  <text x="1070" y="378" fill="#0F3F52" font-size="28" font-family="Microsoft YaHei, PingFang SC, sans-serif">• 公告通知与置顶排序</text>
+  <text x="1070" y="428" fill="#0F3F52" font-size="28" font-family="Microsoft YaHei, PingFang SC, sans-serif">• 个人中心、收藏、学习记录</text>
+  <text x="1070" y="500" fill="#64748B" font-size="22" font-family="Microsoft YaHei, PingFang SC, sans-serif">账号示例：20260001 / 20260002 / admin001</text>
+  <text x="1070" y="542" fill="#64748B" font-size="22" font-family="Microsoft YaHei, PingFang SC, sans-serif">内部结构：request facade + services + smoke tests</text>
+
+  <rect x="124" y="648" width="1316" height="132" rx="30" fill="#F9FEFF" stroke="#DCEFF4"/>
+  <text x="160" y="704" fill="#0891B2" font-size="24" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-weight="700">推荐用于 PPT / 交付封面</text>
+  <text x="160" y="748" fill="#0F3F52" font-size="28" font-family="Microsoft YaHei, PingFang SC, sans-serif">当前项目已具备：统一 UI、完整演示链路、用户隔离缓存、Mock 请求拆分、Node smoke tests</text>
+</svg>

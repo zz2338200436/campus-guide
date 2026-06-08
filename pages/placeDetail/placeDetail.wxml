@@ -1,0 +1,117 @@
+<view class="page">
+  <view class="loading-text" wx:if="{{loading}}">地点详情加载中...</view>
+
+  <view wx:if="{{detail}}">
+    <view class="detail-hero">
+      <view class="detail-hero__eyebrow">{{detail.type}}</view>
+      <view class="detail-hero__title">{{detail.name}}</view>
+      <view class="detail-hero__desc">{{detail.description}}</view>
+    </view>
+
+    <view class="detail-card">
+      <view class="detail-card__head">
+        <view>
+          <view class="detail-card__title">地点信息</view>
+          <view class="detail-card__tags">
+            <text class="tag">{{detail.type}}</text>
+            <text class="detail-card__time">{{detail.openTime}}</text>
+          </view>
+        </view>
+        <favorite-btn
+          id="favoriteBtn"
+          type="place"
+          targetId="{{detail.id}}"
+          title="{{detail.name}}"
+          summary="{{detail.description}}"
+        />
+      </view>
+      <view class="detail-checkin">
+        <view class="detail-checkin__body">
+          <view class="detail-checkin__text">{{checkedIn ? '你已经完成这里的到访记录' : '到达地点后可以记录到访，累计路线进度'}}</view>
+          <view class="detail-checkin__hint">{{checkedIn ? '返回推荐路线会看到这一站已完成' : '到访记录会同步到推荐路线和我的足迹'}}</view>
+        </view>
+        <button class="{{checkedIn ? 'btn-secondary' : 'btn-primary'}} detail-checkin__btn" bindtap="checkInPlace">{{checkedIn ? '已完成到访' : '记录到访'}}</button>
+      </view>
+      <view class="detail-card__item">地点位置：{{detail.address}}</view>
+      <view class="detail-card__item">开放时间：{{detail.openTime}}</view>
+      <view class="detail-card__item">导航坐标：{{detail.latitude}}, {{detail.longitude}}</view>
+      <view class="coordinate-trust coordinate-trust--{{detail.coordinateTrust.level}}" wx:if="{{detail.coordinateTrust}}">
+        <view class="coordinate-trust__head">
+          <text class="coordinate-trust__label">{{detail.coordinateTrust.label}}</text>
+          <text class="coordinate-trust__source">{{detail.coordinateTrust.sourceText}}</text>
+          <text class="coordinate-trust__review">{{detail.coordinateTrust.reviewText}}</text>
+        </view>
+        <view class="coordinate-trust__desc">{{detail.coordinateTrust.desc}}</view>
+      </view>
+      <view class="detail-card__item">温馨提示：{{detail.tips}}</view>
+    </view>
+
+    <view class="detail-guide card">
+      <view class="detail-card__title">到访建议</view>
+      <view class="detail-guide__row">适合人群：{{detail.bestFor}}</view>
+      <view class="detail-guide__row">推荐时段：{{detail.bestTime}}</view>
+      <view class="detail-guide__row">周边可顺路看：{{detail.nearby.join('、')}}</view>
+    </view>
+
+    <view class="detail-services card" wx:if="{{relatedServices.length}}">
+      <view class="detail-card__title">这里能办什么</view>
+      <view class="detail-service" wx:for="{{relatedServices}}" wx:key="id">
+        <view class="detail-service__head">
+          <view>
+            <view class="detail-service__title">{{item.title}}</view>
+            <view class="detail-service__desc">{{item.content}}</view>
+          </view>
+          <view class="detail-service__tag">{{item.category}}</view>
+        </view>
+        <view class="detail-service__meta">准备：{{item.materials.join('、')}}</view>
+        <view class="detail-service__footer">
+          <view class="detail-service__action">{{item.actionText}}</view>
+          <view
+            class="detail-service__call"
+            data-phone="{{item.phone}}"
+            bindtap="callServicePhone"
+          >
+            拨打 {{item.phone}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="nav-card">
+      <view class="nav-card__title">导航到这里</view>
+      <view class="nav-card__desc">点击后会根据当前环境自动选择微信地图或小程序内路线。</view>
+      <button class="btn-primary nav-card__btn" bindtap="startNavigation">开始导航</button>
+      <view class="navigation-error" wx:if="{{navigationError}}">{{navigationError}}</view>
+    </view>
+
+    <view class="detail-next card" wx:if="{{relatedPlaces.length}}">
+      <view class="detail-card__title">建议下一站</view>
+      <view
+        wx:for="{{relatedPlaces}}"
+        wx:key="id"
+        class="link-row"
+        data-id="{{item.id}}"
+        bindtap="openRelated"
+      >
+        <view>
+          <view class="link-row__title">{{item.name}}</view>
+          <view class="link-row__meta">{{item.tagline}}</view>
+        </view>
+        <view class="link-row__action">查看</view>
+      </view>
+    </view>
+
+    <view class="detail-actionbar">
+      <button class="detail-actionbar__primary" bindtap="startNavigation">开始导航</button>
+    </view>
+  </view>
+
+  <empty-state
+    wx:if="{{!loading && !detail}}"
+    statusText="地点未找到"
+    title="内容不存在"
+    description="请返回导览页重新选择地点"
+    buttonText="返回导览"
+    url="/pages/map/map"
+  />
+</view>

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "地点详情",
+  "usingComponents": {
+    "favorite-btn": "/components/favorite-btn/favorite-btn",
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

@@ -1,0 +1,91 @@
+.place-card {
+  overflow: hidden;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 24rpx rgba(15, 23, 42, 0.04);
+}
+
+.place-card__cover {
+  min-height: 156rpx;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #e5e7eb;
+  background: #f8fafc;
+}
+
+.place-card__cover-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38rpx;
+  padding: 0 10rpx;
+  border-radius: 8rpx;
+  background: #eff6ff;
+  color: #0369a1;
+  font-size: 21rpx;
+  font-weight: 800;
+  line-height: 38rpx;
+}
+
+.place-card__cover-name {
+  margin-top: 14rpx;
+  color: #0f172a;
+  font-size: 31rpx;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.place-card__cover-tagline,
+.place-card__desc,
+.place-card__guide-item {
+  margin-top: 8rpx;
+  color: #64748b;
+  font-size: 23rpx;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.place-card__cover-tagline,
+.place-card__guide-item {
+  -webkit-line-clamp: 1;
+}
+
+.place-card__desc {
+  -webkit-line-clamp: 2;
+}
+
+.place-card__body {
+  padding: 20rpx;
+}
+
+.place-card__meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14rpx;
+}
+
+.place-card__time {
+  flex-shrink: 0;
+  max-width: 240rpx;
+  color: #475569;
+  font-size: 21rpx;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.place-card__guide {
+  display: grid;
+  gap: 8rpx;
+  margin-top: 14rpx;
+}
+
+.place-card__guide-item {
+  margin-top: 0;
+  padding: 12rpx 14rpx;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  background: #f8fafc;
+}

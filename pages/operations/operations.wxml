@@ -1,0 +1,113 @@
+<view class="page operations-page">
+  <view class="loading-text" wx:if="{{loading}}">运营数据加载中...</view>
+
+  <view wx:if="{{!loading && !authorized}}" class="operations-denied card">
+    <view class="operations-denied__title">需要管理员身份</view>
+    <view class="operations-denied__desc">请使用 admin001 登录后再进入运营中心。</view>
+    <button class="btn-primary operations-denied__btn" bindtap="goUser">去我的页面登录</button>
+  </view>
+
+  <view wx:if="{{authorized}}">
+    <view class="operations-hero">
+      <view class="operations-hero__eyebrow">智慧校园服务门户</view>
+      <view class="operations-hero__title">运营数据看板</view>
+      <view class="operations-hero__desc">统一观察访问、服务、地点、公告和内容健康，辅助管理员维护企业级校园服务平台。</view>
+    </view>
+
+    <view class="section-title">
+      <text class="section-title__text">业务指标</text>
+      <text class="section-title__action">实时概览</text>
+    </view>
+    <view class="operations-kpi-note">今日访问 · 服务点击 · 热门地点 · 公告阅读</view>
+    <view class="operations-grid">
+      <view class="operations-stat card" wx:for="{{trafficCards}}" wx:key="label">
+        <view class="operations-stat__value">{{item.value}}</view>
+        <view class="operations-stat__label">{{item.label}}</view>
+        <view class="operations-stat__desc">{{item.desc}}</view>
+      </view>
+    </view>
+
+    <view class="operations-panel card" wx:if="{{serviceQuality}}">
+      <view class="operations-panel__head">
+        <view><view class="operations-panel__label">服务质量</view><view class="operations-panel__title">工单响应与超时监控</view></view>
+        <view class="operations-panel__badge">SLA</view>
+      </view>
+      <view class="quality-grid">
+        <view class="quality-card" wx:for="{{serviceQuality.cards}}" wx:key="label">
+          <view class="quality-card__value">{{item.value}}</view>
+          <view class="quality-card__label">{{item.label}}</view>
+          <view class="quality-card__desc">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="operations-panel card" wx:if="{{placeQuality}}">
+      <view class="operations-panel__head">
+        <view><view class="operations-panel__label">点位质量</view><view class="operations-panel__title">地图数据来源与复核状态</view></view>
+        <view class="operations-panel__badge">{{placeQuality.reviewRequiredCount}} 待复核</view>
+      </view>
+      <view class="place-quality-grid">
+        <view class="place-quality-card" wx:for="{{placeQuality.sourceCards}}" wx:key="label">
+          <view class="place-quality-card__value">{{item.value}}</view>
+          <view class="place-quality-card__label">{{item.label}}</view>
+          <view class="place-quality-card__desc">{{item.desc}}</view>
+        </view>
+      </view>
+      <view class="coordinate-review-summary" wx:if="{{coordinateReviewSummary.total}}">
+        <view class="coordinate-review-summary__head">
+          <view><view class="coordinate-review-summary__label">校准备注</view><view class="coordinate-review-summary__title">坐标回写准备状态</view></view>
+          <view class="coordinate-review-summary__count">{{coordinateReviewSummary.total}} 条</view>
+        </view>
+        <view class="coordinate-review-metrics">
+          <view class="coordinate-review-metric"><view class="coordinate-review-metric__value">{{coordinateReviewSummary.validation.readyCount}}</view><view class="coordinate-review-metric__label">可回写</view></view>
+          <view class="coordinate-review-metric coordinate-review-metric--warning"><view class="coordinate-review-metric__value">{{coordinateReviewSummary.validation.issueCount}}</view><view class="coordinate-review-metric__label">待处理</view></view>
+        </view>
+        <view class="coordinate-review-ready" wx:if="{{coordinateReviewSummary.validation.readyItems.length}}"><text>可回写</text><text class="coordinate-review-ready__item" wx:for="{{coordinateReviewSummary.validation.readyItemsPreview}}" wx:key="placeId" data-id="{{item.placeId}}" data-source="operations-ready" bindtap="openCoordinateCalibration">{{item.placeName}}</text><text wx:if="{{coordinateReviewSummary.validation.readyMoreCount}}">另 {{coordinateReviewSummary.validation.readyMoreCount}} 个</text></view>
+        <view class="coordinate-review-blocked" wx:if="{{coordinateReviewSummary.validation.blockedItems.length}}">
+          <view class="coordinate-review-blocked__head"><view><text class="coordinate-review-blocked__title">待处理原因</text><text class="coordinate-review-blocked__state">{{coordinateIssueFilterText}}</text></view><view class="coordinate-review-blocked__summary"><text class="coordinate-review-tag coordinate-review-tag--reset {{coordinateIssueFilterLevel === '' ? 'coordinate-review-tag--active' : ''}}" data-level="" bindtap="filterCoordinateBlockedItems">全部 {{coordinateReviewSummary.validation.issueCount}}</text><text class="coordinate-review-tag coordinate-review-tag--{{item.level}} {{coordinateIssueFilterLevel === item.level ? 'coordinate-review-tag--active' : ''}}" wx:for="{{coordinateReviewSummary.validation.issueSummary}}" wx:key="label" data-level="{{item.level}}" bindtap="filterCoordinateBlockedItems">{{item.label}} {{item.value}}</text></view></view>
+          <view class="coordinate-review-blocked__item" wx:for="{{visibleCoordinateBlockedItems}}" wx:key="placeId" data-id="{{item.placeId}}" data-source="operations-blocked" bindtap="openCoordinateCalibration"><view><text>{{item.placeName}}</text><view class="coordinate-review-tags"><text class="coordinate-review-tag coordinate-review-tag--{{item.level}}" wx:for="{{item.issueTagItems}}" wx:key="label">{{item.label}}</text></view></view><text>去校准</text></view>
+        </view>
+        <view class="coordinate-review-workflow"><view class="coordinate-review-step"><text>1 校准</text><view class="coordinate-review-copy" bindtap="copyCoordinateReviewChecklist">复制清单</view></view><view class="coordinate-review-step"><text>2 模板</text><view class="coordinate-review-copy" bindtap="copyCoordinateRevisionTemplate">复制模板</view></view><view class="coordinate-review-step"><text>3 生成</text><view class="coordinate-review-copy" bindtap="copyCoordinatePlanCommand">复制命令</view></view></view>
+      </view>
+      <view class="coordinate-review-list" wx:if="{{coordinateReviewSummary.total}}">
+        <view class="coordinate-review-head"><text>最近校准备注</text><text>显示最近 5 条</text></view>
+        <view class="coordinate-review-row" wx:for="{{coordinateReviewSummary.items}}" wx:key="placeId"><view><view class="coordinate-review-row__name">{{item.placeName}}</view><view class="coordinate-review-row__note">{{item.note}}</view></view><view class="coordinate-review-row__status">{{item.statusText}}</view></view>
+      </view>
+    </view>
+
+    <view class="operations-panel card" wx:if="{{hotPlaces.length}}">
+      <view class="operations-panel__head">
+        <view><view class="operations-panel__label">热门地点</view><view class="operations-panel__title">服务关联度最高的点位</view></view>
+        <view class="operations-panel__badge">{{hotPlaces.length}} 个</view>
+      </view>
+      <view class="hot-place-list">
+        <view class="hot-place" wx:for="{{hotPlaces}}" wx:key="id">
+          <view><view class="hot-place__name">{{item.name}}</view><view class="hot-place__meta">{{item.type}} · {{item.desc}}</view></view>
+          <view class="hot-place__score">{{item.value}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="operations-panel card" wx:if="{{health}}">
+      <view class="operations-panel__head">
+        <view><view class="operations-panel__label">内容健康</view><view class="operations-panel__title">{{health.issueCount ? '发现 ' + health.issueCount + ' 项待优化' : '内容结构健康'}}</view></view>
+        <view class="operations-panel__badge">{{health.issueCount ? '待处理' : '良好'}}</view>
+      </view>
+      <view class="health-list" wx:if="{{health.items.length}}">
+        <view class="health-item" wx:for="{{health.items}}" wx:key="desc">
+          <view class="health-item__level health-item__level--{{item.level}}">{{item.level}}</view>
+          <view class="health-item__body"><view class="health-item__title">{{item.title}}</view><view class="health-item__desc">{{item.desc}}</view><view class="health-item__action">{{item.actionText}}</view></view>
+        </view>
+      </view>
+      <view class="health-empty" wx:else>地点、服务、公告和学习路径当前没有明显结构问题。可以继续补充真实数据，或准备迁移到云开发后台。</view>
+    </view>
+
+    <view class="operations-panel card">
+      <view class="operations-panel__label">运营建议</view>
+      <view class="operations-panel__title">下一步维护方向</view>
+      <view class="suggestion-list">
+        <view class="suggestion-item" wx:for="{{suggestions}}" wx:key="*this"><view class="suggestion-item__dot"></view><view class="suggestion-item__text">{{item}}</view></view>
+      </view>
+    </view>
+  </view>
+</view>

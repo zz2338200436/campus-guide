@@ -1,0 +1,14 @@
+<view class="study-card" bindtap="handleTap">
+  <view class="study-card__meta-row">
+    <view class="study-card__meta-left">
+      <text class="tag">{{item.category}}</text>
+      <text class="study-card__stage">{{item.stageLabel || item.stage}}</text>
+    </view>
+    <text class="study-card__action">{{item.duration || '查看内容'}}</text>
+  </view>
+  <view class="study-card__title">{{item.title}}</view>
+  <view class="study-card__summary">{{item.summary}}</view>
+  <view class="study-card__keywords" wx:if="{{item.keywords && item.keywords.length}}">
+    <text class="study-card__keyword" wx:for="{{item.keywords}}" wx:key="*this">{{item}}</text>
+  </view>
+</view>

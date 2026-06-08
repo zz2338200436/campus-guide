@@ -1,0 +1,144 @@
+<view class="page">
+  <view class="skeleton-panel card" wx:if="{{loading}}">
+    <view class="skeleton-line"></view>
+    <view class="skeleton-grid">
+      <view class="skeleton-box"></view>
+      <view class="skeleton-box"></view>
+      <view class="skeleton-box"></view>
+    </view>
+  </view>
+
+  <view class="page-head page-head--study">
+    <view class="page-head__eyebrow">成长任务</view>
+    <view class="page-head__title">学习资源路径</view>
+    <view class="page-head__desc">把小程序开发能力拆成任务路径，知道下一步学什么，也能把完成进度留下来。</view>
+    <view class="study-summary">
+      <view class="study-summary__item">
+        <text class="study-summary__num">{{studySummary ? studySummary.totalCount : list.length}}</text>
+        <text class="study-summary__label">知识卡片</text>
+      </view>
+      <view class="study-summary__item">
+        <text class="study-summary__num">{{learningSummary ? learningSummary.completedCount : 0}}</text>
+        <text class="study-summary__label">已完成任务</text>
+      </view>
+      <view class="study-summary__item">
+        <text class="study-summary__num">{{learningSummary ? learningSummary.percent : 0}}%</text>
+        <text class="study-summary__label">成长进度</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-title">
+    <text class="section-title__text">三条成长路径</text>
+    <text class="section-title__action">{{learningSummary && learningSummary.hasEntryBadge ? '已获得入门徽章' : '先完成入门路线'}}</text>
+  </view>
+
+  <view class="learning-paths" wx:if="{{learningPaths.length}}">
+    <view class="learning-path card" wx:for="{{learningPaths}}" wx:key="id">
+      <view class="learning-path__head">
+        <view>
+          <view class="learning-path__label">{{item.completed ? '已完成路径' : '进行中'}}</view>
+          <view class="learning-path__title">{{item.title}}</view>
+        </view>
+        <view class="learning-path__count">{{item.completedCount}} / {{item.totalCount}}</view>
+      </view>
+      <view class="learning-path__desc">{{item.desc}}</view>
+      <view class="progress-bar">
+        <view class="progress-bar__fill" style="width: {{item.percent}}%;"></view>
+      </view>
+      <view class="learning-path__next" wx:if="{{item.nextTask}}" data-id="{{item.nextTask.id}}" bindtap="openDetail">
+        <text>下一步：{{item.nextTask.title}}</text>
+        <text>去完成</text>
+      </view>
+      <view class="learning-path__next learning-path__next--done" wx:else>
+        <text>{{item.badgeName}}</text>
+        <text>已解锁</text>
+      </view>
+    </view>
+  </view>
+
+  <scroll-view class="type-scroll filter-scroll" scroll-x enable-flex>
+    <view
+      wx:for="{{stageTabs}}"
+      wx:key="value"
+      class="type-pill {{currentStage === item.value ? 'type-pill--active' : ''}}"
+      data-stage="{{item.value}}"
+      bindtap="selectStage"
+    >
+      {{item.label}}
+    </view>
+  </scroll-view>
+
+  <view class="section-title">
+    <text class="section-title__text">分类筛选</text>
+    <text class="section-title__action">{{currentStage}}</text>
+  </view>
+
+  <scroll-view class="type-scroll filter-scroll" scroll-x enable-flex>
+    <view
+      wx:for="{{categories}}"
+      wx:key="*this"
+      class="type-pill {{currentCategory === item ? 'type-pill--active' : ''}}"
+      data-category="{{item}}"
+      bindtap="selectCategory"
+    >
+      {{item}}
+    </view>
+  </scroll-view>
+
+  <view class="section-title">
+    <text class="section-title__text">知识检索</text>
+    <text class="section-title__action">{{currentCategory}}</text>
+  </view>
+
+  <view class="search-card">
+    <view class="search-card__main">
+      <input
+        class="search-card__input"
+        placeholder="搜索知识标题、摘要或关键概念"
+        confirm-type="search"
+        value="{{keyword}}"
+        bindinput="handleKeywordInput"
+        bindconfirm="submitSearch"
+      />
+      <view class="search-card__button" bindtap="submitSearch">搜索</view>
+    </view>
+    <view class="search-card__meta">
+      <text class="search-card__hint">支持按标题、摘要、内容和关键词搜索</text>
+      <text wx:if="{{keyword}}" class="search-card__clear" bindtap="clearSearch">清空</text>
+    </view>
+  </view>
+
+  <view class="section-title">
+    <text class="section-title__text">知识条目</text>
+    <text class="section-title__action">{{currentCategory}} · {{currentStage}} · {{list.length}} 条</text>
+  </view>
+
+  <view class="reading-list card">
+    <view
+      wx:for="{{list}}"
+      wx:key="id"
+      class="reading-entry"
+      data-id="{{item.id}}"
+      bindtap="openDetail"
+    >
+      <view class="reading-entry__badge">{{item.stageLabel || item.stage}}</view>
+      <view class="reading-entry__body">
+        <view class="reading-entry__head">
+          <view class="reading-entry__title">{{item.title}}</view>
+          <view class="reading-entry__duration">{{item.duration}}</view>
+        </view>
+        <view class="reading-entry__desc">{{item.summary}}</view>
+        <view class="reading-entry__meta">{{item.category}} · {{item.statusText}}</view>
+      </view>
+      <view class="reading-entry__action">阅读</view>
+    </view>
+  </view>
+
+  <empty-state
+    wx:if="{{!loading && list.length === 0}}"
+    statusText="筛选无结果"
+    title="暂无学习内容"
+    description="换个阶段、分类或关键词试试，成长路径仍会保留在上方"
+  />
+</view>

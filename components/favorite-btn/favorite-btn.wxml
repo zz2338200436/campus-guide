@@ -1,0 +1,3 @@
+<button class="favorite {{active ? 'favorite--active' : ''}}" bindtap="handleTap">
+  {{active ? '已收藏' : '收藏'}}
+</button>

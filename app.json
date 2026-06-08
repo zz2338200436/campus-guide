@@ -1,0 +1,68 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/map/map",
+    "pages/placeDetail/placeDetail",
+    "pages/survivalRoute/survivalRoute",
+    "pages/service/service",
+    "pages/study/study",
+    "pages/studyDetail/studyDetail",
+    "pages/notice/notice",
+    "pages/noticeDetail/noticeDetail",
+    "pages/user/user",
+    "pages/operations/operations",
+    "pages/favorite/favorite",
+    "pages/studyHistory/studyHistory"
+  ],
+  "window": {
+    "navigationBarTitleText": "校园通",
+    "navigationBarBackgroundColor": "#ecfeff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#ecfeff",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#7d8596",
+    "selectedColor": "#0369A1",
+    "backgroundColor": "#f8ffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab/home.png",
+        "selectedIconPath": "images/tab/home-active.png"
+      },
+      {
+        "pagePath": "pages/map/map",
+        "text": "导览",
+        "iconPath": "images/tab/map.png",
+        "selectedIconPath": "images/tab/map-active.png"
+      },
+      {
+        "pagePath": "pages/study/study",
+        "text": "学习",
+        "iconPath": "images/tab/study.png",
+        "selectedIconPath": "images/tab/study-active.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "images/tab/user.png",
+        "selectedIconPath": "images/tab/user-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于在校园导览中定位当前位置、展示附近地点和打开地图导航"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation",
+    "chooseLocation"
+  ]
+}

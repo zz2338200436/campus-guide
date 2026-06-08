@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "学习专区",
+  "usingComponents": {
+    "study-card": "/components/study-card/study-card",
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

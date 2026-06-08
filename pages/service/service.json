@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "校园服务",
+  "usingComponents": {
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

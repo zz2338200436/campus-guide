@@ -1,0 +1,66 @@
+<view class="page">
+  <view class="page-head page-head--compact">
+    <view class="page-head__eyebrow">Notice Board</view>
+    <view class="page-head__title">公告通知</view>
+    <view class="page-head__desc">把课程提醒和校园动态分成“重要提醒 + 最新动态”两层查看。</view>
+  </view>
+
+  <scroll-view class="type-scroll filter-scroll" scroll-x enable-flex>
+    <view
+      wx:for="{{types}}"
+      wx:key="*this"
+      class="type-pill {{currentType === item ? 'type-pill--active' : ''}}"
+      data-type="{{item}}"
+      bindtap="selectType"
+    >
+      {{item}}
+    </view>
+  </scroll-view>
+
+  <view class="notice-toolbar">
+    <view class="notice-toolbar__meta">
+      <text>当前分类：{{currentType}}</text>
+      <text>置顶 {{pinnedCount}}</text>
+      <text>最新 {{latestList.length}}</text>
+    </view>
+  </view>
+
+  <view class="notice-section card" wx:if="{{pinnedList.length}}">
+    <view class="notice-section__head">
+      <view>
+        <view class="notice-section__label">置顶公告</view>
+        <view class="notice-section__title">重要提醒</view>
+      </view>
+      <text class="notice-section__count">{{pinnedList.length}} 条</text>
+    </view>
+    <notice-item
+      wx:for="{{pinnedList}}"
+      wx:key="id"
+      item="{{item}}"
+      bind:tap="openDetail"
+    />
+  </view>
+
+  <view class="notice-section card" wx:if="{{latestList.length}}">
+    <view class="notice-section__head">
+      <view>
+        <view class="notice-section__label">时间顺序</view>
+        <view class="notice-section__title">最新动态</view>
+      </view>
+      <text class="notice-section__count">{{latestList.length}} 条</text>
+    </view>
+    <notice-item
+      wx:for="{{latestList}}"
+      wx:key="id"
+      item="{{item}}"
+      bind:tap="openDetail"
+    />
+  </view>
+
+  <empty-state
+    wx:if="{{!loading && list.length === 0}}"
+    statusText="暂无公告"
+    title="暂无公告"
+    description="当前分类下没有可查看的公告通知"
+  />
+</view>

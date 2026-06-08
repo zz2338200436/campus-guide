@@ -1,0 +1,51 @@
+<view class="page">
+  <view class="page-head page-head--compact">
+    <view class="page-head__eyebrow">Saved Items</view>
+    <view class="page-head__title">我的收藏</view>
+    <view class="page-head__desc">把地点、学习内容和公告通知整理成一个统一的收藏空间。</view>
+  </view>
+
+  <view class="tab-row">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="value"
+      class="tab-row__item {{currentType === item.value ? 'tab-row__item--active' : ''}}"
+      data-type="{{item.value}}"
+      bindtap="selectTab"
+    >
+      {{item.label}}
+    </view>
+  </view>
+
+  <view class="board-card" wx:if="{{isLogin}}">
+    <view class="card-title">收藏说明</view>
+    <view class="card-desc">这里会同步你在地点详情、学习详情和公告详情页点过的收藏内容，切换账号后会按当前用户隔离显示。</view>
+  </view>
+
+  <view class="panel-grid">
+    <view class="fav-card" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="openDetail">
+      <view class="fav-card__head">
+        <view class="fav-card__title">{{item.title}}</view>
+        <text class="tag">{{item.type}}</text>
+      </view>
+      <view class="fav-card__summary">{{item.summary || item.description || item.type}}</view>
+      <view class="fav-card__time">收藏时间：{{item.createTime}}</view>
+    </view>
+  </view>
+
+  <empty-state
+    wx:if="{{!isLogin}}"
+    statusText="账号未登录"
+    title="请先登录"
+    description="登录后才能查看我的收藏"
+    buttonText="去登录"
+    url="/pages/user/user"
+  />
+
+  <empty-state
+    wx:if="{{isLogin && !loading && list.length === 0}}"
+    statusText="暂无收藏记录"
+    title="暂无收藏"
+    description="去详情页点一下收藏按钮，这里就会同步出现"
+  />
+</view>

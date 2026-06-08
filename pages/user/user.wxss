@@ -1,0 +1,271 @@
+.user-hero,
+.login-card,
+.user-note,
+.admin-entry,
+.utility-card {
+  margin-bottom: 18rpx;
+  padding: 24rpx;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 24rpx rgba(15, 23, 42, 0.04);
+}
+
+.user-hero__top {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.user-hero__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 8rpx;
+  background: #0369a1;
+  color: #ffffff;
+  font-size: 40rpx;
+  font-weight: 800;
+}
+
+.user-hero__body,
+.utility-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-hero__eyebrow,
+.login-card__eyebrow,
+.user-note__label,
+.admin-entry__label,
+.utility-card__eyebrow,
+.growth-next__label {
+  color: #0369a1;
+  font-size: 21rpx;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.user-hero__name,
+.login-card__title,
+.user-note__title,
+.admin-entry__title,
+.utility-card__title,
+.growth-next__title {
+  margin-top: 8rpx;
+  color: #0f172a;
+  font-size: 30rpx;
+  font-weight: 800;
+  line-height: 1.38;
+}
+
+.user-hero__meta,
+.login-card__desc,
+.user-note__desc,
+.admin-entry__desc,
+.utility-card__desc {
+  margin-top: 8rpx;
+  color: #64748b;
+  font-size: 23rpx;
+  line-height: 1.55;
+}
+
+.user-hero__status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 18rpx;
+  padding-top: 18rpx;
+  border-top: 1rpx solid #e5e7eb;
+}
+
+.user-hero__hint {
+  color: #64748b;
+  font-size: 22rpx;
+  line-height: 1.45;
+}
+
+.login-input {
+  height: 76rpx;
+  margin-top: 18rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 26rpx;
+}
+
+.quick-accounts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin: 16rpx 0 20rpx;
+}
+
+.quick-accounts__item {
+  min-height: 42rpx;
+  padding: 0 12rpx;
+  border: 1rpx solid #dbeafe;
+  border-radius: 8rpx;
+  background: #eff6ff;
+  color: #0369a1;
+  font-size: 22rpx;
+  font-weight: 700;
+  line-height: 42rpx;
+}
+
+.momentum-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12rpx;
+  margin-bottom: 18rpx;
+}
+
+.user-section-title {
+  margin-top: 4rpx;
+}
+
+.growth-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-top: 16rpx;
+  padding: 14rpx 16rpx;
+  border: 1rpx solid #dbeafe;
+  border-radius: 8rpx;
+  background: #eff6ff;
+}
+
+.growth-next--done {
+  border-color: #dcfce7;
+  background: #f0fdf4;
+}
+
+.growth-next > view:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.growth-next__title,
+.utility-card__desc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.growth-next__status {
+  flex-shrink: 0;
+  min-width: 72rpx;
+  color: #0369a1;
+  font-size: 22rpx;
+  font-weight: 800;
+  text-align: right;
+}
+
+.admin-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  border-color: #bae6fd;
+  background: #f0f9ff;
+}
+
+.admin-entry > view:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-entry__action {
+  flex-shrink: 0;
+  min-width: 72rpx;
+  height: 46rpx;
+  border-radius: 8rpx;
+  background: #0369a1;
+  color: #ffffff;
+  font-size: 22rpx;
+  font-weight: 800;
+  line-height: 46rpx;
+  text-align: center;
+}
+
+.utility-grid {
+  display: grid;
+  gap: 14rpx;
+}
+
+.utility-card {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  min-height: 126rpx;
+}
+
+.utility-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 8rpx;
+  background: #eff6ff;
+  color: #0369a1;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.utility-card__icon--green {
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.utility-card__count {
+  flex-shrink: 0;
+  min-width: 72rpx;
+  color: #0369a1;
+  font-size: 32rpx;
+  font-weight: 800;
+  text-align: right;
+}
+
+.utility-card__count--action {
+  font-size: 23rpx;
+}
+
+.logout-btn {
+  margin-top: 22rpx;
+}
+
+@media (max-width: 360px) {
+  .user-hero,
+  .login-card,
+  .user-note,
+  .admin-entry,
+  .utility-card {
+    padding: 20rpx;
+  }
+
+  .user-hero__avatar {
+    width: 88rpx;
+    height: 88rpx;
+    font-size: 34rpx;
+  }
+
+  .momentum-grid {
+    gap: 8rpx;
+  }
+
+  .utility-card__count {
+    min-width: 56rpx;
+    font-size: 28rpx;
+  }
+}

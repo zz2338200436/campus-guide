@@ -1,0 +1,241 @@
+.enterprise-page {
+  background: #f8fafc;
+}
+
+.enterprise-hero {
+  margin-bottom: 24rpx;
+  padding: 34rpx 30rpx;
+  border-radius: 20rpx;
+  background: #0f172a;
+  color: #ffffff;
+  box-shadow: 0 18rpx 36rpx rgba(15, 23, 42, 0.14);
+}
+
+.enterprise-hero__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24rpx;
+}
+
+.enterprise-hero__eyebrow {
+  color: #bfdbfe;
+  font-size: 22rpx;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.enterprise-hero__title {
+  margin-top: 10rpx;
+  color: #ffffff;
+  font-size: 44rpx;
+  font-weight: 900;
+  line-height: 1.22;
+}
+
+.enterprise-hero__desc {
+  margin-top: 14rpx;
+  color: #cbd5e1;
+  font-size: 25rpx;
+  line-height: 1.62;
+}
+
+.enterprise-hero__role {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  min-width: 132rpx;
+  padding: 14rpx 16rpx;
+  border-radius: 14rpx;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1rpx solid rgba(255, 255, 255, 0.12);
+}
+
+.enterprise-hero__role-label {
+  color: #94a3b8;
+  font-size: 20rpx;
+  line-height: 1.3;
+}
+
+.enterprise-hero__role-value {
+  margin-top: 6rpx;
+  color: #ffffff;
+  font-size: 26rpx;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.enterprise-hero__campus {
+  margin-top: 22rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  font-size: 24rpx;
+  line-height: 1.4;
+}
+
+.enterprise-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12rpx;
+  margin-top: 22rpx;
+}
+
+.enterprise-metric {
+  min-height: 100rpx;
+  padding: 14rpx 10rpx;
+  border-radius: 14rpx;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1rpx solid rgba(255, 255, 255, 0.1);
+}
+
+.enterprise-metric__num {
+  display: block;
+  color: #ffffff;
+  font-size: 28rpx;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.enterprise-metric__label {
+  display: block;
+  margin-top: 8rpx;
+  color: #cbd5e1;
+  font-size: 20rpx;
+  line-height: 1.35;
+}
+
+.workbench-grid,
+.capability-grid {
+  display: grid;
+  gap: 16rpx;
+}
+
+.workbench-card {
+  padding: 26rpx;
+}
+
+.workbench-card--primary {
+  border-left: 8rpx solid #0369a1;
+}
+
+.workbench-card__label,
+.recent-panel__label,
+.capability-card__label {
+  color: #0369a1;
+  font-size: 22rpx;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.workbench-card__title,
+.recent-panel__title,
+.enterprise-list__title,
+.capability-card__title {
+  margin-top: 10rpx;
+  color: #0f172a;
+  font-size: 30rpx;
+  font-weight: 850;
+  line-height: 1.42;
+}
+
+.workbench-card__desc,
+.recent-panel__desc,
+.enterprise-list__desc,
+.capability-card__desc {
+  margin-top: 8rpx;
+  color: #475569;
+  font-size: 23rpx;
+  line-height: 1.58;
+}
+
+.workbench-card__footer {
+  margin-top: 16rpx;
+  color: #0369a1;
+  font-size: 23rpx;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14rpx;
+}
+
+.service-entry {
+  min-height: 166rpx;
+  padding: 22rpx;
+}
+
+.service-entry__code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 12rpx;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 20rpx;
+  font-weight: 900;
+}
+
+.service-entry__title {
+  margin-top: 16rpx;
+  color: #0f172a;
+  font-size: 28rpx;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.service-entry__desc {
+  margin-top: 8rpx;
+  color: #64748b;
+  font-size: 22rpx;
+  line-height: 1.45;
+}
+
+.recent-panel {
+  padding: 26rpx;
+}
+
+.enterprise-list {
+  display: grid;
+  gap: 12rpx;
+}
+
+.enterprise-list__item {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  padding: 22rpx;
+}
+
+.enterprise-list__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.enterprise-list__meta {
+  margin-top: 8rpx;
+  color: #0369a1;
+  font-size: 22rpx;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.enterprise-list__action {
+  flex-shrink: 0;
+  padding: 9rpx 16rpx;
+  border-radius: 12rpx;
+  background: #eff6ff;
+  color: #0369a1;
+  font-size: 22rpx;
+  font-weight: 800;
+}
+
+.capability-card {
+  padding: 24rpx;
+}

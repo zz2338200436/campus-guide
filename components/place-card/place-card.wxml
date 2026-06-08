@@ -1,0 +1,18 @@
+<view class="place-card" bindtap="handleTap">
+  <view class="place-card__cover">
+    <view class="place-card__cover-label">{{item.featured ? '推荐地点' : item.type}}</view>
+    <view class="place-card__cover-name">{{item.name}}</view>
+    <view class="place-card__cover-tagline">{{item.tagline || item.type}}</view>
+  </view>
+  <view class="place-card__body">
+    <view class="place-card__meta-row">
+      <text class="tag">{{item.type}}</text>
+      <text class="place-card__time">{{item.openTime}}</text>
+    </view>
+    <view class="place-card__desc">{{item.description}}</view>
+    <view class="place-card__guide">
+      <view class="place-card__guide-item">适合：{{item.bestFor || '初次熟悉校园'}}</view>
+      <view class="place-card__guide-item">建议：{{item.bestTime || '白天前往体验更完整'}}</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,102 @@
+<view class="page">
+  <view class="route-hero">
+    <view class="route-hero__eyebrow">事项路线服务</view>
+    <view class="route-hero__title">按事项生成办理路线</view>
+    <view class="route-hero__desc">选择一个真实场景，系统会把地点、服务、准备材料和行动顺序整理成可执行路线。</view>
+    <view class="route-hero__meta" wx:if="{{currentRoute}}">{{currentRoute.oneLiner}}</view>
+  </view>
+
+  <view class="scene-panel card" wx:if="{{scenarios.length}}">
+    <view class="scene-panel__head">
+      <view>
+        <view class="scene-panel__label">选择场景</view>
+        <view class="scene-panel__title">你现在最想解决什么？</view>
+      </view>
+      <view class="scene-panel__count">{{scenarios.length}} 条路线</view>
+    </view>
+    <view class="scene-grid">
+      <view
+        wx:for="{{scenarios}}"
+        wx:key="id"
+        class="scene-card {{currentScene === item.id ? 'scene-card--active' : ''}}"
+        data-scene="{{item.id}}"
+        bindtap="selectScene"
+      >
+        <view class="scene-card__question">{{item.question}}</view>
+        <view class="scene-card__title">{{item.title}}</view>
+        <view class="scene-card__desc">{{item.oneLiner}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="route-card card" wx:if="{{currentRoute}}">
+    <view class="route-card__head">
+      <view>
+        <view class="route-card__label">已生成路线</view>
+        <view class="route-card__title">{{currentRoute.title}}</view>
+      </view>
+      <view class="route-card__badge">{{currentRoute.progress.progressText}} 已到访</view>
+    </view>
+    <view class="route-card__summary">{{currentRoute.summary}}</view>
+    <view class="route-progress" wx:if="{{currentRoute.progress}}">
+      <view class="route-progress__head">
+        <text>{{currentRoute.progress.completed ? '这条路线已经完成' : '当前进度'}}</text>
+        <text>{{currentRoute.progress.percent}}%</text>
+      </view>
+      <view class="route-progress__track">
+        <view class="route-progress__bar" style="width: {{currentRoute.progress.percent}}%;"></view>
+      </view>
+      <view class="route-progress__next" wx:if="{{currentRoute.progress.nextStep}}">
+        下一站：{{currentRoute.progress.nextStep.placeName}} · {{currentRoute.progress.nextStep.serviceTitle}}
+      </view>
+      <view class="route-progress__next" wx:else>所有站点已完成，可以继续查看其它路线。</view>
+    </view>
+    <view class="route-materials">
+      <view class="route-materials__title">出发前准备</view>
+      <view class="route-materials__list">
+        <text class="route-material" wx:for="{{currentRoute.materials}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+    <view class="route-primary" bindtap="openPrimaryAction">{{currentRoute.primaryAction.text}}</view>
+  </view>
+
+  <view class="timeline" wx:if="{{currentRoute && currentRoute.steps.length}}">
+    <view
+      wx:for="{{currentRoute.steps}}"
+      wx:key="step"
+      class="timeline-step card"
+      data-url="{{item.actionUrl}}"
+      data-feedback="{{item.feedback}}"
+      bindtap="openStep"
+    >
+      <view class="timeline-step__rail">
+        <view class="timeline-step__index {{item.checkedIn ? 'timeline-step__index--done' : ''}} {{item.isNext ? 'timeline-step__index--next' : ''}}">{{item.checkedIn ? '✓' : item.step}}</view>
+      </view>
+      <view class="timeline-step__body">
+        <view class="timeline-step__head">
+          <view class="timeline-step__place">{{item.placeName}}</view>
+          <view class="timeline-step__status {{item.checkedIn ? 'timeline-step__status--done' : ''}} {{item.isNext ? 'timeline-step__status--next' : ''}}">{{item.statusText}}</view>
+        </view>
+        <view class="timeline-step__desc">{{item.desc}}</view>
+        <view class="timeline-step__service">关联服务：{{item.serviceTitle}}</view>
+        <view class="timeline-step__tip">{{item.tip}}</view>
+        <view class="timeline-step__footer">
+          <text>{{item.bestTime}}</text>
+          <text>{{item.actionText}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="final-tip card" wx:if="{{currentRoute}}">
+    <view class="final-tip__label">路线建议</view>
+    <view class="final-tip__text">{{currentRoute.finalTip}}</view>
+  </view>
+
+  <empty-state
+    wx:if="{{!loading && !currentRoute}}"
+    statusText="暂无路线"
+    title="暂时没有路线"
+    description="可以先返回首页，从个人今日行动台选择一个推荐动作"
+  />
+</view>

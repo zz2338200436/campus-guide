@@ -1,0 +1,19 @@
+# WeChat developer local settings
+project.private.config.json
+
+# Dependencies
+node_modules/
+
+# Build and temporary output
+dist/
+build/
+coverage/
+generated/
+
+# Logs and OS/editor noise
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+

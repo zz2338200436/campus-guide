@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "学习详情",
+  "usingComponents": {
+    "study-card": "/components/study-card/study-card",
+    "favorite-btn": "/components/favorite-btn/favorite-btn",
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

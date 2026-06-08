@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "场景路线",
+  "usingComponents": {
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

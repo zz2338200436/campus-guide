@@ -1,0 +1,133 @@
+.article-hero,
+.article-card,
+.task-status-card {
+  margin-bottom: 20rpx;
+  padding: 24rpx;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 24rpx rgba(15, 23, 42, 0.04);
+}
+
+.article-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38rpx;
+  padding: 0 10rpx;
+  border-radius: 8rpx;
+  background: #eff6ff;
+  color: #0369a1;
+  font-size: 21rpx;
+  font-weight: 800;
+  line-height: 38rpx;
+}
+
+.article-hero__title {
+  margin-top: 14rpx;
+  color: #0f172a;
+  font-size: 38rpx;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.article-hero__summary {
+  margin-top: 12rpx;
+  color: #64748b;
+  font-size: 25rpx;
+  line-height: 1.65;
+}
+
+.article-card--soft,
+.next-step-card {
+  background: #f8fafc;
+}
+
+.article-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18rpx;
+}
+
+.article-card__title,
+.task-status-card__title {
+  color: #0f172a;
+  font-size: 30rpx;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.article-card__content {
+  margin-top: 18rpx;
+  color: #475569;
+  font-size: 27rpx;
+  line-height: 1.85;
+}
+
+.task-status-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  background: #f8fafc;
+}
+
+.task-status-card > view:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-status-card__label {
+  color: #0369a1;
+  font-size: 21rpx;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.task-status-card__title {
+  margin-top: 8rpx;
+}
+
+.task-status-card__desc {
+  margin-top: 8rpx;
+  color: #64748b;
+  font-size: 23rpx;
+  line-height: 1.5;
+}
+
+.task-status-card__btn {
+  flex-shrink: 0;
+  min-width: 160rpx;
+  height: 68rpx;
+  padding: 0 18rpx;
+  font-size: 24rpx;
+  line-height: 68rpx;
+}
+
+.code-panel {
+  padding: 24rpx;
+  border-radius: 8rpx;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-size: 24rpx;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+@media (max-width: 360px) {
+  .article-hero,
+  .article-card,
+  .task-status-card {
+    padding: 20rpx;
+  }
+
+  .task-status-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .task-status-card__btn {
+    width: 100%;
+  }
+}

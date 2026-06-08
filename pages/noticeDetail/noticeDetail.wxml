@@ -1,0 +1,35 @@
+<view class="page">
+  <view class="loading-text" wx:if="{{loading}}">公告详情加载中...</view>
+
+  <view wx:if="{{detail}}">
+    <view class="notice-hero">
+      <view class="notice-hero__eyebrow">{{detail.type}} · {{detail.priorityLabel}}</view>
+      <view class="notice-hero__title">{{detail.title}}</view>
+      <view class="notice-hero__meta">{{detail.date}} · {{detail.publisher}}</view>
+    </view>
+
+    <view class="notice-detail">
+      <view class="notice-detail__head">
+        <view class="notice-detail__title">通知内容</view>
+        <favorite-btn
+          id="favoriteBtn"
+          type="notice"
+          targetId="{{detail.id}}"
+          title="{{detail.title}}"
+          summary="{{detail.type}}"
+        />
+      </view>
+      <view class="notice-detail__summary" wx:if="{{detail.summary}}">{{detail.summary}}</view>
+      <view class="notice-detail__content">{{detail.content}}</view>
+    </view>
+  </view>
+
+  <empty-state
+    wx:if="{{!loading && !detail}}"
+    statusText="内容未找到"
+    title="内容不存在"
+    description="请返回公告列表重新查看"
+    buttonText="返回公告页"
+    url="/pages/notice/notice"
+  />
+</view>
