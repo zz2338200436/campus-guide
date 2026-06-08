@@ -52,14 +52,17 @@ assert.ok(serviceWxml.includes('class="issue-service__meta">办理地点：{{ite
 assert.ok(!serviceWxml.includes('class="issue-service__meta">处理时限：{{item.time}}</view>'), 'issue service cards should not spend a second row on deadline copy');
 assert.ok(serviceWxml.includes('class="service-row"'), 'service category list should use compact service rows');
 assert.ok(serviceWxml.includes('class="service-row__meta">办理地点：{{item.location}} · 处理时限：{{item.time}}</view>'), 'service category rows should compress location and deadline into one row');
-assert.ok(serviceWxml.includes('class="service-row__materials">材料：{{item.materials.join('), 'service category rows should keep required materials in compact copy');
+assert.ok(serviceWxml.includes('class="service-row__materials">所需材料：{{item.materials.join('), 'service category rows should keep required materials in compact copy');
 assert.ok(!serviceWxml.includes('service-card__tagline'), 'service category rows should not repeat long service descriptions');
 assert.ok(!serviceWxml.includes('class="service-card__meta">处理时限：{{item.time}}</view>'), 'service category rows should not spend a second row on deadline copy');
 assert.ok(!serviceWxml.includes('class="service-card__phone"'), 'service category rows should not duplicate phone outside the call action');
 assert.ok(serviceWxml.includes('class="service-row__call" data-phone="{{item.phone}}" catchtap="callServicePhone">拨打</text>'), 'service category rows should keep a compact call action');
 assert.ok(!serviceWxml.includes('service-card__footer'), 'service category rows should not keep a tall card footer');
-assert.ok(serviceWxml.includes('class="service-alert__meta">处理时限：{{item.time}}</view>'), 'emergency service cards should keep deadline as the only metadata row');
-assert.ok(serviceWxml.includes('class="service-alert__phone" data-phone="{{item.phone}}" catchtap="callServicePhone">拨打 {{item.phone}}</view>'), 'emergency service cards should keep phone number on the call action');
+assert.ok(serviceWxml.includes('service-alert__count">{{urgentList.length}} 项</view>'), 'emergency service section should show a compact count badge');
+assert.ok(serviceWxml.includes('class="service-alert-row"'), 'emergency service section should use compact action rows');
+assert.ok(serviceWxml.includes('class="service-alert-row__meta">处理时限：{{item.time}}</view>'), 'emergency service rows should keep deadline as compact metadata');
+assert.ok(serviceWxml.includes('class="service-alert-row__phone" data-phone="{{item.phone}}" catchtap="callServicePhone">拨打</view>'), 'emergency service rows should keep a compact call action');
+assert.ok(!serviceWxml.includes('service-alert__phone" data-phone="{{item.phone}}" catchtap="callServicePhone">拨打 {{item.phone}}</view>'), 'emergency service rows should not use wide phone-number buttons');
 assert.ok(!serviceWxml.includes('class="service-alert__meta">处理时限：{{item.time}} · {{item.phone}}</view>'), 'emergency service cards should not duplicate phone in metadata');
 assert.ok(!serviceWxml.includes('一键拨打'), 'emergency service cards should avoid vague repeated call copy');
 assert.ok(serviceWxml.includes('bindtap="openTicketProgress">查看进度</view>'), 'ticket progress action should provide feedback instead of looking like a dead button');
@@ -74,6 +77,7 @@ assert.ok(!serviceWxss.includes('.service-card__phone'), 'service styles should 
 assert.ok(!serviceWxss.includes('.service-card__tagline'), 'service styles should remove long card description styling');
 assert.ok(!serviceWxss.includes('.service-card__footer'), 'service styles should remove tall card footer styling');
 assert.ok(serviceWxss.includes('.service-row'), 'service styles should define compact service rows');
+assert.ok(serviceWxss.includes('.service-alert-row'), 'service styles should define compact emergency action rows');
 assert.ok(serviceWxss.includes('.service-summary'), 'service page should style the compact summary');
 assert.ok(!serviceWxss.includes('.service-hero'), 'service styles should not keep large hero styling');
 assert.ok(serviceWxss.includes('height: 148rpx'), 'issue tabs should keep a fixed compact height');

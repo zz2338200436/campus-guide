@@ -122,19 +122,18 @@
         </view>
         <view class="service-group__count">{{item.items.length}} 项</view>
       </view>
-      <view class="service-card" wx:for="{{item.items}}" wx:key="id" data-place-id="{{item.primaryPlaceId}}" bindtap="openServicePlace">
-        <view class="service-card__head">
-          <view>
-            <view class="service-card__title">{{item.title}}</view>
-            <view class="service-card__tagline">{{item.content}}</view>
+      <view class="service-row" wx:for="{{item.items}}" wx:key="id" data-place-id="{{item.primaryPlaceId}}" bindtap="openServicePlace">
+        <view class="service-row__main">
+          <view class="service-row__head">
+            <view class="service-row__title">{{item.title}}</view>
+            <text class="tag service-row__tag">{{item.tag}}</text>
           </view>
-          <text class="tag">{{item.tag}}</text>
+          <view class="service-row__meta">办理地点：{{item.location}} · 处理时限：{{item.time}}</view>
+          <view class="service-row__materials">所需材料：{{item.materials.join('、')}}</view>
         </view>
-        <view class="service-card__meta">办理地点：{{item.location}} · 处理时限：{{item.time}}</view>
-        <view class="service-card__meta">所需材料：{{item.materials.join('、')}}</view>
-        <view class="service-card__footer">
-          <text class="service-card__action">{{item.primaryPlaceName ? '查看' + item.primaryPlaceName : item.actionText}}</text>
-          <text class="service-card__call" data-phone="{{item.phone}}" catchtap="callServicePhone">拨打 {{item.phone}}</text>
+        <view class="service-row__actions">
+          <text class="service-row__action">{{item.primaryPlaceName ? '查看地点' : item.actionText}}</text>
+          <text class="service-row__call" data-phone="{{item.phone}}" catchtap="callServicePhone">拨打</text>
         </view>
       </view>
     </view>
