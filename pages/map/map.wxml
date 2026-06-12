@@ -12,6 +12,16 @@
     </view>
     <view class="map-overview__count">{{filteredPlaces.length}} 处</view>
   </view>
+  <view class="guide-hint">
+    <view class="guide-hint__item">
+      <text class="guide-hint__label">查地点</text>
+      <text class="guide-hint__value">搜索楼栋、食堂、图书馆</text>
+    </view>
+    <view class="guide-hint__item">
+      <text class="guide-hint__label">看路线</text>
+      <text class="guide-hint__value">分类筛选后直接导航</text>
+    </view>
+  </view>
 
   <view class="atlas-card card">
     <view class="map-stage">
@@ -40,8 +50,8 @@
           <view class="selected-place__meta">{{selectedPlace.type}} · {{selectedPlace.openTime}}</view>
           <view class="selected-place__trust selected-place__trust--{{selectedPlace.coordinateTrust.level}}" wx:if="{{selectedPlace.coordinateTrust}}">
             <text>{{selectedPlace.coordinateTrust.label}}</text>
-            <text>{{selectedPlace.coordinateTrust.sourceText}}</text>
-            <text>{{selectedPlace.coordinateReviewStatus || selectedPlace.coordinateTrust.reviewText}}</text>
+            <text wx:if="{{showInternalTools}}">{{selectedPlace.coordinateTrust.sourceText}}</text>
+            <text wx:if="{{showInternalTools}}">{{selectedPlace.coordinateReviewStatus || selectedPlace.coordinateTrust.reviewText}}</text>
           </view>
         </view>
         <view class="selected-place__actions">
@@ -65,8 +75,8 @@
             <view class="nav-info-panel__address">{{navDestination.address}}</view>
             <view class="nav-info-panel__trust nav-info-panel__trust--{{navDestination.coordinateTrust.level}}" wx:if="{{navDestination.coordinateTrust}}">
               <text>{{navDestination.coordinateTrust.label}}</text>
-              <text>{{navDestination.coordinateTrust.sourceText}}</text>
-              <text>{{navDestination.coordinateTrust.reviewText}}</text>
+              <text wx:if="{{showInternalTools}}">{{navDestination.coordinateTrust.sourceText}}</text>
+              <text wx:if="{{showInternalTools}}">{{navDestination.coordinateTrust.reviewText}}</text>
             </view>
           </view>
           <view class="nav-info-panel__distance" wx:if="{{navDistance}}">
@@ -149,8 +159,8 @@
         </view>
         <view class="directory-item__trust directory-item__trust--{{item.coordinateTrust.level}}" wx:if="{{item.coordinateTrust}}">
           <text>{{item.coordinateTrust.label}}</text>
-          <text class="directory-item__source">{{item.coordinateTrust.sourceText}}</text>
-          <text class="directory-item__status">{{item.directoryStatus}}</text>
+          <text wx:if="{{showInternalTools}}" class="directory-item__source">{{item.coordinateTrust.sourceText}}</text>
+          <text wx:if="{{showInternalTools}}" class="directory-item__status">{{item.directoryStatus}}</text>
         </view>
       </view>
       <view class="directory-item__actions">

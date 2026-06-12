@@ -33,6 +33,12 @@
     </view>
   </view>
 
+  <view class="service-promise card">
+    <view class="service-promise__item"><text class="service-promise__label">去哪办</text><text class="service-promise__value">关联地点</text></view>
+    <view class="service-promise__item"><text class="service-promise__label">带什么</text><text class="service-promise__value">材料清单</text></view>
+    <view class="service-promise__item"><text class="service-promise__label">联系谁</text><text class="service-promise__value">电话直达</text></view>
+  </view>
+
   <view class="issue-solver card" wx:if="{{issueTabs.length}}">
     <view class="issue-solver__head">
       <view>
@@ -42,13 +48,7 @@
       <view class="issue-solver__count">{{issueTabs.length}} 类问题</view>
     </view>
     <scroll-view class="issue-tabs" scroll-x enable-flex>
-      <view
-        wx:for="{{issueTabs}}"
-        wx:key="id"
-        class="issue-tab {{currentIssueId === item.id ? 'issue-tab--active' : ''}}"
-        data-id="{{item.id}}"
-        bindtap="selectIssue"
-      >
+      <view wx:for="{{issueTabs}}" wx:key="id" class="issue-tab {{currentIssueId === item.id ? 'issue-tab--active' : ''}}" data-id="{{item.id}}" bindtap="selectIssue">
         <view class="issue-tab__question">{{item.question}}</view>
         <view class="issue-tab__title">{{item.title}}</view>
       </view>
@@ -59,13 +59,7 @@
         <view class="issue-panel__desc">{{currentIssue.desc}}</view>
       </view>
       <view class="issue-panel__list">
-        <view
-          wx:for="{{issueServices}}"
-          wx:key="id"
-          class="issue-service"
-          data-place-id="{{item.primaryPlaceId}}"
-          bindtap="openServicePlace"
-        >
+        <view wx:for="{{issueServices}}" wx:key="id" class="issue-service" data-place-id="{{item.primaryPlaceId}}" bindtap="openServicePlace">
           <view class="issue-service__main">
             <view class="issue-service__tag">{{item.category}} · {{item.tag}}</view>
             <view class="issue-service__title">{{item.title}}</view>
@@ -104,13 +98,7 @@
   </view>
 
   <scroll-view class="type-scroll filter-scroll" scroll-x enable-flex>
-    <view
-      wx:for="{{categoryTabs}}"
-      wx:key="*this"
-      class="type-pill {{currentCategory === item ? 'type-pill--active' : ''}}"
-      data-category="{{item}}"
-      bindtap="selectCategory"
-    >
+    <view wx:for="{{categoryTabs}}" wx:key="*this" class="type-pill {{currentCategory === item ? 'type-pill--active' : ''}}" data-category="{{item}}" bindtap="selectCategory">
       {{item}}
     </view>
   </scroll-view>

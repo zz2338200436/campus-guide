@@ -22,6 +22,10 @@
       </view>
     </view>
     <view class="home-hero__campus">广州应用科技学院肇庆校区</view>
+    <view class="home-next" wx:if="{{nextRoutePlace}}" data-id="{{nextRoutePlace.id}}" bindtap="openPlaceDetail">
+      <view class="home-next__body"><text class="home-next__label">推荐下一站</text><text class="home-next__title">{{nextRoutePlace.name}}</text><text class="home-next__desc">{{nextRoutePlace.guide || nextRoutePlace.desc}}</text></view>
+      <view class="home-next__action">去看看</view>
+    </view>
     <view class="home-metrics">
       <view class="home-metric">
         <text class="home-metric__num">{{notices.length}}</text>
@@ -39,6 +43,11 @@
         <text class="home-metric__num">{{quickActions.length}}</text>
         <text class="home-metric__label">常用入口</text>
       </view>
+    </view>
+    <view class="home-action-strip">
+      <view class="home-action-chip" data-tab="{{true}}" data-url="/pages/map/map" bindtap="openQuickAction"><text class="home-action-chip__label">路线</text><text class="home-action-chip__value">{{explorationSummary ? explorationSummary.routeProgressText : '0/3'}}</text></view>
+      <view class="home-action-chip" data-url="/pages/service/service" bindtap="openQuickAction"><text class="home-action-chip__label">服务</text><text class="home-action-chip__value">问题入口</text></view>
+      <view class="home-action-chip" bindtap="openContinueStudy"><text class="home-action-chip__label">学习</text><text class="home-action-chip__value">{{continueStudy ? '继续' : '待开始'}}</text></view>
     </view>
   </view>
 
@@ -65,14 +74,7 @@
       <text class="section-title__action" data-url="/pages/service/service" bindtap="openQuickAction">全部服务</text>
     </view>
     <view class="service-grid">
-      <view
-        wx:for="{{quickActions}}"
-        wx:key="id"
-        class="service-entry card"
-        data-url="{{item.url}}"
-        data-tab="{{item.tab}}"
-        bindtap="openQuickAction"
-      >
+      <view wx:for="{{quickActions}}" wx:key="id" class="service-entry card" data-url="{{item.url}}" data-tab="{{item.tab}}" bindtap="openQuickAction">
         <view class="service-entry__code">{{index + 1}}</view>
         <view class="service-entry__title">{{item.title}}</view>
         <view class="service-entry__desc">{{item.desc}}</view>

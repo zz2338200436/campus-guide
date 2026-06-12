@@ -13,6 +13,10 @@
 .map-overview__title { color: #0f172a; font-size: 30rpx; font-weight: 800; line-height: 1.3; }
 .map-overview__desc { margin-top: 4rpx; color: #64748b; font-size: 21rpx; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .map-overview__count { flex-shrink: 0; min-height: 40rpx; padding: 0 12rpx; border-radius: 8rpx; background: #eff6ff; color: #0369a1; font-size: 21rpx; font-weight: 800; line-height: 40rpx; }
+.guide-hint { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12rpx; margin-bottom: 16rpx; }
+.guide-hint__item { min-height: 76rpx; padding: 14rpx 16rpx; border: 1rpx solid #dbeafe; border-radius: 8rpx; background: #f8fafc; }
+.guide-hint__label { display: block; color: #0369a1; font-size: 21rpx; font-weight: 800; line-height: 1.3; }
+.guide-hint__value { display: block; margin-top: 6rpx; color: #475569; font-size: 21rpx; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .atlas-card { padding: 22rpx; }
 .zone-strip {
   display: flex;
