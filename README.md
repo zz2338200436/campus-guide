@@ -45,6 +45,7 @@ Local services / future HTTP API
 - 本地缓存：登录用户、收藏、打卡、学习完成和学习记录按用户隔离。
 - Smoke tests：`tests/*.test.js` 覆盖工具层、服务层和关键产品文案。
 - 企业演示材料：`docs/校园通_企业演示指南.md`、`docs/校园通_企业演示交付清单.md`
+- 录屏与截图材料：`docs/校园通_企业演示录屏讲解稿.md`、`docs/assets/screenshots/企业演示截图清单.md`
 - 坐标运维说明：`docs/coordinate-operations.md`
 
 未来可扩展为：
@@ -103,6 +104,8 @@ campus-guide/
 
 - `docs/校园通_企业演示指南.md`
 - `docs/校园通_企业演示交付清单.md`
+- `docs/校园通_企业演示录屏讲解稿.md`
+- `docs/assets/screenshots/企业演示截图清单.md`
 
 ## 测试账号
 
