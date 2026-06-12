@@ -21,7 +21,7 @@
         <view class="map-stage__summary">
           <view class="map-stage__title">广州应用科技学院肇庆校区</view>
           <view class="map-layer-summary" wx:if="{{campusDetailLayer}}">
-            <text>{{campusDetailLayer.realCoordinatePlaces}}/{{campusDetailLayer.totalPlaces}} 坐标点</text>
+            <text>{{campusDetailLayer.realCoordinatePlaces}}/{{campusDetailLayer.totalPlaces}} 地点在线</text>
             <text>{{campusDetailLayer.coordinateSystem}}</text>
           </view>
         </view>
@@ -46,11 +46,11 @@
         </view>
         <view class="selected-place__actions">
           <view class="selected-place__primary-actions">
-            <view wx:if="{{selectedPlace.coordinateTrust.level === 'review'}}" class="selected-place__review" data-id="{{selectedPlace.id}}" catchtap="openCoordinateReview">校准</view>
+            <view wx:if="{{showInternalTools && selectedPlace.coordinateTrust.level === 'review'}}" class="selected-place__review" data-id="{{selectedPlace.id}}" catchtap="openCoordinateReview">校准</view>
             <button class="selected-place__btn" bindtap="startSelectedPlaceNavigation">导航</button>
           </view>
           <view class="selected-place__secondary-actions">
-            <text wx:if="{{showCoordinateReviewReturn}}" class="selected-place__link" bindtap="openOperationsReview">{{coordinateReviewReturnText}}</text>
+            <text wx:if="{{showInternalTools && showCoordinateReviewReturn}}" class="selected-place__link" bindtap="openOperationsReview">{{coordinateReviewReturnText}}</text>
             <text class="selected-place__link" bindtap="openSelectedPlaceDetail">详情</text>
             <text class="selected-place__link" bindtap="openSelectedPlacePanorama">实景</text>
           </view>
@@ -116,7 +116,7 @@
       <view wx:for="{{categories}}" wx:key="*this" class="type-pill {{currentType === item ? 'type-pill--active' : ''}}" data-type="{{item}}" bindtap="selectType">
         {{item}}
       </view>
-      <view class="trust-filter {{reviewOnly ? 'trust-filter--active' : ''}}" bindtap="toggleReviewFilter">待复核 {{reviewPlaceCount}}</view>
+      <view wx:if="{{showInternalTools}}" class="trust-filter {{reviewOnly ? 'trust-filter--active' : ''}}" bindtap="toggleReviewFilter">待复核 {{reviewPlaceCount}}</view>
     </scroll-view>
 
     <view class="emergency-strip" wx:if="{{emergencyPlaces.length}}">
@@ -155,7 +155,7 @@
       </view>
       <view class="directory-item__actions">
         <view class="directory-item__locate" data-id="{{item.id}}" catchtap="focusPlaceOnMap">定位</view>
-        <view wx:if="{{item.coordinateTrust.level === 'review'}}" class="directory-item__review" data-id="{{item.id}}" catchtap="openCoordinateReview">校准</view>
+        <view wx:if="{{showInternalTools && item.coordinateTrust.level === 'review'}}" class="directory-item__review" data-id="{{item.id}}" catchtap="openCoordinateReview">校准</view>
         <button class="directory-item__nav" data-id="{{item.id}}" catchtap="startPlaceNavigation">导航</button>
       </view>
     </view>

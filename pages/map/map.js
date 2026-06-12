@@ -5,6 +5,7 @@ const checkinHelper = require('../../utils/explorationCheckinHelper');
 const selectors = require('../../utils/flagshipSelectors');
 const navigationHelper = require('../../utils/navigationHelper');
 const coordinateReviewStore = require('../../utils/coordinateReviewStore');
+const userManager = require('../../utils/userManager');
 const systemInfo = wx.getSystemInfoSync ? wx.getSystemInfoSync() : {};
 const isDeveloperTool = navigationHelper.isDeveloperTool(systemInfo);
 
@@ -14,6 +15,7 @@ Page({
     currentType: '全部',
     keyword: '',
     reviewOnly: false,
+    showInternalTools: false,
     reviewPlaceCount: 0,
     categories: ['全部', '教学', '学习', '住宿', '生活', '交通', '办事', '应急', '运动'],
     categoryMap: {
@@ -75,6 +77,7 @@ Page({
     showCoordinateReviewReturn: false
   },
   onLoad() {
+    this.syncInternalTools();
     this.loadPlaces();
   },
   onReady() {
@@ -82,6 +85,7 @@ Page({
     this.consumePendingNavigation();
   },
   onShow() {
+    this.syncInternalTools();
     if (this.data.places.length) {
       this.applyFilter(this.data.currentType, this.data.keyword);
     }
@@ -96,6 +100,11 @@ Page({
       app.globalData.mapFocusTarget = null;
       this.focusCoordinateTarget(target);
     }
+  },
+  syncInternalTools() {
+    this.setData({
+      showInternalTools: userManager.isAdmin()
+    });
   },
   loadPlaces() {
     this.setData({ loading: true });
@@ -179,6 +188,13 @@ Page({
     this.applyFilter('应急', this.data.keyword);
   },
   toggleReviewFilter() {
+    if (!this.data.showInternalTools) {
+      wx.showToast({
+        title: '内部校准工具仅运营人员可用',
+        icon: 'none'
+      });
+      return;
+    }
     const nextReviewOnly = !this.data.reviewOnly;
     this.setData({
       reviewOnly: nextReviewOnly
@@ -463,6 +479,13 @@ Page({
     });
   },
   openCoordinateReview(event) {
+    if (!this.data.showInternalTools) {
+      wx.showToast({
+        title: '内部校准工具仅运营人员可用',
+        icon: 'none'
+      });
+      return;
+    }
     const dataset = event.currentTarget ? event.currentTarget.dataset : {};
     const place = this.data.places.find((item) => Number(item.id) === Number(dataset.id));
     if (!place) {
@@ -556,6 +579,13 @@ Page({
     });
   },
   openOperationsReview() {
+    if (!this.data.showInternalTools) {
+      wx.showToast({
+        title: '内部运营入口仅运营人员可用',
+        icon: 'none'
+      });
+      return;
+    }
     getApp().globalData.operationsReturnHint = buildOperationsReturnHint(this.data.coordinateReviewReturnTarget && this.data.coordinateReviewReturnTarget.source);
     wx.switchTab({
       url: '/pages/operations/operations'

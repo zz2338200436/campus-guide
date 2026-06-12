@@ -1,9 +1,9 @@
 <view class="page service-hall-page">
   <view class="service-summary card">
     <view class="service-summary__main">
-      <view class="service-summary__eyebrow">校园通</view>
-      <view class="service-summary__title">校园服务</view>
-      <view class="service-summary__desc">遇到校园卡、网络、证明、失物这些事，先看去哪办、带什么。</view>
+      <view class="service-summary__eyebrow">Campus Service Desk</view>
+      <view class="service-summary__title">校园服务问题解决中心</view>
+      <view class="service-summary__desc">把报到、报修、证明、失物和应急联系整理成可执行的办理指引。</view>
     </view>
     <view class="service-summary__metrics">
       <view class="service-summary__metric">
@@ -24,7 +24,7 @@
   <view class="ticket-bar card">
     <view class="ticket-bar__main">
       <view class="ticket-bar__label">咨询与报修</view>
-      <view class="ticket-bar__status">本地模拟</view>
+      <view class="ticket-bar__status">演示通道</view>
     </view>
     <view class="ticket-bar__actions">
       <view class="ticket-bar__action ticket-bar__action--primary" bindtap="openConsultEntry">我要咨询</view>
@@ -36,8 +36,8 @@
   <view class="issue-solver card" wx:if="{{issueTabs.length}}">
     <view class="issue-solver__head">
       <view>
-        <view class="issue-solver__label">遇到问题</view>
-        <view class="issue-solver__title">按问题找入口</view>
+        <view class="issue-solver__label">服务导航</view>
+        <view class="issue-solver__title">按问题找到办理入口</view>
       </view>
       <view class="issue-solver__count">{{issueTabs.length}} 类问题</view>
     </view>
@@ -119,7 +119,7 @@
     <view class="service-group card" wx:for="{{serviceGroups}}" wx:key="title">
       <view class="service-group__head">
         <view>
-          <view class="service-group__label">服务分类</view>
+          <view class="service-group__label">办理事项</view>
           <view class="service-group__title">{{item.title}}</view>
         </view>
         <view class="service-group__count">{{item.items.length}} 项</view>

@@ -1,0 +1,9 @@
+{
+  "name": "campus-guide",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Enterprise-demo WeChat Mini Program for campus guidance and student services.",
+  "scripts": {
+    "test": "node tests/run-all.js"
+  }
+}

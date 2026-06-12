@@ -12,12 +12,12 @@
   <view class="home-hero">
     <view class="home-hero__top">
       <view>
-        <view class="home-hero__eyebrow">校园通</view>
+        <view class="home-hero__eyebrow">Campus Guide</view>
         <view class="home-hero__title">今天先去哪</view>
-        <view class="home-hero__desc">查地点、找服务、看通知和继续学习，都可以从这里开始。</view>
+        <view class="home-hero__desc">把下一站、常用服务、校园通知和学习进度整合到一个入口。</view>
       </view>
       <view class="home-hero__role">
-        <text class="home-hero__role-label">当前身份</text>
+        <text class="home-hero__role-label">校园身份</text>
         <text class="home-hero__role-value">学生</text>
       </view>
     </view>
@@ -33,7 +33,7 @@
       </view>
       <view class="home-metric">
         <text class="home-metric__num">{{studySummary ? studySummary.viewedCount : 0}}</text>
-        <text class="home-metric__label">看过内容</text>
+        <text class="home-metric__label">学习触达</text>
       </view>
       <view class="home-metric">
         <text class="home-metric__num">{{quickActions.length}}</text>
@@ -45,7 +45,7 @@
   <view class="section">
     <view class="workbench-grid">
       <view class="workbench-card card workbench-card--primary" wx:if="{{todayAction}}">
-        <view class="workbench-card__label">今日待办</view>
+        <view class="workbench-card__label">下一步行动</view>
         <view class="workbench-card__title">{{todayAction.title}}</view>
         <view class="workbench-card__desc">{{todayAction.subtitle}}</view>
         <view class="workbench-card__footer">{{todayAction.progressText}}</view>
@@ -82,18 +82,18 @@
 
   <view class="section">
     <view class="section-title">
-      <text class="section-title__text">最近访问</text>
+      <text class="section-title__text">继续推进</text>
       <text class="section-title__action" data-url="/pages/studyHistory/studyHistory" bindtap="openQuickAction">查看记录</text>
     </view>
     <view class="recent-panel card">
       <view class="recent-panel__main" wx:if="{{continueStudy}}" bindtap="openContinueStudy">
-        <view class="recent-panel__label">学习资源</view>
+        <view class="recent-panel__label">最近学习</view>
         <view class="recent-panel__title">{{continueStudy.title}}</view>
         <view class="recent-panel__desc">{{continueStudy.summary}}</view>
       </view>
       <view class="recent-panel__main" wx:else>
-        <view class="recent-panel__label">暂无访问记录</view>
-        <view class="recent-panel__title">看过的内容会放在这里</view>
+        <view class="recent-panel__label">等待首次记录</view>
+        <view class="recent-panel__title">访问过的内容会沉淀在这里</view>
         <view class="recent-panel__desc">方便下次继续查看地点、服务或学习资料。</view>
       </view>
     </view>

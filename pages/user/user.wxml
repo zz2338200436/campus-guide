@@ -3,22 +3,22 @@
     <view class="user-hero__top">
       <view class="user-hero__avatar">{{avatarText}}</view>
       <view class="user-hero__body">
-        <view class="user-hero__eyebrow">个人信息</view>
+        <view class="user-hero__eyebrow">校园身份中心</view>
         <view class="user-hero__name">{{user.name}}</view>
         <view class="user-hero__meta">{{user.college}} · {{user.major}}</view>
         <view class="user-hero__meta">学号：{{user.studentId}}</view>
       </view>
     </view>
     <view class="user-hero__status">
-      <text class="tag" wx:if="{{user.role === 'admin'}}">管理员模式已识别</text>
-      <text class="user-hero__hint">收藏与学习记录会保存在本地缓存</text>
+      <text class="tag" wx:if="{{user.role === 'admin'}}">内部运营身份</text>
+      <text class="user-hero__hint">收藏、学习和探索进度会同步到当前身份</text>
     </view>
   </view>
 
   <view class="login-card" wx:if="{{!user}}">
-    <view class="login-card__eyebrow">账号入口</view>
-    <view class="login-card__title">模拟登录</view>
-    <view class="login-card__desc">请输入测试学号，体验收藏、学习记录和个人信息展示。</view>
+    <view class="login-card__eyebrow">校园身份入口</view>
+    <view class="login-card__title">选择体验身份</view>
+    <view class="login-card__desc">输入体验学号后，可以查看收藏、学习记录和校园探索进度。</view>
     <input class="login-input" value="{{studentId}}" placeholder="请输入学号" bindinput="handleInput" />
     <view class="quick-accounts">
       <text class="quick-accounts__item" data-id="20260001" bindtap="quickFill">20260001</text>
@@ -78,7 +78,7 @@
   </view>
 
   <view class="section-title user-section-title">
-    <text class="section-title__text">我的工具台</text>
+    <text class="section-title__text">我的校园工作台</text>
     <text class="section-title__action">{{user ? '四个高频入口' : '登录后可用'}}</text>
   </view>
 
