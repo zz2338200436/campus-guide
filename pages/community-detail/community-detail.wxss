@@ -1,0 +1,123 @@
+.detail-card,
+.comment-section,
+.detail-empty,
+.comment-composer {
+  margin-bottom: 18rpx;
+  padding: 24rpx;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 24rpx rgba(15, 23, 42, 0.04);
+}
+
+.detail-card__head,
+.community-post-summary,
+.comment-card__head,
+.comment-bar,
+.reply-state,
+.detail-card__market {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12rpx;
+}
+
+.detail-card__author,
+.comment-section__title,
+.comment-card__name,
+.detail-empty__title,
+.detail-card__title {
+  color: #0f172a;
+  font-size: 28rpx;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.detail-card__meta,
+.detail-card__content,
+.comment-card__time,
+.comment-card__content,
+.reply-item,
+.detail-empty__desc,
+.reply-state__label {
+  margin-top: 8rpx;
+  color: #64748b;
+  font-size: 23rpx;
+  line-height: 1.55;
+}
+
+.detail-card__badge {
+  padding: 6rpx 12rpx;
+  border-radius: 999rpx;
+  background: #eff6ff;
+  color: #0369a1;
+  font-size: 21rpx;
+  font-weight: 800;
+}
+
+.detail-card__badge--marketplace {
+  background: #ecfeff;
+  color: #0f766e;
+}
+
+.detail-card__price {
+  color: #0f172a;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.detail-card__status {
+  color: #0f766e;
+  font-size: 21rpx;
+  font-weight: 800;
+}
+
+.community-post-summary {
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #e5e7eb;
+}
+
+.community-post-summary__item,
+.comment-card__reply,
+.comment-bar__send,
+.reply-state__action {
+  color: #0369a1;
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.comment-card {
+  padding-top: 16rpx;
+  border-top: 1rpx solid #e5e7eb;
+}
+
+.reply-list {
+  margin-top: 10rpx;
+  padding: 12rpx;
+  border-radius: 8rpx;
+  background: #f8fafc;
+}
+
+.comment-composer {
+  position: sticky;
+  bottom: 0;
+}
+
+.reply-state {
+  margin-bottom: 12rpx;
+  padding: 12rpx 14rpx;
+  border-radius: 8rpx;
+  background: #f8fafc;
+}
+
+.comment-bar__input {
+  flex: 1;
+  min-width: 0;
+  height: 72rpx;
+  padding: 0 18rpx;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  background: #ffffff;
+  font-size: 24rpx;
+}

@@ -37,6 +37,21 @@ runTest('community feed page exposes overview, hot items, and typed cards', () =
   assert.ok(communityWxss.includes('.community-card__badge'));
 });
 
+runTest('community detail page exposes summary, reply state, and missing fallback', () => {
+  const detailJs = read('pages/community-detail/community-detail.js');
+  const detailWxml = read('pages/community-detail/community-detail.wxml');
+  const detailWxss = read('pages/community-detail/community-detail.wxss');
+
+  assert.ok(detailJs.includes('missingState'));
+  assert.ok(detailJs.includes('getDisplayPost'));
+  assert.ok(detailWxml.includes('detail-empty'));
+  assert.ok(detailWxml.includes('community-post-summary'));
+  assert.ok(detailWxml.includes('reply-state'));
+  assert.ok(detailWxml.includes('comment-composer'));
+  assert.ok(detailWxss.includes('.reply-state'));
+  assert.ok(detailWxss.includes('.community-post-summary'));
+});
+
 if (process.exitCode) {
   process.exit(process.exitCode);
 }
