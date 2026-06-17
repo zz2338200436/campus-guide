@@ -52,6 +52,20 @@ runTest('community detail page exposes summary, reply state, and missing fallbac
   assert.ok(detailWxss.includes('.community-post-summary'));
 });
 
+runTest('community publish page groups shared and marketplace fields', () => {
+  const postJs = read('pages/community-post/community-post.js');
+  const postWxml = read('pages/community-post/community-post.wxml');
+  const postWxss = read('pages/community-post/community-post.wxss');
+
+  assert.ok(postJs.includes('statusOptions'));
+  assert.ok(postWxml.includes('post-section'));
+  assert.ok(postWxml.includes('post-mode-note'));
+  assert.ok(postWxml.includes('marketplace-fields'));
+  assert.ok(postWxml.includes('post-status-switch'));
+  assert.ok(postWxss.includes('.post-section'));
+  assert.ok(postWxss.includes('.post-submit-bar'));
+});
+
 if (process.exitCode) {
   process.exit(process.exitCode);
 }

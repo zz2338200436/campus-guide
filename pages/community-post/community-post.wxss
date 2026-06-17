@@ -1,0 +1,95 @@
+.post-card {
+  padding: 24rpx;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 24rpx rgba(15, 23, 42, 0.04);
+}
+
+.post-hero__label,
+.post-section__title {
+  color: #0369a1;
+  font-size: 21rpx;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.post-hero__title {
+  margin-top: 8rpx;
+  color: #0f172a;
+  font-size: 30rpx;
+  font-weight: 800;
+  line-height: 1.38;
+}
+
+.post-mode-note {
+  margin-top: 8rpx;
+  color: #64748b;
+  font-size: 23rpx;
+  line-height: 1.55;
+}
+
+.post-switch,
+.post-status-switch {
+  display: flex;
+  gap: 10rpx;
+  margin-top: 18rpx;
+}
+
+.post-switch__item,
+.post-status-switch__item {
+  min-width: 110rpx;
+  height: 54rpx;
+  padding: 0 16rpx;
+  border: 1rpx solid #dbeafe;
+  border-radius: 8rpx;
+  background: #ffffff;
+  color: #0369a1;
+  font-size: 22rpx;
+  font-weight: 700;
+  line-height: 54rpx;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.post-switch__item--active,
+.post-status-switch__item--active {
+  background: #eff6ff;
+}
+
+.post-section {
+  margin-top: 18rpx;
+  padding: 18rpx;
+  border-radius: 8rpx;
+  background: #f8fafc;
+}
+
+.marketplace-fields {
+  background: #f0fdfa;
+}
+
+.post-input,
+.post-textarea {
+  width: 100%;
+  margin-top: 14rpx;
+  padding: 16rpx 18rpx;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 24rpx;
+  box-sizing: border-box;
+}
+
+.post-textarea {
+  min-height: 220rpx;
+}
+
+.post-submit-bar {
+  margin-top: 22rpx;
+  padding-bottom: 6rpx;
+}
+
+.post-submit-bar__button {
+  width: 100%;
+}

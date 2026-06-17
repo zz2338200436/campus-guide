@@ -1,0 +1,44 @@
+<view class="page">
+  <view class="post-card card">
+    <view class="post-hero">
+      <view class="post-hero__label">发布内容</view>
+      <view class="post-hero__title">发一条新的校园圈内容</view>
+      <view class="post-mode-note">{{modeNote}}</view>
+    </view>
+
+    <view class="post-switch">
+      <text class="post-switch__item {{postType === 'feed' ? 'post-switch__item--active' : ''}}" data-type="feed" bindtap="switchType">动态</text>
+      <text class="post-switch__item {{postType === 'marketplace' ? 'post-switch__item--active' : ''}}" data-type="marketplace" bindtap="switchType">集市</text>
+    </view>
+
+    <view class="post-section">
+      <view class="post-section__title">基础信息</view>
+      <input class="post-input" data-field="title" placeholder="标题（可选）" value="{{title}}" bindinput="handleField" />
+      <textarea class="post-textarea" data-field="content" placeholder="写点内容（必填）" value="{{content}}" bindinput="handleField"></textarea>
+      <input class="post-input" data-field="tags" placeholder="标签，用空格或逗号分隔" value="{{tags}}" bindinput="handleField" />
+      <input class="post-input" data-field="location" placeholder="地点（可选）" value="{{location}}" bindinput="handleField" />
+    </view>
+
+    <view class="post-section marketplace-fields" wx:if="{{postType === 'marketplace'}}">
+      <view class="post-section__title">集市信息</view>
+      <input class="post-input" data-field="price" placeholder="价格（必填）" value="{{price}}" bindinput="handleField" />
+      <view class="post-status-switch">
+        <view
+          wx:for="{{statusOptions}}"
+          wx:key="*this"
+          class="post-status-switch__item {{status === item ? 'post-status-switch__item--active' : ''}}"
+          data-status="{{item}}"
+          bindtap="switchStatus"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="post-submit-bar">
+      <button class="btn-primary post-submit-bar__button" bindtap="submit">
+        {{postType === 'marketplace' ? '发布集市信息' : '发布动态'}}
+      </button>
+    </view>
+  </view>
+</view>
