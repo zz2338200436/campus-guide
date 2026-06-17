@@ -1,0 +1,103 @@
+<view class="page community-page">
+  <view class="community-hero card">
+    <view class="community-hero__head">
+      <view>
+        <view class="community-hero__label">校园互助</view>
+        <view class="community-hero__title">校园圈</view>
+        <view class="community-hero__desc">看动态、发求助、逛二手，保持和当前项目一致的轻界面。</view>
+      </view>
+      <button class="btn-primary community-hero__button" bindtap="openCreate">{{isLogin ? '发布内容' : '登录后发布'}}</button>
+    </view>
+
+    <view class="community-overview" wx:if="{{overview}}">
+      <view class="community-overview__item">
+        <text class="community-overview__num">{{overview.totalCount}}</text>
+        <text class="community-overview__label">全部内容</text>
+      </view>
+      <view class="community-overview__item">
+        <text class="community-overview__num">{{overview.currentCount}}</text>
+        <text class="community-overview__label">{{overview.currentTabLabel}}</text>
+      </view>
+      <view class="community-overview__item">
+        <text class="community-overview__num">{{overview.hotCount}}</text>
+        <text class="community-overview__label">热度靠前</text>
+      </view>
+    </view>
+  </view>
+
+  <scroll-view class="community-tabs" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="community-tabs__row">
+      <view
+        wx:for="{{tabs}}"
+        wx:key="value"
+        class="community-tab {{currentTab === item.value ? 'community-tab--active' : ''}}"
+        data-value="{{item.value}}"
+        bindtap="switchTab"
+      >
+        <text>{{item.label}}</text>
+        <text class="community-tab__count">{{item.count}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="community-hot card" wx:if="{{hotPosts.length}}">
+    <view class="section-title">
+      <text class="section-title__text">热度靠前</text>
+      <text class="section-title__action">{{hotPosts.length}} 条</text>
+    </view>
+    <view class="community-hot__list">
+      <view
+        wx:for="{{hotPosts}}"
+        wx:key="id"
+        class="community-hot-card"
+        data-id="{{item.id}}"
+        bindtap="openDetail"
+      >
+        <view class="community-hot-card__top">
+          <text class="community-hot-card__badge">{{item.typeLabel}}</text>
+          <text class="community-hot-card__meta">{{item.meta}}</text>
+        </view>
+        <view class="community-hot-card__title">{{item.title}}</view>
+        <view class="community-hot-card__desc">{{item.excerpt}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="community-list" wx:if="{{list.length}}">
+    <view wx:for="{{list}}" wx:key="id" class="community-card card">
+      <view class="community-card__head">
+        <view>
+          <view class="community-card__author">{{item.author.name}}</view>
+          <view class="community-card__meta">{{item.location || '校园里'}} · {{item.createdAt}}</view>
+        </view>
+        <view class="community-card__badge {{item.type === 'marketplace' ? 'community-card__badge--marketplace' : ''}}">
+          {{item.typeLabel}}
+        </view>
+      </view>
+
+      <view class="community-card__title" wx:if="{{item.title}}">{{item.title}}</view>
+      <view class="community-card__content">{{item.excerpt}}</view>
+
+      <view class="community-card__market" wx:if="{{item.type === 'marketplace'}}">
+        <text class="community-card__price">{{item.priceText}}</text>
+        <text class="community-card__status">{{item.statusText}}</text>
+      </view>
+
+      <view class="community-card__tags" wx:if="{{item.tags && item.tags.length}}">
+        <text wx:for="{{item.tags}}" wx:key="*this" class="community-card__tag">{{item}}</text>
+      </view>
+
+      <view class="community-card__actions">
+        <text class="community-card__action" data-id="{{item.id}}" bindtap="toggleLike">赞 {{item.likeCount}}</text>
+        <text class="community-card__action" data-id="{{item.id}}" bindtap="openDetail">评论 {{item.commentCount}}</text>
+        <text class="community-card__action community-card__action--primary" data-id="{{item.id}}" bindtap="openDetail">查看详情</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="community-empty card" wx:else>
+    <view class="community-empty__title">当前分区还没有内容</view>
+    <view class="community-empty__desc">切换分区看看，或者直接发一条新的内容。</view>
+    <button class="btn-primary community-empty__button" bindtap="openCreate">{{isLogin ? '立即发布' : '登录后发布'}}</button>
+  </view>
+</view>
