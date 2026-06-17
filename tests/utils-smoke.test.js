@@ -30,9 +30,13 @@ function clearProjectModules() {
     '../utils/userManager',
     '../utils/studyHistoryHelper',
     '../utils/favoriteSubject',
-    '../utils/contentFilter'
+    '../utils/contentFilter',
+    '../utils/communityData',
+    '../utils/communityStore'
   ].forEach((modulePath) => {
-    clearModule(modulePath);
+    try {
+      clearModule(modulePath);
+    } catch (error) {}
   });
 }
 
@@ -149,6 +153,102 @@ runTest('contentFilter returns stable map pin fallback and keyword matches', () 
   assert.deepEqual(filtered.map((item) => item.id), [2]);
   assert.equal(pins[0].x, 48);
   assert.equal(pins[0].y, 30);
+});
+
+runTest('communityStore keeps seeded-post replies after reload', () => {
+  global.wx = createWxMock();
+  clearProjectModules();
+  const userManager = require('../utils/userManager');
+
+  userManager.login({
+    studentId: '20260001',
+    name: '同学甲',
+    role: 'student'
+  });
+
+  let communityStore = require('../utils/communityStore');
+  const seededPost = communityStore.getPostsByType('feed')[0];
+  const seededComment = communityStore.getMergedComments(seededPost.id)[0];
+  const result = communityStore.addReply(seededPost.id, seededComment.id, '收到', seededComment.author.name);
+
+  assert.equal(result.code, 0);
+
+  clearModule('../utils/communityStore');
+  communityStore = require('../utils/communityStore');
+
+  const reloaded = communityStore.getMergedComments(seededPost.id);
+  assert.ok(reloaded[0].replies.some((reply) => reply.content === '收到'));
+});
+
+runTest('communityStore scopes custom posts by logged-in user', () => {
+  global.wx = createWxMock();
+  clearProjectModules();
+  const userManager = require('../utils/userManager');
+  const communityStore = require('../utils/communityStore');
+
+  userManager.login({
+    studentId: '20260001',
+    name: '同学甲',
+    role: 'student'
+  });
+  assert.equal(communityStore.createPost({ type: 'feed', content: '你好校园' }).code, 0);
+  assert.ok(communityStore.getAllPosts().some((item) => item.content === '你好校园'));
+
+  userManager.login({
+    studentId: '20260002',
+    name: '同学乙',
+    role: 'student'
+  });
+  assert.ok(!communityStore.getAllPosts().some((item) => item.content === '你好校园'));
+});
+
+runTest('communityStore rejects empty content and missing marketplace price', () => {
+  global.wx = createWxMock();
+  clearProjectModules();
+  const userManager = require('../utils/userManager');
+  const communityStore = require('../utils/communityStore');
+
+  userManager.login({
+    studentId: '20260001',
+    name: '同学甲',
+    role: 'student'
+  });
+
+  assert.equal(
+    communityStore.createPost({ type: 'feed', title: '空内容', content: '' }).code,
+    1003
+  );
+  assert.equal(
+    communityStore.createPost({ type: 'marketplace', content: '转让小风扇', price: '' }).code,
+    1005
+  );
+});
+
+runTest('communityStore builds stable community overview counts', () => {
+  global.wx = createWxMock();
+  clearProjectModules();
+  const userManager = require('../utils/userManager');
+  const communityStore = require('../utils/communityStore');
+
+  userManager.login({
+    studentId: '20260001',
+    name: '同学甲',
+    role: 'student'
+  });
+  communityStore.createPost({
+    type: 'feed',
+    content: '今晚图书馆四楼还有位置',
+    tags: ['自习']
+  });
+
+  const overview = communityStore.getFeedOverview('all');
+  assert.ok(overview.totalCount >= 5);
+  assert.equal(overview.currentTab, 'all');
+  assert.ok(overview.currentCount >= 5);
+  assert.ok(overview.hotCount >= 1);
+  assert.ok(Array.isArray(overview.tabCounts));
+  assert.ok(overview.tabCounts.some((item) => item.value === 'feed' && item.count >= 1));
+  assert.ok(overview.tabCounts.some((item) => item.value === 'marketplace' && item.count >= 1));
 });
 
 if (process.exitCode) {
