@@ -9,6 +9,7 @@ dist/
 build/
 coverage/
 generated/
+.superpowers/
 
 # Logs and OS/editor noise
 *.log
@@ -16,4 +17,3 @@ generated/
 Thumbs.db
 .vscode/
 .idea/
-
