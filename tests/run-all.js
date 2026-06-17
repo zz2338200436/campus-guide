@@ -7,6 +7,7 @@ const tests = [
   'amap-poi-fetcher.test.js',
   'campus-3d-map.test.js',
   'campus-coordinate-candidates.test.js',
+  'campus-images.test.js',
   'campus-supplement-places.test.js',
   'content-filter.test.js',
   'coordinate-helper.test.js',
@@ -18,6 +19,7 @@ const tests = [
   'enterprise-visual-system.test.js',
   'exploration-checkin.test.js',
   'flagship-selectors.test.js',
+  'home-style-refresh.test.js',
   'learning-progress.test.js',
   'location-map.test.js',
   'map-page-interactions.test.js',
@@ -36,6 +38,7 @@ const tests = [
   'service-hall-copy.test.js',
   'service-issue.test.js',
   'survival-route.test.js',
+  'theme-manager.test.js',
   'today-action.test.js',
   'utils-smoke.test.js'
 ];

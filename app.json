@@ -12,7 +12,11 @@
     "pages/user/user",
     "pages/operations/operations",
     "pages/favorite/favorite",
-    "pages/studyHistory/studyHistory"
+    "pages/studyHistory/studyHistory",
+    "pages/assistant/assistant",
+    "pages/community/community",
+    "pages/community-detail/community-detail",
+    "pages/community-post/community-post"
   ],
   "window": {
     "navigationBarTitleText": "校园通",
@@ -40,8 +44,8 @@
         "selectedIconPath": "images/tab/map-active.png"
       },
       {
-        "pagePath": "pages/study/study",
-        "text": "学习",
+        "pagePath": "pages/community/community",
+        "text": "校园圈",
         "iconPath": "images/tab/study.png",
         "selectedIconPath": "images/tab/study-active.png"
       },

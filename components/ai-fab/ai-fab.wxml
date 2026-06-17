@@ -1,0 +1,6 @@
+<block>
+  <view wx:if="{{hidden}}" class="ai-fab__dot" bindtap="restoreFab"></view>
+  <view wx:else class="ai-fab" style="{{useCustomPos ? ('left:' + posX + 'rpx;top:' + posY + 'rpx;right:auto;bottom:auto') : ''}}" bindtap="openAssistant" bindlongpress="toggleHidden" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd">
+    <text class="ai-fab__label">助手</text>
+  </view>
+</block>

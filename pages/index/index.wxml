@@ -1,104 +1,44 @@
-<view class="page home-page">
+<view class="page home-page {{themeClass}}">
   <view class="skeleton-panel card" wx:if="{{loading}}">
-    <view class="skeleton-line skeleton-line--hero"></view>
-    <view class="skeleton-grid">
-      <view class="skeleton-box"></view>
-      <view class="skeleton-box"></view>
-      <view class="skeleton-box"></view>
-    </view>
-    <view class="skeleton-line"></view>
+    <view class="skeleton-line skeleton-line--hero"></view><view class="skeleton-grid"><view class="skeleton-box"></view><view class="skeleton-box"></view><view class="skeleton-box"></view></view><view class="skeleton-line"></view>
   </view>
 
   <view class="home-hero">
-    <view class="home-hero__top">
-      <view>
-        <view class="home-hero__eyebrow">Campus Guide</view>
-        <view class="home-hero__title">今天先去哪</view>
-        <view class="home-hero__desc">把下一站、常用服务、校园通知和学习进度整合到一个入口。</view>
-      </view>
-      <view class="home-hero__role">
-        <text class="home-hero__role-label">校园身份</text>
-        <text class="home-hero__role-value">学生</text>
-      </view>
-    </view>
-    <view class="home-hero__campus">广州应用科技学院肇庆校区</view>
-    <view class="home-next" wx:if="{{nextRoutePlace}}" data-id="{{nextRoutePlace.id}}" bindtap="openPlaceDetail">
-      <view class="home-next__body"><text class="home-next__label">推荐下一站</text><text class="home-next__title">{{nextRoutePlace.name}}</text><text class="home-next__desc">{{nextRoutePlace.guide || nextRoutePlace.desc}}</text></view>
-      <view class="home-next__action">去看看</view>
-    </view>
-    <view class="home-metrics">
-      <view class="home-metric">
-        <text class="home-metric__num">{{notices.length}}</text>
-        <text class="home-metric__label">最近通知</text>
-      </view>
-      <view class="home-metric">
-        <text class="home-metric__num">{{explorationSummary ? explorationSummary.routeProgressText : '0/3'}}</text>
-        <text class="home-metric__label">路线进度</text>
-      </view>
-      <view class="home-metric">
-        <text class="home-metric__num">{{studySummary ? studySummary.viewedCount : 0}}</text>
-        <text class="home-metric__label">学习触达</text>
-      </view>
-      <view class="home-metric">
-        <text class="home-metric__num">{{quickActions.length}}</text>
-        <text class="home-metric__label">常用入口</text>
+    <swiper class="home-hero-swiper" autoplay circular interval="4200" duration="500" wx:if="{{banners.length}}">
+      <swiper-item wx:for="{{banners}}" wx:key="id"><view class="home-hero-slide"><image class="home-hero-slide__image" src="{{item.image}}" mode="aspectFill" /><view class="home-hero-slide__shade"></view><view class="home-hero-slide__caption"><text class="home-hero__eyebrow">Campus Guide</text><text class="home-hero__title">广州应用科技学院肇庆校区</text><text class="home-hero__desc">今天先去哪，地图、服务、校园圈都在这里</text></view></view></swiper-item>
+    </swiper>
+  </view>
+
+  <view class="home-next card" wx:if="{{nextRoutePlace}}" data-id="{{nextRoutePlace.id}}" bindtap="openPlaceDetail">
+    <view class="home-next__body"><text class="home-next__label">推荐下一站</text><text class="home-next__title">{{nextRoutePlace.name}}</text><text class="home-next__desc">{{nextRoutePlace.guide || nextRoutePlace.desc}}</text></view>
+    <view class="home-next__action">去看看</view>
+  </view>
+
+  <view class="section">
+    <view class="section-title"><text class="section-title__text">常用入口</text><text class="section-title__action" data-url="/pages/service/service" bindtap="openQuickAction">全部服务</text></view>
+    <view class="home-core-grid">
+      <view wx:for="{{coreActions}}" wx:key="id" class="home-core-action card home-core-action--{{item.id}}" data-url="{{item.url}}" data-tab="{{item.tab}}" bindtap="openQuickAction">
+        <view class="home-core-action__mark"></view><view class="home-core-action__title">{{item.title}}</view><view class="home-core-action__desc">{{item.desc}}</view>
       </view>
     </view>
-    <view class="home-action-strip">
-      <view class="home-action-chip" data-tab="{{true}}" data-url="/pages/map/map" bindtap="openQuickAction"><text class="home-action-chip__label">路线</text><text class="home-action-chip__value">{{explorationSummary ? explorationSummary.routeProgressText : '0/3'}}</text></view>
-      <view class="home-action-chip" data-url="/pages/service/service" bindtap="openQuickAction"><text class="home-action-chip__label">服务</text><text class="home-action-chip__value">问题入口</text></view>
-      <view class="home-action-chip" bindtap="openContinueStudy"><text class="home-action-chip__label">学习</text><text class="home-action-chip__value">{{continueStudy ? '继续' : '待开始'}}</text></view>
+  </view>
+
+  <view class="section">
+    <view class="section-title"><text class="section-title__text">校园圈动态</text><text class="section-title__action" data-url="/pages/community/community" data-tab="{{true}}" bindtap="openQuickAction">去看看</text></view>
+    <view class="community-spotlight card" wx:if="{{communitySpotlight}}" data-url="{{communitySpotlight.url}}" data-tab="{{true}}" bindtap="openQuickAction">
+      <view class="community-spotlight__top"><text class="community-spotlight__badge">{{communitySpotlight.typeLabel}}</text><text class="community-spotlight__meta">{{communitySpotlight.meta}}</text></view>
+      <view class="community-spotlight__title">{{communitySpotlight.title}}</view>
+      <view class="community-spotlight__desc">{{communitySpotlight.excerpt}}</view>
+      <view class="community-spotlight__stats"><text>全部 {{communitySpotlight.totalCount}}</text><text>热门 {{communitySpotlight.hotCount}}</text></view>
     </view>
   </view>
 
   <view class="section">
     <view class="workbench-grid">
-      <view class="workbench-card card workbench-card--primary" wx:if="{{todayAction}}">
-        <view class="workbench-card__label">下一步行动</view>
-        <view class="workbench-card__title">{{todayAction.title}}</view>
-        <view class="workbench-card__desc">{{todayAction.subtitle}}</view>
-        <view class="workbench-card__footer">{{todayAction.progressText}}</view>
-      </view>
-      <view class="workbench-card card" wx:if="{{notices.length}}" data-id="{{notices[0].id}}" bindtap="openNotice">
-        <view class="workbench-card__label">最近通知</view>
-        <view class="workbench-card__title">{{notices[0].title}}</view>
-        <view class="workbench-card__desc">{{notices[0].summary}}</view>
-        <view class="workbench-card__footer">查看详情</view>
-      </view>
+      <view class="workbench-card card workbench-card--primary" wx:if="{{todayAction}}"><view class="workbench-card__label">今日行动</view><view class="workbench-card__title">{{todayAction.title}}</view><view class="workbench-card__desc">{{todayAction.subtitle}}</view><view class="workbench-card__footer">{{todayAction.progressText}}</view></view>
+      <view class="workbench-card card" wx:if="{{notices.length}}" data-id="{{notices[0].id}}" bindtap="openNotice"><view class="workbench-card__label">最近通知</view><view class="workbench-card__title">{{notices[0].title}}</view><view class="workbench-card__desc">{{notices[0].summary}}</view><view class="workbench-card__footer">查看详情</view></view>
     </view>
   </view>
 
-  <view class="section">
-    <view class="section-title">
-      <text class="section-title__text">常用入口</text>
-      <text class="section-title__action" data-url="/pages/service/service" bindtap="openQuickAction">全部服务</text>
-    </view>
-    <view class="service-grid">
-      <view wx:for="{{quickActions}}" wx:key="id" class="service-entry card" data-url="{{item.url}}" data-tab="{{item.tab}}" bindtap="openQuickAction">
-        <view class="service-entry__code">{{index + 1}}</view>
-        <view class="service-entry__title">{{item.title}}</view>
-        <view class="service-entry__desc">{{item.desc}}</view>
-      </view>
-    </view>
-  </view>
-
-  <view class="section">
-    <view class="section-title">
-      <text class="section-title__text">继续推进</text>
-      <text class="section-title__action" data-url="/pages/studyHistory/studyHistory" bindtap="openQuickAction">查看记录</text>
-    </view>
-    <view class="recent-panel card">
-      <view class="recent-panel__main" wx:if="{{continueStudy}}" bindtap="openContinueStudy">
-        <view class="recent-panel__label">最近学习</view>
-        <view class="recent-panel__title">{{continueStudy.title}}</view>
-        <view class="recent-panel__desc">{{continueStudy.summary}}</view>
-      </view>
-      <view class="recent-panel__main" wx:else>
-        <view class="recent-panel__label">等待首次记录</view>
-        <view class="recent-panel__title">访问过的内容会沉淀在这里</view>
-        <view class="recent-panel__desc">方便下次继续查看地点、服务或学习资料。</view>
-      </view>
-    </view>
-  </view>
-
+  <ai-fab />
 </view>

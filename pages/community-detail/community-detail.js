@@ -1,8 +1,10 @@
 const communityStore = require('../../utils/communityStore');
+const themeManager = require('../../utils/themeManager');
 const userManager = require('../../utils/userManager');
 
 Page({
   data: {
+    themeClass: '',
     post: null,
     comments: [],
     inputValue: '',
@@ -15,6 +17,7 @@ Page({
     this.postId = options.id;
   },
   onShow() {
+    themeManager.applyToPage(this);
     this.loadPost();
   },
   loadPost() {

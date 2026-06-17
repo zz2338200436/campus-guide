@@ -1,7 +1,9 @@
 const request = require('../../utils/request');
+const themeManager = require('../../utils/themeManager');
 
 Page({
   data: {
+    themeClass: '',
     loading: true,
     detail: null
   },
@@ -10,6 +12,7 @@ Page({
     this.loadDetail();
   },
   onShow() {
+    themeManager.applyToPage(this);
     const favoriteBtn = this.selectComponent('#favoriteBtn');
     if (favoriteBtn) {
       favoriteBtn.syncStatus();

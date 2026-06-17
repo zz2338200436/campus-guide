@@ -1,4 +1,5 @@
 const request = require('../../utils/request');
+const themeManager = require('../../utils/themeManager');
 const checkinHelper = require('../../utils/explorationCheckinHelper');
 const placeData = require('../../utils/placeData');
 const serviceData = require('../../utils/serviceData');
@@ -9,6 +10,7 @@ const navigationHelper = require('../../utils/navigationHelper');
 
 Page({
   data: {
+    themeClass: '',
     loading: true,
     detail: null,
     relatedPlaces: [],
@@ -22,6 +24,7 @@ Page({
     this.loadDetail();
   },
   onShow() {
+    themeManager.applyToPage(this);
     const favoriteBtn = this.selectComponent('#favoriteBtn');
     if (favoriteBtn) {
       favoriteBtn.syncStatus();

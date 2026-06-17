@@ -1,8 +1,9 @@
-<view class="page">
+<view class="page {{themeClass}}">
   <view class="loading-text" wx:if="{{loading}}">地点详情加载中...</view>
 
   <view wx:if="{{detail}}">
     <view class="detail-hero">
+      <image class="detail-hero__image" wx:if="{{detail.image}}" src="{{detail.image}}" mode="aspectFill" />
       <view class="detail-hero__eyebrow">{{detail.type}}</view>
       <view class="detail-hero__title">{{detail.name}}</view>
       <view class="detail-hero__desc">{{detail.description}}</view>

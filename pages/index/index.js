@@ -1,7 +1,9 @@
 const request = require('../../utils/request');
+const themeManager = require('../../utils/themeManager');
 
 Page({
   data: {
+    themeClass: '',
     loading: true,
     banners: [],
     notices: [],
@@ -16,12 +18,16 @@ Page({
     explorationSummary: null,
     routeTasks: [],
     nextRoutePlace: null,
-    checkinHistory: []
+    checkinHistory: [],
+    helperEntry: null,
+    coreActions: [],
+    communitySpotlight: null
   },
   onLoad() {
     this.loadHomeData();
   },
   onShow() {
+    themeManager.applyToPage(this);
     this.loadHomeData(false);
   },
   loadHomeData(showLoading) {
@@ -52,6 +58,9 @@ Page({
         routeTasks: res.data.routeTasks || [],
         nextRoutePlace: res.data.nextRoutePlace || null,
         checkinHistory: res.data.checkinHistory || [],
+        helperEntry: res.data.helperEntry || null,
+        coreActions: res.data.coreActions || [],
+        communitySpotlight: res.data.communitySpotlight || null,
         loading: false
       });
     });

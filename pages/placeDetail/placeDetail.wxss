@@ -29,6 +29,14 @@
   line-height: 38rpx;
 }
 
+.detail-hero__image {
+  width: 100%;
+  height: 300rpx;
+  margin-bottom: 20rpx;
+  border-radius: 8rpx;
+  background: #e5e7eb;
+}
+
 .detail-hero__title {
   margin-top: 14rpx;
   color: #0f172a;

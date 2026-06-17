@@ -1,9 +1,11 @@
 const request = require('../../utils/request');
+const themeManager = require('../../utils/themeManager');
 const favoriteSubject = require('../../utils/favoriteSubject');
 const userManager = require('../../utils/userManager');
 
 Page({
   data: {
+    themeClass: '',
     tabs: [
       { label: '地点', value: 'place' },
       { label: '学习', value: 'study' },
@@ -20,6 +22,7 @@ Page({
     });
   },
   onShow() {
+    themeManager.applyToPage(this);
     this.setData({
       isLogin: userManager.isLogin()
     });

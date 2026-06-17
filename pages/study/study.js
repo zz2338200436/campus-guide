@@ -1,4 +1,5 @@
 const request = require('../../utils/request');
+const themeManager = require('../../utils/themeManager');
 const { filterStudyList } = require('../../utils/contentFilter');
 const userManager = require('../../utils/userManager');
 const selectors = require('../../utils/flagshipSelectors');
@@ -6,6 +7,7 @@ const learningProgressHelper = require('../../utils/learningProgressHelper');
 
 Page({
   data: {
+    themeClass: '',
     loading: true,
     currentCategory: '全部',
     currentStage: '全部',
@@ -32,6 +34,7 @@ Page({
     this.loadList();
   },
   onShow() {
+    themeManager.applyToPage(this);
     this.setData({
       isLogin: userManager.isLogin()
     });

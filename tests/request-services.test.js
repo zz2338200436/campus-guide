@@ -182,6 +182,19 @@ runTest('home data exposes quick actions and explore highlights', async () => {
   assert.ok(Array.isArray(result.data.featuredPlaces));
 });
 
+runTest('home data exposes one compact assistant/community entry group', async () => {
+  clearProjectModules();
+  const { wx } = createWxMock();
+  global.wx = wx;
+  const homeService = require('../utils/services/homeService');
+
+  const data = homeService.buildHomeData();
+  assert.ok(data.helperEntry);
+  assert.equal(data.helperEntry.title, '校园互助');
+  assert.equal(data.helperEntry.assistantUrl, '/pages/assistant/assistant');
+  assert.equal(data.helperEntry.communityUrl, '/pages/community/community');
+});
+
 runTest('service center data exposes categories and quick services', async () => {
   clearProjectModules();
   const { wx } = createWxMock();

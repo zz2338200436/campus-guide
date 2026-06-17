@@ -7,9 +7,15 @@ const studyHistoryHelper = require('../../utils/studyHistoryHelper');
 const studyData = require('../../utils/studyData');
 const learningProgressHelper = require('../../utils/learningProgressHelper');
 const selectors = require('../../utils/flagshipSelectors');
+const themeManager = require('../../utils/themeManager');
 
 Page({
   data: {
+    theme: 'light',
+    themeClass: '',
+    themeLabel: '白天',
+    themeIcon: '/images/theme/night.svg',
+    isDarkTheme: false,
     studentId: '20260001',
     user: null,
     avatarText: '',
@@ -24,6 +30,11 @@ Page({
       { id: 'history', title: '学习记录', desc: '保留最近 20 条学习浏览历史', countKey: 'historyCount' },
       { id: 'continue', title: '继续学习', desc: '快速回到最近一次学习内容', countKey: '' },
       { id: 'notice', title: '查看公告', desc: '及时回看校园提醒和活动动态', countKey: '' }
+    ],
+    helperLinks: [
+      { id: 'assistant', title: '校园助手', desc: '问路线和常见校园问题', url: '/pages/assistant/assistant' },
+      { id: 'community', title: '校园圈', desc: '看动态、发求助、逛二手', url: '/pages/community/community' },
+      { id: 'study', title: '学习资源', desc: '进入成长路径和知识卡片', url: '/pages/study/study' }
     ]
   },
   onLoad() {
@@ -32,11 +43,26 @@ Page({
     });
   },
   onShow() {
+    this.syncTheme();
     this.syncUser();
     this.refreshCounts();
   },
   onUnload() {
     favoriteSubject.unsubscribe('user-page');
+  },
+  syncTheme() {
+    const theme = themeManager.applyToPage(this);
+    this.setData({
+      themeIcon: themeManager.getToggleIcon(theme)
+    });
+  },
+  toggleTheme() {
+    const nextTheme = themeManager.toggleTheme();
+    this.syncTheme();
+    wx.showToast({
+      title: '已切换到' + themeManager.getThemeLabel(nextTheme),
+      icon: 'none'
+    });
   },
   syncUser() {
     const user = userManager.getUser();
@@ -150,5 +176,10 @@ Page({
         url: '/pages/notice/notice'
       });
     }
+  },
+  openHelperLink(event) {
+    wx.navigateTo({
+      url: event.currentTarget.dataset.url
+    });
   }
 });

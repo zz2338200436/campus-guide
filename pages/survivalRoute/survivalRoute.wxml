@@ -1,4 +1,4 @@
-<view class="page">
+<view class="page {{themeClass}}">
   <view class="route-hero">
     <view class="route-hero__eyebrow">事项路线服务</view>
     <view class="route-hero__title">按事项生成办理路线</view>

@@ -66,6 +66,16 @@ runTest('community publish page groups shared and marketplace fields', () => {
   assert.ok(postWxss.includes('.post-submit-bar'));
 });
 
+runTest('community publish fields keep placeholder text vertically visible', () => {
+  const postWxss = read('pages/community-post/community-post.wxss');
+
+  assert.match(postWxss, /\.post-input\s*\{[\s\S]*height:\s*72rpx;/);
+  assert.match(postWxss, /\.post-input\s*\{[\s\S]*padding:\s*0 18rpx;/);
+  assert.match(postWxss, /\.post-input\s*\{[\s\S]*line-height:\s*72rpx;/);
+  assert.match(postWxss, /\.post-textarea\s*\{[\s\S]*height:\s*240rpx;/);
+  assert.match(postWxss, /\.post-textarea\s*\{[\s\S]*line-height:\s*1\.55;/);
+});
+
 if (process.exitCode) {
   process.exit(process.exitCode);
 }

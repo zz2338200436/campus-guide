@@ -12,6 +12,36 @@
   box-shadow: 0 10rpx 24rpx rgba(15, 23, 42, 0.04);
 }
 
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 20rpx;
+  top: 20rpx;
+  width: 64rpx;
+  height: 64rpx;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 32rpx;
+  background: #f8fafc;
+}
+
+.theme-toggle__image {
+  display: block;
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.theme-toggle--dark {
+  border-color: #334155;
+  background: #172033;
+}
+
+.user-hero,
+.login-card {
+  position: relative;
+}
+
 .user-hero__top {
   display: flex;
   align-items: center;
@@ -234,6 +264,57 @@
 .utility-grid {
   display: grid;
   gap: 14rpx;
+}
+
+.helper-link-grid {
+  display: grid;
+  gap: 14rpx;
+  margin-top: 18rpx;
+}
+
+.helper-link-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  padding: 20rpx 22rpx;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 24rpx rgba(15, 23, 42, 0.04);
+}
+
+.helper-link-card > view:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.helper-link-card__title {
+  color: #0f172a;
+  font-size: 28rpx;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.helper-link-card__desc {
+  margin-top: 8rpx;
+  color: #64748b;
+  font-size: 22rpx;
+  line-height: 1.45;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.helper-link-card__action {
+  flex-shrink: 0;
+  min-width: 72rpx;
+  color: #0369a1;
+  font-size: 22rpx;
+  font-weight: 800;
+  text-align: right;
 }
 
 .utility-card {

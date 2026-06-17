@@ -1,7 +1,9 @@
 const request = require('../../utils/request');
+const themeManager = require('../../utils/themeManager');
 
 Page({
   data: {
+    themeClass: '',
     types: ['全部', '课程通知', '活动通知'],
     currentType: '全部',
     list: [],
@@ -11,6 +13,7 @@ Page({
     latestList: []
   },
   onLoad() {
+    themeManager.applyToPage(this);
     this.loadList();
   },
   loadList() {

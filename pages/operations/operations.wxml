@@ -1,4 +1,4 @@
-<view class="page operations-page">
+<view class="page operations-page {{themeClass}}">
   <view class="loading-text" wx:if="{{loading}}">运营数据加载中...</view>
 
   <view wx:if="{{!loading && !authorized}}" class="operations-denied card">

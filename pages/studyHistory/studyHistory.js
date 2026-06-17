@@ -1,13 +1,16 @@
 const request = require('../../utils/request');
+const themeManager = require('../../utils/themeManager');
 const userManager = require('../../utils/userManager');
 
 Page({
   data: {
+    themeClass: '',
     list: [],
     loading: true,
     isLogin: false
   },
   onShow() {
+    themeManager.applyToPage(this);
     this.setData({
       isLogin: userManager.isLogin()
     });

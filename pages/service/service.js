@@ -1,9 +1,11 @@
 const request = require('../../utils/request');
+const themeManager = require('../../utils/themeManager');
 const serviceMatcher = require('../../utils/serviceMatcher');
 const phoneHelper = require('../../utils/phoneHelper');
 
 Page({
   data: {
+    themeClass: '',
     currentCategory: '全部',
     categoryTabs: ['全部'],
     list: [],
@@ -17,6 +19,7 @@ Page({
     issueServices: []
   },
   onLoad() {
+    themeManager.applyToPage(this);
     this.loadList();
   },
   loadList() {

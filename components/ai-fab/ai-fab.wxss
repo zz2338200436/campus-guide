@@ -1,0 +1,32 @@
+.ai-fab__dot,
+.ai-fab {
+  position: fixed;
+  right: 24rpx;
+  bottom: 132rpx;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999rpx;
+  box-shadow: 0 12rpx 30rpx rgba(3, 105, 161, 0.18);
+}
+
+.ai-fab {
+  min-width: 108rpx;
+  height: 92rpx;
+  padding: 0 24rpx;
+  background: #0369a1;
+}
+
+.ai-fab__dot {
+  width: 30rpx;
+  height: 30rpx;
+  background: #0369a1;
+}
+
+.ai-fab__label {
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: 800;
+  line-height: 1;
+}

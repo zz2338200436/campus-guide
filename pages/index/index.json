@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "校园通首页",
   "usingComponents": {
+    "ai-fab": "/components/ai-fab/ai-fab",
     "notice-item": "/components/notice-item/notice-item",
     "study-card": "/components/study-card/study-card"
   }

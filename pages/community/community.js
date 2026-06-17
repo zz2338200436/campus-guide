@@ -1,5 +1,6 @@
 const communityStore = require('../../utils/communityStore');
 const userManager = require('../../utils/userManager');
+const themeManager = require('../../utils/themeManager');
 
 const BASE_TABS = [
   { label: '全部', value: 'all' },
@@ -9,6 +10,7 @@ const BASE_TABS = [
 
 Page({
   data: {
+    themeClass: '',
     tabs: BASE_TABS,
     currentTab: 'all',
     overview: null,
@@ -17,6 +19,7 @@ Page({
     isLogin: false
   },
   onShow() {
+    themeManager.applyToPage(this);
     this.setData({
       isLogin: userManager.isLogin()
     });

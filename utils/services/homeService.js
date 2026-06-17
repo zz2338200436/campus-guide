@@ -5,6 +5,7 @@ const placeData = require('../placeData');
 const studyData = require('../studyData');
 const studyHistoryHelper = require('../studyHistoryHelper');
 const learningProgressHelper = require('../learningProgressHelper');
+const communityStore = require('../communityStore');
 const selectors = require('../flagshipSelectors');
 const todayActionBuilder = require('../todayActionBuilder');
 
@@ -42,26 +43,45 @@ function buildHomeData() {
     nextRoutePlace,
     notices
   });
+  const communitySpotlight = buildCommunitySpotlight();
+  const coreActions = [
+    { id: 'map', title: '校园地图', desc: '楼栋、路线和导航', url: '/pages/map/map', tab: true },
+    { id: 'community', title: '校园圈', desc: '动态、求助和二手', url: '/pages/community/community', tab: true },
+    { id: 'service', title: '常用服务', desc: '办事、后勤和应急', url: '/pages/service/service' },
+    { id: 'survival', title: '推荐路线', desc: '按场景规划下一站', url: '/pages/survivalRoute/survivalRoute' }
+  ];
 
   return {
     banners: [
-      { id: 1, image: '', title: '校园地图服务', desc: '统一查看楼栋、服务地点和导航入口' },
-      { id: 2, image: '', title: '常用服务', desc: '查看办事、生活、后勤和应急入口' },
-      { id: 3, image: '', title: '学习资源', desc: '保留学习记录，继续推进个人成长任务' }
+      { id: 1, image: '/images/campus/admin-center.jpg', title: '行政中心', desc: '校园事务和办事咨询入口' },
+      { id: 2, image: '/images/campus/mingde-building-wide.jpg', title: '明德楼', desc: '教学区楼栋和课程导航' },
+      { id: 3, image: '/images/campus/stadium-aerial.jpg', title: '田径场', desc: '运动、集合和体育课程场地' },
+      { id: 4, image: '/images/campus/basketball-gym.jpg', title: '篮球馆', desc: '体育活动和校园生活场景' },
+      { id: 5, image: '/images/campus/swimming-pool.jpg', title: '游泳馆', desc: '校区运动场馆资源' },
+      { id: 6, image: '/images/campus/lianhua-theater.jpg', title: '莲花大剧院', desc: '演出、讲座和大型活动地点' }
     ],
     notices,
     recommends: studyData.slice(0, 4),
     todayAction,
     continueStudy,
+    coreActions,
     quickActions: [
       { id: 'survival', title: '推荐路线', desc: '按场景生成行动路线', url: '/pages/survivalRoute/survivalRoute' },
       { id: 'map', title: '地图导览', desc: '查看楼栋与导航', url: '/pages/map/map', tab: true },
       { id: 'service', title: '常用服务', desc: '办事与日常支持', url: '/pages/service/service' },
       { id: 'notice', title: '公告通知', desc: '查看重要提醒', url: '/pages/notice/notice' },
-      { id: 'study', title: '学习资源', desc: '进入成长路径', url: '/pages/study/study', tab: true },
+      { id: 'study', title: '学习资源', desc: '进入成长路径', url: '/pages/study/study', tab: false },
       { id: 'favorite', title: '我的收藏', desc: '回看重要内容', url: '/pages/favorite/favorite' },
       { id: 'history', title: '浏览记录', desc: '继续最近内容', url: '/pages/studyHistory/studyHistory' }
     ],
+    helperEntry: {
+      title: '校园互助',
+      assistantLabel: '智能助手',
+      assistantUrl: '/pages/assistant/assistant',
+      communityLabel: '校园圈',
+      communityUrl: '/pages/community/community'
+    },
+    communitySpotlight,
     featuredPlaces,
     studySummary,
     learningSummary,
@@ -70,6 +90,21 @@ function buildHomeData() {
     routeTasks,
     nextRoutePlace,
     checkinHistory
+  };
+}
+
+function buildCommunitySpotlight() {
+  const overview = communityStore.getFeedOverview('all');
+  const hotPost = communityStore.getHotPostSummaries(1)[0] || null;
+
+  return {
+    title: hotPost ? hotPost.title : '校园圈',
+    excerpt: hotPost ? hotPost.excerpt : '看动态、发求助、逛二手，快速了解校园生活。',
+    meta: hotPost ? hotPost.meta : '全部 ' + overview.totalCount,
+    typeLabel: hotPost ? hotPost.typeLabel : '动态',
+    totalCount: overview.totalCount,
+    hotCount: overview.hotCount,
+    url: '/pages/community/community'
   };
 }
 

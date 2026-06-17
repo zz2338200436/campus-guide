@@ -1,9 +1,11 @@
 const request = require('../../utils/request');
+const themeManager = require('../../utils/themeManager');
 const userManager = require('../../utils/userManager');
 const coordinateReviewStore = require('../../utils/coordinateReviewStore');
 
 Page({
   data: {
+    themeClass: '',
     loading: true,
     authorized: false,
     overviewCards: [],
@@ -22,6 +24,7 @@ Page({
     this.loadOperationsData();
   },
   onShow() {
+    themeManager.applyToPage(this);
     this.loadOperationsData(false).then(() => {
       this.consumeOperationsReturnHint();
     });

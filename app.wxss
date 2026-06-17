@@ -806,3 +806,286 @@ page,
 .skeleton-box {
   background: linear-gradient(90deg, rgba(226, 232, 240, 0.72), rgba(255, 255, 255, 0.96), rgba(226, 232, 240, 0.72));
 }
+
+/* Day / night theme */
+.theme-dark {
+  min-height: 100vh;
+  background: #0f172a;
+  color: #e5edf5;
+}
+
+.theme-dark .card,
+.theme-dark .board-card,
+.theme-dark .page-head,
+.theme-dark .search-card,
+.theme-dark .map-stage,
+.theme-dark .utility-card,
+.theme-dark .detail-card,
+.theme-dark .nav-card,
+.theme-dark .detail-guide,
+.theme-dark .detail-services,
+.theme-dark .detail-next,
+.theme-dark .article-card,
+.theme-dark .notice-detail,
+.theme-dark .operations-panel,
+.theme-dark .operations-denied,
+.theme-dark .user-hero,
+.theme-dark .login-card,
+.theme-dark .identity-brief,
+.theme-dark .user-note,
+.theme-dark .admin-entry,
+.theme-dark .helper-link-card,
+.theme-dark .post-card,
+.theme-dark .community-hero,
+.theme-dark .community-hot,
+.theme-dark .community-card,
+.theme-dark .community-empty {
+  background: #111827;
+  border-color: #263445;
+  color: #e5edf5;
+  box-shadow: 0 10rpx 28rpx rgba(0, 0, 0, 0.22);
+}
+
+.theme-dark .home-hero,
+.theme-dark .home-action-chip,
+.theme-dark .home-next,
+.theme-dark .home-metric,
+.theme-dark .helper-entry,
+.theme-dark .service-entry,
+.theme-dark .recent-panel,
+.theme-dark .assistant-hero,
+.theme-dark .assistant-messages,
+.theme-dark .atlas-card,
+.theme-dark .directory-card,
+.theme-dark .map-overview,
+.theme-dark .selected-place,
+.theme-dark .nav-info-panel,
+.theme-dark .location-panel {
+  background: #111827;
+  border-color: #263445;
+  color: #e5edf5;
+  box-shadow: 0 10rpx 28rpx rgba(0, 0, 0, 0.18);
+}
+
+.theme-dark .surface-soft,
+.theme-dark .flagship-stat,
+.theme-dark .detail-card__item,
+.theme-dark .detail-checkin,
+.theme-dark .map-tip,
+.theme-dark .route-panel,
+.theme-dark .progress-card,
+.theme-dark .study-flow__current,
+.theme-dark .notice-detail__summary,
+.theme-dark .article-card--soft,
+.theme-dark .next-step-card,
+.theme-dark .footprint-empty,
+.theme-dark .growth-next,
+.theme-dark .health-empty,
+.theme-dark .post-section,
+.theme-dark .identity-brief__item {
+  background: #172033;
+  border-color: #263445;
+}
+
+.theme-dark .home-hero__role,
+.theme-dark .guide-hint__item,
+.theme-dark .zone-chip,
+.theme-dark .map-layer-summary text,
+.theme-dark .map-mode,
+.theme-dark .location-action,
+.theme-dark .directory-item__tag,
+.theme-dark .assistant-quick__item,
+.theme-dark .community-overview__item,
+.theme-dark .community-hot-card,
+.theme-dark .community-card__badge,
+.theme-dark .community-card__tag {
+  background: #172033;
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+.theme-dark .section-title__text,
+.theme-dark .card-title,
+.theme-dark .link-row__title,
+.theme-dark .feature-place__title,
+.theme-dark .page-head__title,
+.theme-dark .detail-card__title,
+.theme-dark .nav-card__title,
+.theme-dark .notice-detail__title,
+.theme-dark .article-card__title,
+.theme-dark .user-hero__name,
+.theme-dark .login-card__title,
+.theme-dark .user-note__title,
+.theme-dark .admin-entry__title,
+.theme-dark .utility-card__title,
+.theme-dark .helper-link-card__title,
+.theme-dark .post-hero__title,
+.theme-dark .community-hero__title,
+.theme-dark .community-card__title,
+.theme-dark .community-hot-card__title,
+.theme-dark .community-empty__title {
+  color: #f8fafc;
+}
+
+.theme-dark .card-desc,
+.theme-dark .page-head__desc,
+.theme-dark .feature-place__desc,
+.theme-dark .link-row__desc,
+.theme-dark .user-hero__meta,
+.theme-dark .user-hero__hint,
+.theme-dark .login-card__desc,
+.theme-dark .user-note__desc,
+.theme-dark .admin-entry__desc,
+.theme-dark .utility-card__desc,
+.theme-dark .helper-link-card__desc,
+.theme-dark .post-mode-note,
+.theme-dark .community-hero__desc,
+.theme-dark .community-card__meta,
+.theme-dark .community-card__content,
+.theme-dark .community-hot-card__desc,
+.theme-dark .community-empty__desc,
+.theme-dark .text-muted {
+  color: #a8b3c7;
+}
+
+.theme-dark .page-head__eyebrow,
+.theme-dark .feature-place__label,
+.theme-dark .flagship-stat__num,
+.theme-dark .feature-place__meta,
+.theme-dark .route-step__meta,
+.theme-dark .field-note__meta,
+.theme-dark .highlight-card__meta,
+.theme-dark .directory-item__index,
+.theme-dark .search-card__clear,
+.theme-dark .reading-entry__duration,
+.theme-dark .reading-entry__action,
+.theme-dark .user-hero__eyebrow,
+.theme-dark .login-card__eyebrow,
+.theme-dark .user-note__label,
+.theme-dark .admin-entry__label,
+.theme-dark .utility-card__eyebrow,
+.theme-dark .growth-next__label,
+.theme-dark .post-hero__label,
+.theme-dark .post-section__title,
+.theme-dark .community-hero__label,
+.theme-dark .community-card__author {
+  color: #5eead4;
+}
+
+.theme-dark .home-hero__eyebrow,
+.theme-dark .home-next__label,
+.theme-dark .home-metric__num,
+.theme-dark .home-action-chip__value,
+.theme-dark .workbench-card__label,
+.theme-dark .recent-panel__label,
+.theme-dark .capability-card__label,
+.theme-dark .workbench-card__footer,
+.theme-dark .helper-entry__label,
+.theme-dark .service-entry__code,
+.theme-dark .home-list__meta,
+.theme-dark .assistant-hero__label,
+.theme-dark .assistant-bar__send,
+.theme-dark .zone-chip__count,
+.theme-dark .guide-hint__label,
+.theme-dark .map-overview__count,
+.theme-dark .selected-place__label,
+.theme-dark .nav-info-panel__label,
+.theme-dark .directory-item__index,
+.theme-dark .selected-place__link,
+.theme-dark .nav-info-panel__link {
+  color: #5eead4;
+}
+
+.theme-dark .home-hero__title,
+.theme-dark .home-hero__role-value,
+.theme-dark .home-next__title,
+.theme-dark .workbench-card__title,
+.theme-dark .recent-panel__title,
+.theme-dark .home-list__title,
+.theme-dark .capability-card__title,
+.theme-dark .service-entry__title,
+.theme-dark .assistant-message--assistant,
+.theme-dark .map-overview__title,
+.theme-dark .map-stage__title,
+.theme-dark .selected-place__title,
+.theme-dark .nav-info-panel__name,
+.theme-dark .directory-item__title,
+.theme-dark .community-overview__num,
+.theme-dark .community-card__price,
+.theme-dark .theme-switch__title {
+  color: #f8fafc;
+}
+
+.theme-dark .home-hero__desc,
+.theme-dark .home-hero__role-label,
+.theme-dark .home-hero__campus,
+.theme-dark .home-next__desc,
+.theme-dark .home-metric__label,
+.theme-dark .home-action-chip__label,
+.theme-dark .workbench-card__desc,
+.theme-dark .recent-panel__desc,
+.theme-dark .home-list__desc,
+.theme-dark .capability-card__desc,
+.theme-dark .helper-entry__desc,
+.theme-dark .service-entry__desc,
+.theme-dark .assistant-hero__desc,
+.theme-dark .assistant-message,
+.theme-dark .map-overview__desc,
+.theme-dark .guide-hint__value,
+.theme-dark .selected-place__meta,
+.theme-dark .nav-info-panel__address,
+.theme-dark .nav-info-panel__hint,
+.theme-dark .location-panel__status,
+.theme-dark .community-overview__label {
+  color: #a8b3c7;
+}
+
+.theme-dark .tag,
+.theme-dark .type-pill,
+.theme-dark .guide-chip,
+.theme-dark .btn-secondary,
+.theme-dark .community-tab,
+.theme-dark .post-switch__item,
+.theme-dark .post-status-switch__item {
+  background: #172033;
+  border-color: #334155;
+  color: #cbd5e1;
+  box-shadow: none;
+}
+
+.theme-dark .tag--active,
+.theme-dark .type-pill--active,
+.theme-dark .btn-primary,
+.theme-dark .community-tab--active,
+.theme-dark .post-switch__item--active,
+.theme-dark .post-status-switch__item--active,
+.theme-dark .section-title__action,
+.theme-dark .link-row__action,
+.theme-dark .home-next__action,
+.theme-dark .helper-entry__action,
+.theme-dark .home-list__action,
+.theme-dark .search-card__button,
+.theme-dark .map-mode--active,
+.theme-dark .selected-place__btn,
+.theme-dark .nav-info-panel__btn,
+.theme-dark .directory-item__nav {
+  background: #0f766e;
+  border-color: #14b8a6;
+  color: #ffffff;
+  box-shadow: 0 10rpx 22rpx rgba(20, 184, 166, 0.16);
+}
+
+.theme-dark input,
+.theme-dark textarea,
+.theme-dark .post-input,
+.theme-dark .post-textarea,
+.theme-dark .login-input {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+.theme-dark .skeleton-line,
+.theme-dark .skeleton-box {
+  background: linear-gradient(90deg, rgba(30, 41, 59, 0.9), rgba(51, 65, 85, 0.9), rgba(30, 41, 59, 0.9));
+}

@@ -1,4 +1,4 @@
-<view class="page">
+<view class="page {{themeClass}}">
   <view class="skeleton-panel card" wx:if="{{loading}}">
     <view class="skeleton-line"></view>
     <view class="skeleton-line skeleton-line--short"></view>

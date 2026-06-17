@@ -1,10 +1,12 @@
 const request = require('../../utils/request');
+const themeManager = require('../../utils/themeManager');
 const userManager = require('../../utils/userManager');
 const studyData = require('../../utils/studyData');
 const selectors = require('../../utils/flagshipSelectors');
 
 Page({
   data: {
+    themeClass: '',
     loading: true,
     detail: null,
     relatedList: [],
@@ -16,6 +18,7 @@ Page({
     this.loadDetail();
   },
   onShow() {
+    themeManager.applyToPage(this);
     const favoriteBtn = this.selectComponent('#favoriteBtn');
     if (favoriteBtn) {
       favoriteBtn.syncStatus();

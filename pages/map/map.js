@@ -6,11 +6,13 @@ const selectors = require('../../utils/flagshipSelectors');
 const navigationHelper = require('../../utils/navigationHelper');
 const coordinateReviewStore = require('../../utils/coordinateReviewStore');
 const userManager = require('../../utils/userManager');
+const themeManager = require('../../utils/themeManager');
 const systemInfo = wx.getSystemInfoSync ? wx.getSystemInfoSync() : {};
 const isDeveloperTool = navigationHelper.isDeveloperTool(systemInfo);
 
 Page({
   data: {
+    themeClass: '',
     loading: true,
     currentType: '全部',
     keyword: '',
@@ -85,6 +87,7 @@ Page({
     this.consumePendingNavigation();
   },
   onShow() {
+    themeManager.applyToPage(this);
     this.syncInternalTools();
     if (this.data.places.length) {
       this.applyFilter(this.data.currentType, this.data.keyword);

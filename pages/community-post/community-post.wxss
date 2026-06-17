@@ -72,7 +72,6 @@
 .post-textarea {
   width: 100%;
   margin-top: 14rpx;
-  padding: 16rpx 18rpx;
   border: 1rpx solid #e5e7eb;
   border-radius: 8rpx;
   background: #ffffff;
@@ -81,8 +80,17 @@
   box-sizing: border-box;
 }
 
+.post-input {
+  height: 72rpx;
+  padding: 0 18rpx;
+  line-height: 72rpx;
+}
+
 .post-textarea {
-  min-height: 220rpx;
+  height: 240rpx;
+  min-height: 240rpx;
+  padding: 18rpx;
+  line-height: 1.55;
 }
 
 .post-submit-bar {

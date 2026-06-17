@@ -1,7 +1,9 @@
 const request = require('../../utils/request');
+const themeManager = require('../../utils/themeManager');
 
 Page({
   data: {
+    themeClass: '',
     loading: true,
     currentScene: 'checkin',
     scenarios: [],
@@ -12,6 +14,7 @@ Page({
     this.loadRoute(options && options.scene ? options.scene : 'checkin');
   },
   onShow() {
+    themeManager.applyToPage(this);
     if (!this.data.loading && this.data.currentScene) {
       this.loadRoute(this.data.currentScene);
     }

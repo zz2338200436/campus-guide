@@ -1,8 +1,10 @@
 const communityStore = require('../../utils/communityStore');
 const userManager = require('../../utils/userManager');
+const themeManager = require('../../utils/themeManager');
 
 Page({
   data: {
+    themeClass: '',
     postType: 'feed',
     title: '',
     content: '',
@@ -14,6 +16,7 @@ Page({
     statusOptions: communityStore.MARKETPLACE_STATUSES
   },
   onLoad() {
+    themeManager.applyToPage(this);
     if (!userManager.isLogin()) {
       wx.showToast({
         title: '请先登录',
@@ -23,6 +26,9 @@ Page({
         wx.navigateBack();
       }, 1000);
     }
+  },
+  onShow() {
+    themeManager.applyToPage(this);
   },
   switchType(event) {
     const nextType = event.currentTarget.dataset.type;

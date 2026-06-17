@@ -1,4 +1,4 @@
-<view class="page service-hall-page">
+<view class="page service-hall-page {{themeClass}}">
   <view class="service-summary card">
     <view class="service-summary__main">
       <view class="service-summary__eyebrow">Campus Service Desk</view>
