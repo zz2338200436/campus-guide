@@ -1,83 +1,97 @@
-<view class="page {{themeClass}}">
+<view class="page map-page {{themeClass}}">
+  <!-- Skeleton loading -->
   <view class="skeleton-panel card" wx:if="{{loading}}">
     <view class="skeleton-line"></view>
     <view class="skeleton-line skeleton-line--short"></view>
     <view class="skeleton-box skeleton-box--map"></view>
   </view>
 
+  <!-- ═══ 1. Overview — Data Dashboard ═══ -->
   <view class="map-overview">
     <view class="map-overview__main">
       <view class="map-overview__title">校园地图服务</view>
       <view class="map-overview__desc">{{campusProfile.name}} · {{campusProfile.address}}</view>
     </view>
-    <view class="map-overview__count">{{filteredPlaces.length}} 处</view>
+    <view class="map-overview__count">{{filteredPlaces.length}}</view>
   </view>
-  <view class="guide-hint">
-    <view class="guide-hint__item">
-      <text class="guide-hint__label">查地点</text>
-      <text class="guide-hint__value">搜索楼栋、食堂、图书馆</text>
-    </view>
-    <view class="guide-hint__item">
-      <text class="guide-hint__label">看路线</text>
-      <text class="guide-hint__value">分类筛选后直接导航</text>
+
+  <!-- Category stats row -->
+  <view class="map-stats-row" wx:if="{{mapZones.length}}">
+    <view
+      wx:for="{{mapZones}}"
+      wx:key="type"
+      class="map-stats-item stats--{{item.colorKey}} {{currentType === item.type ? 'map-stats-item--active' : ''}}"
+      data-type="{{item.type}}"
+      bindtap="selectType">
+      <view class="map-stats-item__icon">{{item.icon}}</view>
+      <view class="map-stats-item__count">{{item.count}}</view>
+      <view class="map-stats-item__label">{{item.shortLabel}}</view>
     </view>
   </view>
 
+  <!-- ═══ 2. Atlas Card — Map ═══ -->
   <view class="atlas-card card">
     <view class="map-stage">
-      <map id="campusMap" class="campus-real-map {{navigating ? 'campus-real-map--navigating' : ''}}" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" enable-satellite="{{enableSatellite}}" markers="{{mapMarkers}}" polyline="{{polyline}}" circles="{{circles}}" polygons="{{polygons}}" show-location show-compass enable-building="{{enableBuilding}}" enable-poi bindpoitap="handlePoiTap" bindmarkertap="handleMarkerTap"></map>
+      <!-- Floating controls overlay -->
+      <view class="map-controls-overlay">
+        <view class="map-ctrl-btn map-ctrl-btn--nav" wx:if="{{navigating}}" bindtap="cancelNavigation">退出</view>
+        <view class="map-ctrl-btn {{currentMapMode === 'standard' ? 'map-ctrl-btn--active' : ''}}" wx:if="{{!navigating}}" bindtap="switchMapMode" data-mode="standard">标准</view>
+        <view class="map-ctrl-btn {{currentMapMode === 'follow' ? 'map-ctrl-btn--active' : ''}}" wx:if="{{!navigating}}" bindtap="switchMapMode" data-mode="follow">跟随</view>
+      </view>
 
+      <map
+        id="campusMap"
+        class="campus-real-map {{navigating ? 'campus-real-map--navigating' : ''}}"
+        latitude="{{latitude}}"
+        longitude="{{longitude}}"
+        scale="{{scale}}"
+        enable-satellite="{{enableSatellite}}"
+        markers="{{mapMarkers}}"
+        polyline="{{polyline}}"
+        circles="{{circles}}"
+        polygons="{{polygons}}"
+        show-location show-compass
+        enable-building="{{enableBuilding}}"
+        enable-poi
+        bindpoitap="handlePoiTap"
+        bindmarkertap="handleMarkerTap"
+      />
+
+      <!-- Map header -->
       <view class="map-stage__head">
         <view class="map-stage__summary">
           <view class="map-stage__title">广州应用科技学院肇庆校区</view>
           <view class="map-layer-summary" wx:if="{{campusDetailLayer}}">
-            <text>{{campusDetailLayer.realCoordinatePlaces}}/{{campusDetailLayer.totalPlaces}} 地点在线</text>
-            <text>{{campusDetailLayer.coordinateSystem}}</text>
+            <text>{{campusDetailLayer.realCoordinatePlaces}}/{{campusDetailLayer.totalPlaces}} 点位在线</text>
           </view>
         </view>
         <view class="map-stage__tools">
-          <view class="map-stage__count">{{navigating ? '导航中' : filteredPlaces.length + ' 处'}}</view>
-          <view class="map-mode-bar">
-            <view wx:for="{{mapModes}}" wx:key="id" class="map-mode {{currentMapMode === item.id ? 'map-mode--active' : ''}}" data-mode="{{item.id}}" bindtap="switchMapMode">{{item.title}}</view>
+          <view class="map-mode-bar" wx:if="{{navigating}}">
+            <view class="map-mode map-mode--active">导航中</view>
           </view>
         </view>
       </view>
 
-      <view class="selected-place" wx:if="{{selectedPlace && !navigating}}">
+      <!-- Selected place panel -->
+      <view class="selected-place map-focus-panel" wx:if="{{selectedPlace && !navigating}}">
         <view>
           <view class="selected-place__label">当前选中</view>
           <view class="selected-place__title">{{selectedPlace.name}}</view>
           <view class="selected-place__meta">{{selectedPlace.type}} · {{selectedPlace.openTime}}</view>
-          <view class="selected-place__trust selected-place__trust--{{selectedPlace.coordinateTrust.level}}" wx:if="{{selectedPlace.coordinateTrust}}">
-            <text>{{selectedPlace.coordinateTrust.label}}</text>
-            <text wx:if="{{showInternalTools}}">{{selectedPlace.coordinateTrust.sourceText}}</text>
-            <text wx:if="{{showInternalTools}}">{{selectedPlace.coordinateReviewStatus || selectedPlace.coordinateTrust.reviewText}}</text>
-          </view>
         </view>
         <view class="selected-place__actions">
-          <view class="selected-place__primary-actions">
-            <view wx:if="{{showInternalTools && selectedPlace.coordinateTrust.level === 'review'}}" class="selected-place__review" data-id="{{selectedPlace.id}}" catchtap="openCoordinateReview">校准</view>
-            <button class="selected-place__btn" bindtap="startSelectedPlaceNavigation">导航</button>
-          </view>
-          <view class="selected-place__secondary-actions">
-            <text wx:if="{{showInternalTools && showCoordinateReviewReturn}}" class="selected-place__link" bindtap="openOperationsReview">{{coordinateReviewReturnText}}</text>
-            <text class="selected-place__link" bindtap="openSelectedPlaceDetail">详情</text>
-            <text class="selected-place__link" bindtap="openSelectedPlacePanorama">实景</text>
-          </view>
+          <button class="selected-place__btn" bindtap="startSelectedPlaceNavigation">导航</button>
+          <text class="selected-place__link" bindtap="openSelectedPlaceDetail">详情</text>
         </view>
       </view>
 
-      <view class="nav-info-panel" wx:if="{{navigating && navDestination}}">
+      <!-- Navigation panel -->
+      <view class="nav-info-panel map-focus-panel" wx:if="{{navigating && navDestination}}">
         <view class="nav-info-panel__header">
           <view class="nav-info-panel__dest">
             <view class="nav-info-panel__label">导航目的地</view>
             <view class="nav-info-panel__name">{{navDestination.name}}</view>
             <view class="nav-info-panel__address">{{navDestination.address}}</view>
-            <view class="nav-info-panel__trust nav-info-panel__trust--{{navDestination.coordinateTrust.level}}" wx:if="{{navDestination.coordinateTrust}}">
-              <text>{{navDestination.coordinateTrust.label}}</text>
-              <text wx:if="{{showInternalTools}}">{{navDestination.coordinateTrust.sourceText}}</text>
-              <text wx:if="{{showInternalTools}}">{{navDestination.coordinateTrust.reviewText}}</text>
-            </view>
           </view>
           <view class="nav-info-panel__distance" wx:if="{{navDistance}}">
             <text class="nav-info-panel__distance-num">{{navDistance}}</text>
@@ -89,24 +103,32 @@
             <button class="btn-primary nav-info-panel__btn" bindtap="openNativeNavigation">开始导航</button>
           </view>
           <view class="nav-info-panel__secondary-actions">
-            <text class="nav-info-panel__link" bindtap="refreshNavigation">刷新位置</text>
-            <text class="nav-info-panel__link nav-info-panel__link--danger" bindtap="cancelNavigation">退出导航</text>
+            <text class="nav-info-panel__link" bindtap="refreshNavigation">刷新</text>
+            <text class="nav-info-panel__link nav-info-panel__link--danger" bindtap="cancelNavigation">退出</text>
           </view>
         </view>
-        <view class="nav-info-panel__hint">开发者工具内显示直线路径示意，真机点击“开始导航”会尝试打开微信地图。</view>
+        <view class="nav-info-panel__hint">真机可直接拉起微信地图</view>
       </view>
 
-      <view class="location-panel">
-        <view class="location-panel__status">{{mapCenterText || '校园视图已就绪'}}</view>
-        <view class="location-toolbar">
-          <view class="location-action" bindtap="getCurrentLocation">定位</view>
-          <view class="location-action" bindtap="chooseLocation">选择</view>
-          <view class="location-action" bindtap="includeAllPoints">全览</view>
-          <view class="location-action" bindtap="openSelectedLocation">打开</view>
+      <!-- Location bar -->
+      <view class="location-bar">
+        <text class="location-bar__status">{{mapCenterText || '校园视图已就绪'}}</text>
+        <view class="location-bar__tools">
+          <view class="location-bar__action" bindtap="includeAllPoints">全览</view>
         </view>
       </view>
     </view>
 
+    <!-- ═══ 3. Search Card ═══ -->
+    <view class="search-card">
+      <view class="search-card__main">
+        <input class="search-card__input" placeholder="搜索地点或楼栋" confirm-type="search" value="{{keyword}}" bindinput="handleKeywordInput" bindconfirm="submitSearch" />
+        <view class="search-card__button" bindtap="submitSearch">搜索</view>
+        <text wx:if="{{keyword}}" class="search-card__clear" bindtap="clearSearch">清空</text>
+      </view>
+    </view>
+
+    <!-- Zone chips (quick zone filter) -->
     <view class="zone-strip" wx:if="{{mapZones.length}}">
       <view wx:for="{{mapZones}}" wx:key="type" class="zone-chip" data-type="{{item.type}}" bindtap="selectType">
         <text class="zone-chip__count">{{item.count}}</text>
@@ -114,24 +136,20 @@
       </view>
     </view>
 
-    <view class="search-card">
-      <view class="search-card__main">
-        <input class="search-card__input" placeholder="搜索地点、楼栋或高德来源" confirm-type="search" value="{{keyword}}" bindinput="handleKeywordInput" bindconfirm="submitSearch" />
-        <view class="search-card__button" bindtap="submitSearch">搜索</view>
-        <text wx:if="{{keyword}}" class="search-card__clear" bindtap="clearSearch">清空</text>
-      </view>
+    <!-- Category pills -->
+    <view class="atlas-card__filters">
+      <scroll-view class="filter-scroll" scroll-x enable-flex>
+        <view wx:for="{{categories}}" wx:key="*this" class="type-pill {{currentType === item ? 'type-pill--active' : ''}}" data-type="{{item}}" bindtap="selectType">{{item}}</view>
+      </scroll-view>
     </view>
 
-    <scroll-view class="type-scroll filter-scroll atlas-card__filters" scroll-x enable-flex>
-      <view wx:for="{{categories}}" wx:key="*this" class="type-pill {{currentType === item ? 'type-pill--active' : ''}}" data-type="{{item}}" bindtap="selectType">
-        {{item}}
-      </view>
-      <view wx:if="{{showInternalTools}}" class="trust-filter {{reviewOnly ? 'trust-filter--active' : ''}}" bindtap="toggleReviewFilter">待复核 {{reviewPlaceCount}}</view>
-    </scroll-view>
-
+    <!-- Emergency strip -->
     <view class="emergency-strip" wx:if="{{emergencyPlaces.length}}">
       <view class="emergency-strip__head">
-        <text class="emergency-strip__title">应急入口</text>
+        <view class="emergency-strip__title-group">
+          <text class="emergency-strip__title">应急入口</text>
+          <text class="emergency-strip__count">{{emergencyPlaces.length}} 个</text>
+        </view>
         <text class="emergency-strip__action" bindtap="filterEmergency">只看应急</text>
       </view>
       <scroll-view class="emergency-chip-row" scroll-x enable-flex>
@@ -141,32 +159,32 @@
         </view>
       </scroll-view>
     </view>
-
   </view>
 
+  <!-- ═══ 4. Directory ═══ -->
   <view class="section-title">
     <text class="section-title__text">地点目录</text>
-    <text class="section-title__action">{{currentType}} · {{filteredPlaces.length}} 个结果</text>
+    <text class="section-title__action">{{currentType}}</text>
   </view>
 
-  <view class="directory-card card">
+  <view class="directory-card">
+    <!-- Directory toolbar -->
+    <view class="directory-toolbar">
+      <text class="directory-toolbar__count">共 {{filteredPlaces.length}} 个地点</text>
+      <view class="directory-toolbar__sort">
+        <text class="directory-sort-btn directory-sort-btn--active">默认排序</text>
+      </view>
+    </view>
+
+    <!-- Directory list -->
     <view wx:for="{{filteredPlaces}}" wx:key="id" class="directory-item" data-id="{{item.id}}" bindtap="openDetail">
       <view class="directory-item__index">{{item.displayIndex}}</view>
       <view class="directory-item__body">
         <view class="directory-item__head">
           <view class="directory-item__title">{{item.name}}</view>
           <view class="directory-item__tag">{{item.type}}</view>
+          <button class="directory-item__nav" data-id="{{item.id}}" catchtap="startPlaceNavigation">导航</button>
         </view>
-        <view class="directory-item__trust directory-item__trust--{{item.coordinateTrust.level}}" wx:if="{{item.coordinateTrust}}">
-          <text>{{item.coordinateTrust.label}}</text>
-          <text wx:if="{{showInternalTools}}" class="directory-item__source">{{item.coordinateTrust.sourceText}}</text>
-          <text wx:if="{{showInternalTools}}" class="directory-item__status">{{item.directoryStatus}}</text>
-        </view>
-      </view>
-      <view class="directory-item__actions">
-        <view class="directory-item__locate" data-id="{{item.id}}" catchtap="focusPlaceOnMap">定位</view>
-        <view wx:if="{{showInternalTools && item.coordinateTrust.level === 'review'}}" class="directory-item__review" data-id="{{item.id}}" catchtap="openCoordinateReview">校准</view>
-        <button class="directory-item__nav" data-id="{{item.id}}" catchtap="startPlaceNavigation">导航</button>
       </view>
     </view>
   </view>
@@ -175,6 +193,6 @@
     wx:if="{{!loading && filteredPlaces.length === 0}}"
     statusText="筛选无结果"
     title="暂无地点信息"
-    description="换个分类或关键词试试，导览板会继续保留地图参考"
+    description="换个分类或关键词试试"
   />
 </view>

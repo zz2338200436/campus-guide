@@ -74,13 +74,22 @@ function applyChrome(theme) {
       backgroundColorBottom: nextTheme === DARK ? '#111827' : '#f7f9fb'
     });
   }
-  if (wx.setTabBarStyle) {
+  if (wx.setTabBarStyle && !usesCustomTabBar()) {
     wx.setTabBarStyle({
       color: nextTheme === DARK ? '#94a3b8' : '#7d8596',
       selectedColor: '#14b8a6',
       backgroundColor: nextTheme === DARK ? '#0f172a' : '#f8ffff',
       borderStyle: nextTheme === DARK ? 'white' : 'black'
     });
+  }
+}
+
+function usesCustomTabBar() {
+  try {
+    const appConfig = require('../app.json');
+    return !!(appConfig && appConfig.tabBar && appConfig.tabBar.custom);
+  } catch (error) {
+    return false;
   }
 }
 

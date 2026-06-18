@@ -127,6 +127,22 @@ runTest('global stylesheet defines dark theme surfaces', () => {
   assert.ok(appWxss.includes('.theme-dark .btn-primary'));
 });
 
+runTest('theme manager skips native tab style when custom tab bar is enabled', () => {
+  global.wx = {
+    ...createWxMock(),
+    setNavigationBarColor() {},
+    setBackgroundColor() {},
+    setTabBarStyle() {
+      throw new Error('setTabBarStyle should not be called with custom tab bar enabled');
+    }
+  };
+  clearModule('../utils/storage');
+  clearModule('../utils/themeManager');
+  const themeManager = require('../utils/themeManager');
+
+  assert.equal(themeManager.setTheme('dark'), 'dark');
+});
+
 runTest('dark home page uses softer layered surfaces and avoids floating button overlap', () => {
   const indexWxss = read('pages/index/index.wxss');
   const fabWxss = read('components/ai-fab/ai-fab.wxss');
@@ -137,7 +153,7 @@ runTest('dark home page uses softer layered surfaces and avoids floating button 
   assert.ok(indexWxss.includes('background: linear-gradient(180deg, #111c31 0%, #0f172a 100%);'));
   assert.ok(indexWxss.includes('.theme-dark .home-metric'));
   assert.ok(indexWxss.includes('border-color: rgba(94, 234, 212, 0.16);'));
-  assert.ok(fabWxss.includes('bottom: 132rpx;'));
+  assert.ok(fabWxss.includes('bottom: calc(148rpx + env(safe-area-inset-bottom));'));
   assert.ok(fabWxss.includes('height: 92rpx;'));
 });
 

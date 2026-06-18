@@ -1,5 +1,6 @@
 const request = require('../../utils/request');
 const themeManager = require('../../utils/themeManager');
+const tabBarHelper = require('../../utils/tabBarHelper');
 
 Page({
   data: {
@@ -18,6 +19,7 @@ Page({
     explorationSummary: null,
     routeTasks: [],
     nextRoutePlace: null,
+    nextRouteCard: null,
     checkinHistory: [],
     helperEntry: null,
     coreActions: [],
@@ -28,6 +30,7 @@ Page({
   },
   onShow() {
     themeManager.applyToPage(this);
+    tabBarHelper.sync(this, 0);
     this.loadHomeData(false);
   },
   loadHomeData(showLoading) {
@@ -57,6 +60,7 @@ Page({
         explorationSummary: res.data.explorationSummary || null,
         routeTasks: res.data.routeTasks || [],
         nextRoutePlace: res.data.nextRoutePlace || null,
+        nextRouteCard: res.data.nextRouteCard || null,
         checkinHistory: res.data.checkinHistory || [],
         helperEntry: res.data.helperEntry || null,
         coreActions: res.data.coreActions || [],
@@ -134,6 +138,20 @@ Page({
     }
     wx.navigateTo({
       url: '/pages/placeDetail/placeDetail?id=' + dataset.id
+    });
+  },
+  toggleTodayTask(event) {
+    const index = event.currentTarget.dataset.index;
+    const todayAction = this.data.todayAction;
+    if (!todayAction || !todayAction.tasks || index === undefined) {
+      return;
+    }
+    const task = todayAction.tasks[index];
+    task.done = !task.done;
+    const completedCount = todayAction.tasks.filter(function (t) { return t.done; }).length;
+    this.setData({
+      ['todayAction.tasks[' + index + '].done']: task.done,
+      'todayAction.completedCount': completedCount
     });
   }
 });

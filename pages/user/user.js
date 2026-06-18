@@ -8,6 +8,7 @@ const studyData = require('../../utils/studyData');
 const learningProgressHelper = require('../../utils/learningProgressHelper');
 const selectors = require('../../utils/flagshipSelectors');
 const themeManager = require('../../utils/themeManager');
+const tabBarHelper = require('../../utils/tabBarHelper');
 
 Page({
   data: {
@@ -35,6 +36,11 @@ Page({
       { id: 'assistant', title: '校园助手', desc: '问路线和常见校园问题', url: '/pages/assistant/assistant' },
       { id: 'community', title: '校园圈', desc: '看动态、发求助、逛二手', url: '/pages/community/community' },
       { id: 'study', title: '学习资源', desc: '进入成长路径和知识卡片', url: '/pages/study/study' }
+    ],
+    visibleHelperLinks: [
+      { id: 'assistant', title: '校园助手', desc: '问路线和常见校园问题', url: '/pages/assistant/assistant' },
+      { id: 'community', title: '校园圈', desc: '看动态、发求助、逛二手', url: '/pages/community/community', tab: true },
+      { id: 'study', title: '学习资源', desc: '进入成长路径和知识卡片', url: '/pages/study/study' }
     ]
   },
   onLoad() {
@@ -44,6 +50,7 @@ Page({
   },
   onShow() {
     this.syncTheme();
+    tabBarHelper.sync(this, 3);
     this.syncUser();
     this.refreshCounts();
   },
@@ -178,8 +185,14 @@ Page({
     }
   },
   openHelperLink(event) {
-    wx.navigateTo({
-      url: event.currentTarget.dataset.url
-    });
+    const dataset = event.currentTarget ? event.currentTarget.dataset : {};
+    if (!dataset.url) {
+      return;
+    }
+    if (dataset.tab) {
+      wx.switchTab({ url: dataset.url });
+      return;
+    }
+    wx.navigateTo({ url: dataset.url });
   }
 });

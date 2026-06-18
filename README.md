@@ -123,6 +123,14 @@ campus-guide/
 npm test
 ```
 
+如果要启用校园助手的真实大模型代理，在项目根目录再启动：
+
+```powershell
+npm run ai:proxy
+```
+
+当前代理会读取本地环境变量 `XIAOMI_API_KEY`，默认监听 `http://127.0.0.1:4318`，并转发到 `https://token-plan-cn.xiaomimimo.com/v1/chat/completions`。小程序端不会直接暴露 key；当代理不可用时，助手页会自动回退到本地规则回复。
+
 如果未安装 npm，也可以逐条执行 `tests/*.test.js` 中的 Node smoke tests。测试主要验证纯工具层、本地 service、用户隔离、探索打卡、学习成长、今日行动台、问题解决器和请求门面，不替代微信开发者工具编译与真机检查。
 
 ## 本地缓存

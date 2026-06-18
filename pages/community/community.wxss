@@ -1,5 +1,9 @@
+.page {
+  padding-bottom: 184rpx;
+}
+
 .community-page {
-  padding-bottom: 24rpx;
+  padding-bottom: 176rpx;
 }
 
 .community-hero,
@@ -21,12 +25,11 @@
   gap: 18rpx;
 }
 
-.community-hero__label,
 .community-hot-card__badge,
 .community-card__badge,
 .community-card__status {
-  color: #0369a1;
-  font-size: 21rpx;
+  color: #0f766e;
+  font-size: 26rpx;
   font-weight: 800;
   line-height: 1.35;
 }
@@ -50,8 +53,8 @@
 .community-hot-card__meta,
 .community-empty__desc {
   margin-top: 8rpx;
-  color: #64748b;
-  font-size: 23rpx;
+  color: #334155;
+  font-size: 26rpx;
   line-height: 1.55;
 }
 
@@ -66,6 +69,7 @@
   padding: 16rpx;
   border-radius: 8rpx;
   background: #f8fafc;
+  border: 1rpx solid #e5e7eb;
 }
 
 .community-overview__num {
@@ -77,8 +81,8 @@
 .community-overview__label {
   display: block;
   margin-top: 6rpx;
-  color: #64748b;
-  font-size: 21rpx;
+  color: #334155;
+  font-size: 26rpx;
 }
 
 .community-tabs {
@@ -97,22 +101,24 @@
   min-width: 132rpx;
   height: 58rpx;
   padding: 0 18rpx;
-  border: 1rpx solid #dbeafe;
+  border: 1rpx solid #e5e7eb;
   border-radius: 8rpx;
-  background: #ffffff;
-  color: #0369a1;
-  font-size: 22rpx;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 26rpx;
   font-weight: 700;
   box-sizing: border-box;
 }
 
 .community-tab--active {
-  background: #eff6ff;
+  border-color: #0f766e;
+  background: #ecfdf5;
+  color: #0f766e;
 }
 
 .community-tab__count {
-  color: #64748b;
-  font-size: 20rpx;
+  color: #334155;
+  font-size: 24rpx;
 }
 
 .community-hot__list,
@@ -125,6 +131,7 @@
   padding: 18rpx;
   border-radius: 8rpx;
   background: #f8fafc;
+  border: 1rpx solid #e5e7eb;
 }
 
 .community-hot-card__top,
@@ -139,8 +146,8 @@
 
 .community-card__badge {
   padding: 6rpx 12rpx;
-  border-radius: 999rpx;
-  background: #eff6ff;
+  border-radius: 8rpx;
+  background: #ecfdf5;
 }
 
 .community-card__badge--marketplace {
@@ -168,20 +175,21 @@
 .community-card__tag {
   padding: 4rpx 10rpx;
   border-radius: 8rpx;
-  background: #eff6ff;
-  color: #0369a1;
-  font-size: 21rpx;
+  background: #ecfdf5;
+  color: #0f766e;
+  font-size: 26rpx;
   font-weight: 700;
 }
 
 .community-card__action {
-  color: #0369a1;
-  font-size: 21rpx;
+  color: #0f766e;
+  font-size: 24rpx;
   font-weight: 700;
 }
 
 .community-card__action--primary {
   text-align: right;
+  color: #0f172a;
 }
 
 .community-empty__button,

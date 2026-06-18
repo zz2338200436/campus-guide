@@ -10,6 +10,7 @@ const favoriteService = require('./services/favoriteService');
 const historyService = require('./services/historyService');
 const operationsService = require('./services/operationsService');
 const survivalService = require('./services/survivalService');
+const aiEngine = require('./aiEngine');
 
 module.exports = {
   getHomeData(options) {
@@ -77,5 +78,20 @@ module.exports = {
   },
   getOperationsData(options) {
     return adapter.mock(() => response(0, 'success', operationsService.getOperationsData()), options);
+  },
+  getAssistantReply(data, options) {
+    // 委托给 aiService 统一处理策略编排和回退
+    const aiService = require('./aiService');
+    return aiService.chat(
+      data && data.question,
+      data && data.messages
+    ).then(function (result) {
+      return response(0, 'success', result);
+    }).catch(function () {
+      return response(0, 'fallback', {
+        answer: aiEngine.ask(data && data.question).answer,
+        provider: 'fallback'
+      });
+    });
   }
 };

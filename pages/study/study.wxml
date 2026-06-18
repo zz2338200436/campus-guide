@@ -11,7 +11,7 @@
   <view class="page-head page-head--study">
     <view class="page-head__eyebrow">成长任务</view>
     <view class="page-head__title">学习资源路径</view>
-    <view class="page-head__desc">把小程序开发能力拆成任务路径，知道下一步学什么，也能把完成进度留下来。</view>
+    <view class="page-head__desc">按路径学习，直接看到下一步</view>
     <view class="study-summary">
       <view class="study-summary__item">
         <text class="study-summary__num">{{studySummary ? studySummary.totalCount : list.length}}</text>
@@ -103,10 +103,7 @@
       />
       <view class="search-card__button" bindtap="submitSearch">搜索</view>
     </view>
-    <view class="search-card__meta">
-      <text class="search-card__hint">支持按标题、摘要、内容和关键词搜索</text>
-      <text wx:if="{{keyword}}" class="search-card__clear" bindtap="clearSearch">清空</text>
-    </view>
+    <text wx:if="{{keyword}}" class="search-card__clear" bindtap="clearSearch">清空</text>
   </view>
 
   <view class="section-title">
@@ -139,6 +136,6 @@
     wx:if="{{!loading && list.length === 0}}"
     statusText="筛选无结果"
     title="暂无学习内容"
-    description="换个阶段、分类或关键词试试，成长路径仍会保留在上方"
+    description="换个阶段、分类或关键词试试"
   />
 </view>

@@ -44,11 +44,21 @@ function buildHomeData() {
     notices
   });
   const communitySpotlight = buildCommunitySpotlight();
+  const nextRouteCard = nextRoutePlace
+    ? {
+        id: nextRoutePlace.id,
+        title: nextRoutePlace.name,
+        desc: nextRoutePlace.guide || nextRoutePlace.desc,
+        note: '推荐下一站',
+        symbol: '站',
+        meta: '路线继续'
+      }
+    : null;
   const coreActions = [
-    { id: 'map', title: '校园地图', desc: '楼栋、路线和导航', url: '/pages/map/map', tab: true },
-    { id: 'community', title: '校园圈', desc: '动态、求助和二手', url: '/pages/community/community', tab: true },
-    { id: 'service', title: '常用服务', desc: '办事、后勤和应急', url: '/pages/service/service' },
-    { id: 'survival', title: '推荐路线', desc: '按场景规划下一站', url: '/pages/survivalRoute/survivalRoute' }
+    { id: 'map', title: '校园地图', desc: '楼栋、路线和导航', note: '查地点', symbol: '图', url: '/pages/map/map', tab: true },
+    { id: 'community', title: '校园圈', desc: '动态、求助和二手', note: '看动态', symbol: '圈', url: '/pages/community/community', tab: true },
+    { id: 'service', title: '常用服务', desc: '办事、后勤和应急', note: '去办理', symbol: '服', url: '/pages/service/service' },
+    { id: 'survival', title: '推荐路线', desc: '按场景规划下一站', note: '看路线', symbol: '路', url: '/pages/survivalRoute/survivalRoute' }
   ];
 
   return {
@@ -64,6 +74,7 @@ function buildHomeData() {
     recommends: studyData.slice(0, 4),
     todayAction,
     continueStudy,
+    nextRouteCard,
     coreActions,
     quickActions: [
       { id: 'survival', title: '推荐路线', desc: '按场景生成行动路线', url: '/pages/survivalRoute/survivalRoute' },

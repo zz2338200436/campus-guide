@@ -6,15 +6,29 @@ function buildTodayAction(options) {
   const nextTask = learningSummary.nextTask || null;
   const routeProgressText = explorationSummary.routeProgressText || '0/3';
 
+  const cards = [
+    buildExploreCard(nextRoutePlace, explorationSummary),
+    buildServiceCard(notices),
+    buildLearnCard(nextTask, learningSummary)
+  ];
+
+  const tasks = cards.map(function (card, i) {
+    return {
+      id: card.id + '-task',
+      text: card.label + '：' + (card.title.length > 14 ? card.title.slice(0, 14) + '…' : card.title),
+      done: false,
+      targetUrl: card.targetUrl,
+      tab: !!card.tab
+    };
+  });
+
   return {
     title: '今天建议先完成这 3 件事',
     subtitle: '按顺序完成到访、服务和学习，今天的小程序就真的帮上忙了。',
     progressText: '到访 ' + routeProgressText + ' · 学习 ' + Number(learningSummary.completedCount || 0) + '/' + Number(learningSummary.totalCount || 0),
-    cards: [
-      buildExploreCard(nextRoutePlace, explorationSummary),
-      buildServiceCard(notices),
-      buildLearnCard(nextTask, learningSummary)
-    ]
+    tasks: tasks,
+    completedCount: 0,
+    cards: cards
   };
 }
 

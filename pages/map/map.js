@@ -7,6 +7,7 @@ const navigationHelper = require('../../utils/navigationHelper');
 const coordinateReviewStore = require('../../utils/coordinateReviewStore');
 const userManager = require('../../utils/userManager');
 const themeManager = require('../../utils/themeManager');
+const tabBarHelper = require('../../utils/tabBarHelper');
 const systemInfo = wx.getSystemInfoSync ? wx.getSystemInfoSync() : {};
 const isDeveloperTool = navigationHelper.isDeveloperTool(systemInfo);
 
@@ -88,6 +89,7 @@ Page({
   },
   onShow() {
     themeManager.applyToPage(this);
+    tabBarHelper.sync(this, 1);
     this.syncInternalTools();
     if (this.data.places.length) {
       this.applyFilter(this.data.currentType, this.data.keyword);
@@ -147,14 +149,12 @@ Page({
       }
     });
   },
-  applyFilter(type, keyword, coordinateLevel) {
+  applyFilter(type, keyword) {
     const nextKeyword = typeof keyword === 'string' ? keyword : this.data.keyword;
-    const nextCoordinateLevel = coordinateLevel || (this.data.reviewOnly ? 'review' : '全部');
     const dataType = this.data.categoryMap[type] || type;
     const filtered = filterPlaces(this.data.places, {
       type: dataType,
-      keyword: nextKeyword,
-      coordinateLevel: nextCoordinateLevel
+      keyword: nextKeyword
     });
     const checkedIds = new Set(checkinHelper.getCheckins().map((item) => Number(item.id)));
     const coordinateReviews = coordinateReviewStore.getAllReviews();
@@ -575,7 +575,7 @@ Page({
       showCoordinateReviewReturn: false,
       mapCenterText: focusCopy.mapCenterText
     });
-    this.applyFilter('全部', '', 'review');
+    this.applyFilter('全部', '');
     wx.showToast({
       title: focusCopy.toastTitle,
       icon: 'none'
@@ -821,13 +821,13 @@ function mergePlacesById(placeList) {
 
 function buildMapZones(placeList) {
   const zones = [
-    { type: '教学楼', title: '教学楼群', desc: '格致、博雅、明德、J3/J4、S5' },
-    { type: '交通入口', title: '入校交通', desc: '校门、公交接驳、返校定位' },
-    { type: '学习场所', title: '学习自习', desc: '图书馆、自习长廊、资料检索' },
-    { type: '宿舍楼', title: '住宿片区', desc: '集贤苑、学思苑宿舍楼' },
-    { type: '生活场所', title: '生活补给', desc: '食堂、宿舍、快递和便利服务' },
-    { type: '办事服务', title: '办事报修', desc: '证明办理、网络后勤报修' },
-    { type: '应急服务', title: '安全应急', desc: '身体不适和突发问题支持' }
+    { type: '教学楼',    title: '教学楼群', desc: '格致、博雅、明德、J3/J4、S5', icon: '教', shortLabel: '教学', colorKey: 'teaching' },
+    { type: '交通入口',  title: '入校交通', desc: '校门、公交接驳、返校定位',     icon: '行', shortLabel: '交通', colorKey: 'transport' },
+    { type: '学习场所',  title: '学习自习', desc: '图书馆、自习长廊、资料检索',   icon: '学', shortLabel: '学习', colorKey: 'study' },
+    { type: '宿舍楼',    title: '住宿片区', desc: '集贤苑、学思苑宿舍楼',         icon: '宿', shortLabel: '住宿', colorKey: 'dorm' },
+    { type: '生活场所',  title: '生活补给', desc: '食堂、宿舍、快递和便利服务',   icon: '吃', shortLabel: '生活', colorKey: 'life' },
+    { type: '办事服务',  title: '办事报修', desc: '证明办理、网络后勤报修',       icon: '办', shortLabel: '办事', colorKey: 'admin' },
+    { type: '应急服务',  title: '安全应急', desc: '身体不适和突发问题支持',       icon: '急', shortLabel: '应急', colorKey: 'emergency' }
   ];
   return zones.map((zone) => {
     const count = (placeList || []).filter((item) => item.type === zone.type).length;

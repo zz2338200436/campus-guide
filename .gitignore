@@ -17,3 +17,6 @@ generated/
 Thumbs.db
 .vscode/
 .idea/
+
+# AI assistant local state
+.workbuddy/

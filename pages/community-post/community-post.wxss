@@ -1,3 +1,7 @@
+.page {
+  padding-bottom: 184rpx;
+}
+
 .post-card {
   padding: 24rpx;
   border: 1rpx solid #e5e7eb;
@@ -8,8 +12,8 @@
 
 .post-hero__label,
 .post-section__title {
-  color: #0369a1;
-  font-size: 21rpx;
+  color: #0f766e;
+  font-size: 26rpx;
   font-weight: 800;
   line-height: 1.35;
 }
@@ -24,8 +28,8 @@
 
 .post-mode-note {
   margin-top: 8rpx;
-  color: #64748b;
-  font-size: 23rpx;
+  color: #334155;
+  font-size: 26rpx;
   line-height: 1.55;
 }
 
@@ -41,11 +45,11 @@
   min-width: 110rpx;
   height: 54rpx;
   padding: 0 16rpx;
-  border: 1rpx solid #dbeafe;
+  border: 1rpx solid #ccfbf1;
   border-radius: 8rpx;
   background: #ffffff;
-  color: #0369a1;
-  font-size: 22rpx;
+  color: #0f766e;
+  font-size: 26rpx;
   font-weight: 700;
   line-height: 54rpx;
   text-align: center;
@@ -54,7 +58,7 @@
 
 .post-switch__item--active,
 .post-status-switch__item--active {
-  background: #eff6ff;
+  background: #ecfdf5;
 }
 
 .post-section {
@@ -76,7 +80,7 @@
   border-radius: 8rpx;
   background: #ffffff;
   color: #0f172a;
-  font-size: 24rpx;
+  font-size: 26rpx;
   box-sizing: border-box;
 }
 

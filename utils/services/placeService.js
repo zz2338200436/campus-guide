@@ -34,11 +34,21 @@ function buildCoordinateTrust(place) {
   }
   if (place.coordinateStatus === 'amap') {
     return {
-      label: '高德POI',
+      label: '高德坐标',
       sourceText,
-      level: place.reviewRequired ? 'review' : 'stable',
-      reviewText: place.reviewRequired ? '需现场复核' : '已校准',
-      desc: '该点位来自高德 POI，建议结合现场标识确认入口。'
+      level: 'stable',
+      reviewText: '可直接导航',
+      desc: '来自高德地图 POI，与微信地图同为 GCJ-02 坐标系，精度可靠。'
+    };
+  }
+  // OpenStreetMap / 无 coordinateStatus → 诚实标注「未经校准」
+  if (place.source === 'OpenStreetMap' || !place.coordinateStatus) {
+    return {
+      label: '未经校准',
+      sourceText,
+      level: 'review',
+      reviewText: '需现场复核',
+      desc: '该坐标来自 OpenStreetMap，尚未经过实地验证。导航时请预留偏差。'
     };
   }
   return {

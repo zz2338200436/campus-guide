@@ -5,20 +5,60 @@
 
   <view class="home-hero">
     <swiper class="home-hero-swiper" autoplay circular interval="4200" duration="500" wx:if="{{banners.length}}">
-      <swiper-item wx:for="{{banners}}" wx:key="id"><view class="home-hero-slide"><image class="home-hero-slide__image" src="{{item.image}}" mode="aspectFill" /><view class="home-hero-slide__shade"></view><view class="home-hero-slide__caption"><text class="home-hero__eyebrow">Campus Guide</text><text class="home-hero__title">广州应用科技学院肇庆校区</text><text class="home-hero__desc">今天先去哪，地图、服务、校园圈都在这里</text></view></view></swiper-item>
+      <swiper-item wx:for="{{banners}}" wx:key="id"><view class="home-hero-slide"><image class="home-hero-slide__image" src="{{item.image}}" mode="aspectFill" /><view class="home-hero-slide__shade"></view><view class="home-hero-slide__caption"><text class="home-hero__eyebrow">Campus Guide</text><text class="home-hero__title">广州应用科技学院肇庆校区</text><text class="home-hero__desc">今天先去哪</text></view></view></swiper-item>
     </swiper>
   </view>
 
-  <view class="home-next card" wx:if="{{nextRoutePlace}}" data-id="{{nextRoutePlace.id}}" bindtap="openPlaceDetail">
-    <view class="home-next__body"><text class="home-next__label">推荐下一站</text><text class="home-next__title">{{nextRoutePlace.name}}</text><text class="home-next__desc">{{nextRoutePlace.guide || nextRoutePlace.desc}}</text></view>
-    <view class="home-next__action">去看看</view>
+  <view class="home-next card" wx:if="{{nextRouteCard}}" data-id="{{nextRouteCard.id}}" bindtap="openPlaceDetail">
+    <view class="home-next__top">
+      <view class="home-next__mark">
+        <text class="home-next__symbol">{{nextRouteCard.symbol}}</text>
+      </view>
+    </view>
+    <view class="home-next__body">
+      <text class="home-next__label">{{nextRouteCard.note}}</text>
+      <text class="home-next__title">{{nextRouteCard.title}}</text>
+      <text class="home-next__desc">{{nextRouteCard.desc}}</text>
+    </view>
   </view>
 
   <view class="section">
     <view class="section-title"><text class="section-title__text">常用入口</text><text class="section-title__action" data-url="/pages/service/service" bindtap="openQuickAction">全部服务</text></view>
     <view class="home-core-grid">
       <view wx:for="{{coreActions}}" wx:key="id" class="home-core-action card home-core-action--{{item.id}}" data-url="{{item.url}}" data-tab="{{item.tab}}" bindtap="openQuickAction">
-        <view class="home-core-action__mark"></view><view class="home-core-action__title">{{item.title}}</view><view class="home-core-action__desc">{{item.desc}}</view>
+        <view class="home-core-action__top">
+          <view class="home-core-action__mark">
+            <text class="home-core-action__symbol">{{item.symbol}}</text>
+          </view>
+        </view>
+        <view class="home-core-action__title">{{item.title}}</view>
+        <view class="home-core-action__desc">{{item.desc}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="workbench-grid">
+      <view class="workbench-card card workbench-card--primary" wx:if="{{todayAction}}">
+        <view class="workbench-card__label">今日行动</view>
+        <view class="workbench-card__title">{{todayAction.title}}</view>
+        <view class="workbench-card__desc">{{todayAction.subtitle}}</view>
+        <!-- 进度条 & 任务列表 -->
+        <view class="workbench-card__progress-bar" wx:if="{{todayAction.tasks && todayAction.tasks.length}}">
+          <view class="workbench-card__progress-track">
+            <view class="workbench-card__progress-fill" style="width: {{todayAction.completedCount / todayAction.tasks.length * 100}}%;"></view>
+          </view>
+          <text class="workbench-card__progress-num">{{todayAction.completedCount}}/{{todayAction.tasks.length}}</text>
+        </view>
+        <view class="workbench-card__tasks" wx:if="{{todayAction.tasks && todayAction.tasks.length}}">
+          <view class="workbench-card__task" wx:for="{{todayAction.tasks}}" wx:key="id" data-index="{{index}}" bindtap="toggleTodayTask">
+            <view class="workbench-card__task-check {{item.done ? 'workbench-card__task-check--done' : ''}}">
+              <text class="workbench-card__task-icon" wx:if="{{item.done}}">✓</text>
+            </view>
+            <text class="workbench-card__task-text {{item.done ? 'workbench-card__task-text--done' : ''}}">{{item.text}}</text>
+          </view>
+        </view>
+        <view class="workbench-card__footer">查看全部</view>
       </view>
     </view>
   </view>
@@ -35,7 +75,6 @@
 
   <view class="section">
     <view class="workbench-grid">
-      <view class="workbench-card card workbench-card--primary" wx:if="{{todayAction}}"><view class="workbench-card__label">今日行动</view><view class="workbench-card__title">{{todayAction.title}}</view><view class="workbench-card__desc">{{todayAction.subtitle}}</view><view class="workbench-card__footer">{{todayAction.progressText}}</view></view>
       <view class="workbench-card card" wx:if="{{notices.length}}" data-id="{{notices[0].id}}" bindtap="openNotice"><view class="workbench-card__label">最近通知</view><view class="workbench-card__title">{{notices[0].title}}</view><view class="workbench-card__desc">{{notices[0].summary}}</view><view class="workbench-card__footer">查看详情</view></view>
     </view>
   </view>

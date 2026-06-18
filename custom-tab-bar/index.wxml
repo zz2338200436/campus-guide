@@ -1,0 +1,15 @@
+<view class="custom-tab {{themeClass}}">
+  <view class="custom-tab__inner">
+    <view
+      wx:for="{{list}}"
+      wx:key="pagePath"
+      class="custom-tab__item {{selected === index ? 'custom-tab__item--active' : ''}}"
+      data-index="{{index}}"
+      data-path="{{item.pagePath}}"
+      bindtap="switchTab"
+    >
+      <image class="custom-tab__icon" src="{{selected === index ? item.selectedIconPath : item.iconPath}}" mode="aspectFit" />
+      <text class="custom-tab__text">{{item.text}}</text>
+    </view>
+  </view>
+</view>

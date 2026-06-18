@@ -14,10 +14,14 @@ function getSystemInfo() {
 function getBounds() {
   const systemInfo = getSystemInfo();
   const ratio = 750 / (systemInfo.windowWidth || 375);
+  const tabBarHeight = 124;      // 自定义 tab bar 视觉高度（rpx）
+  const fabHeight = 92;          // FAB 自身高度
+  const fabOffset = 24;          // 底部额外留白
+  const bottomPadding = tabBarHeight + fabHeight + fabOffset; // 240rpx
   return {
     ratio,
     maxX: Math.max(24, 750 - 132),
-    maxY: Math.max(180, Math.round((systemInfo.windowHeight || 667) * ratio) - 220)
+    maxY: Math.max(180, Math.round((systemInfo.windowHeight || 667) * ratio) - bottomPadding)
   };
 }
 

@@ -26,9 +26,10 @@
     "backgroundTextStyle": "light"
   },
   "tabBar": {
-    "color": "#7d8596",
-    "selectedColor": "#0F766E",
-    "backgroundColor": "#f8ffff",
+    "custom": true,
+    "color": "#334155",
+    "selectedColor": "#0E7490",
+    "backgroundColor": "#FFFFFF",
     "borderStyle": "black",
     "list": [
       {
@@ -39,15 +40,15 @@
       },
       {
         "pagePath": "pages/map/map",
-        "text": "导览",
+        "text": "地图",
         "iconPath": "images/tab/map.png",
         "selectedIconPath": "images/tab/map-active.png"
       },
       {
         "pagePath": "pages/community/community",
         "text": "校园圈",
-        "iconPath": "images/tab/study.png",
-        "selectedIconPath": "images/tab/study-active.png"
+        "iconPath": "images/tab/community.png",
+        "selectedIconPath": "images/tab/community-active.png"
       },
       {
         "pagePath": "pages/user/user",

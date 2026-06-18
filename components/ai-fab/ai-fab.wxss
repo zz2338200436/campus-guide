@@ -2,31 +2,65 @@
 .ai-fab {
   position: fixed;
   right: 24rpx;
-  bottom: 132rpx;
-  z-index: 50;
+  bottom: calc(148rpx + env(safe-area-inset-bottom));
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 999rpx;
-  box-shadow: 0 12rpx 30rpx rgba(3, 105, 161, 0.18);
+  box-shadow: 0 12rpx 30rpx rgba(15, 23, 42, 0.16);
 }
 
 .ai-fab {
-  min-width: 108rpx;
+  width: 92rpx;
   height: 92rpx;
-  padding: 0 24rpx;
-  background: #0369a1;
+  border: 1rpx solid rgba(20, 184, 166, 0.18);
+  background: transparent;
+  box-shadow: none;
 }
 
 .ai-fab__dot {
   width: 30rpx;
   height: 30rpx;
-  background: #0369a1;
+  background: #0f766e;
 }
 
-.ai-fab__label {
-  color: #ffffff;
-  font-size: 24rpx;
-  font-weight: 800;
-  line-height: 1;
+.ai-fab__halo {
+  position: absolute;
+  inset: 8rpx;
+  border-radius: 999rpx;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.82) 0, rgba(94, 234, 212, 0.34) 34%, rgba(20, 184, 166, 0.16) 62%, rgba(20, 184, 166, 0) 100%);
+  opacity: 0.9;
+}
+
+.ai-fab__button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 999rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.72);
+  background: linear-gradient(180deg, #14b8a6 0%, #0f766e 100%);
+  box-shadow: 0 14rpx 34rpx rgba(15, 118, 110, 0.28), inset 0 1rpx 0 rgba(255, 255, 255, 0.55);
+}
+
+.ai-fab__button::after {
+  content: '';
+  position: absolute;
+  top: 8rpx;
+  left: 12rpx;
+  right: 12rpx;
+  height: 18rpx;
+  border-radius: 999rpx;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.ai-fab__icon {
+  position: relative;
+  z-index: 1;
+  width: 42rpx;
+  height: 42rpx;
+  flex-shrink: 0;
 }

@@ -10,57 +10,65 @@ function normalizeKeyword(keyword) {
   return String(keyword || '').trim().toLowerCase();
 }
 
+/**
+ * Expand a keyword into search tokens and optional type filters.
+ * Returns { tokens: string[], typeFilter: string|null }
+ */
 function expandPlaceKeyword(keyword) {
   const normalized = normalizeKeyword(keyword);
-  const synonymGroups = [
-    ['教室', '上课', '教学', '教学楼', '格致', '博雅', '明德', '修齐', '治平', '致用'],
-    ['吃饭', '用餐', '食堂', '饭堂', '餐饮', '桃园', '桃蹊'],
-    ['宿舍', '寝室', '住宿', '集贤苑', '学思苑'],
-    ['快递', '取件', '包裹', '菜鸟', '驿站'],
-    ['医务', '看病', '身体不适', '应急', '校医', '诊所'],
-    ['高德', '高德poi', '高德地图poi'],
-    ['手绘', '手绘地图', '估算坐标', '线性估算'],
-    ['待复核', '需现场复核', '复核'],
-    ['已校准', '已转换为微信地图坐标', 'openstreetmap', 'osm']
-  ];
-  const matchedGroup = synonymGroups.find((group) => group.includes(normalized));
-  return matchedGroup || (normalized ? [normalized] : []);
+  if (!normalized) return { tokens: [], typeFilter: null };
+
+  // Split by spaces for multi-word search
+  const tokens = normalized.split(/\s+/).filter(Boolean);
+
+  // Map common intent words → type filter
+  const typeMap = {
+    '教学楼': '教学楼', '教室': '教学楼', '上课': '教学楼',
+    '宿舍': '宿舍楼', '寝室': '宿舍楼', '住宿': '宿舍楼',
+    '食堂': '生活场所', '饭堂': '生活场所', '吃饭': '生活场所', '餐饮': '生活场所',
+    '快递': '生活场所', '驿站': '生活场所', '奶茶': '生活场所', '咖啡': '生活场所',
+    '超市': '生活场所', '汉堡': '生活场所',
+    '门': '交通入口', '校门': '交通入口', '入口': '交通入口', '交通': '交通入口',
+    '图书馆': '学习场所', '自习': '学习场所', '学习': '学习场所',
+    '运动': '运动场所', '体育馆': '运动场所', '健身': '运动场所',
+    '办事': '办事服务', '应急': '应急服务', '医务': '应急服务',
+  };
+
+  let typeFilter = null;
+  const nameTokens = [];
+  for (const token of tokens) {
+    nameTokens.push(token);
+    const tf = typeMap[token];
+    if (tf && !typeFilter) typeFilter = tf;
+  }
+
+  return { tokens: nameTokens, typeFilter };
 }
 
 function matchKeyword(fields, keyword) {
-  if (!keyword) {
-    return true;
-  }
+  if (!keyword) return true;
   return fields.some((field) => String(field || '').toLowerCase().includes(keyword));
 }
 
 function filterPlaces(list, options) {
   const settings = options || {};
   const type = settings.type || '全部';
-  const coordinateLevel = settings.coordinateLevel || '全部';
   const keyword = normalizeKeyword(settings.keyword);
-  const keywords = expandPlaceKeyword(keyword);
+  const { tokens, typeFilter } = expandPlaceKeyword(keyword);
   return (list || []).filter((item) => {
     const typeMatched = type === '全部' || item.type === type;
-    const coordinateMatched = coordinateLevel === '全部' ||
-      (item.coordinateTrust && item.coordinateTrust.level === coordinateLevel);
-    const trust = item.coordinateTrust || {};
     const fields = [
       item.name,
-      item.type,
       item.description,
-      item.tagline,
-      item.bestFor,
-      item.bestTime,
       item.address,
-      item.tips,
-      trust.label,
-      trust.sourceText,
-      trust.reviewText,
-      trust.desc
+      item.tagline,
     ];
-    const keywordMatched = !keywords.length || keywords.some((itemKeyword) => matchKeyword(fields, itemKeyword));
-    return typeMatched && coordinateMatched && keywordMatched;
+    // Name/token matching: any token matches any field
+    const nameMatched = !tokens.length || tokens.some((k) => matchKeyword(fields, k));
+    // Type filter: item.type matches the mapped type (only applies when type filter is set)
+    const typeFilterMatched = typeFilter ? item.type === typeFilter : false;
+    // Name match OR type match
+    return typeMatched && (nameMatched || typeFilterMatched);
   });
 }
 

@@ -26,7 +26,7 @@ assertIncludes(indexWxml, '常用入口', 'pages/index/index.wxml');
 assertIncludes(indexWxml, '最近通知', 'pages/index/index.wxml');
 assertIncludes(mapWxml, '校园地图服务', 'pages/map/map.wxml');
 assertIncludes(mapWxml, '应急入口', 'pages/map/map.wxml');
-assertIncludes(mapWxml, '搜索地点、楼栋或高德来源', 'pages/map/map.wxml');
+assertIncludes(mapWxml, '搜索地点或楼栋', 'pages/map/map.wxml');
 assertIncludes(homeService, '常用服务', 'utils/services/homeService.js');
 assertIncludes(homeService, '学习资源', 'utils/services/homeService.js');
 

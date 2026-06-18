@@ -2,7 +2,7 @@
   <view class="page-head page-head--compact">
     <view class="page-head__eyebrow">Notice Board</view>
     <view class="page-head__title">公告通知</view>
-    <view class="page-head__desc">把课程提醒和校园动态分成“重要提醒 + 最新动态”两层查看。</view>
+    <view class="page-head__desc">重要提醒和最新动态分开看</view>
   </view>
 
   <scroll-view class="type-scroll filter-scroll" scroll-x enable-flex>

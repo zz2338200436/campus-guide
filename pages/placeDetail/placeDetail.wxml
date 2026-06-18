@@ -28,22 +28,12 @@
       </view>
       <view class="detail-checkin">
         <view class="detail-checkin__body">
-          <view class="detail-checkin__text">{{checkedIn ? '你已经完成这里的到访记录' : '到达地点后可以记录到访，累计路线进度'}}</view>
-          <view class="detail-checkin__hint">{{checkedIn ? '返回推荐路线会看到这一站已完成' : '到访记录会同步到推荐路线和我的足迹'}}</view>
+          <view class="detail-checkin__text">{{checkedIn ? '到访记录已更新' : '到访后可直接记录'}}</view>
         </view>
         <button class="{{checkedIn ? 'btn-secondary' : 'btn-primary'}} detail-checkin__btn" bindtap="checkInPlace">{{checkedIn ? '已完成到访' : '记录到访'}}</button>
       </view>
       <view class="detail-card__item">地点位置：{{detail.address}}</view>
       <view class="detail-card__item">开放时间：{{detail.openTime}}</view>
-      <view class="detail-card__item">导航坐标：{{detail.latitude}}, {{detail.longitude}}</view>
-      <view class="coordinate-trust coordinate-trust--{{detail.coordinateTrust.level}}" wx:if="{{detail.coordinateTrust}}">
-        <view class="coordinate-trust__head">
-          <text class="coordinate-trust__label">{{detail.coordinateTrust.label}}</text>
-          <text class="coordinate-trust__source">{{detail.coordinateTrust.sourceText}}</text>
-          <text class="coordinate-trust__review">{{detail.coordinateTrust.reviewText}}</text>
-        </view>
-        <view class="coordinate-trust__desc">{{detail.coordinateTrust.desc}}</view>
-      </view>
       <view class="detail-card__item">温馨提示：{{detail.tips}}</view>
     </view>
 
@@ -80,7 +70,7 @@
 
     <view class="nav-card">
       <view class="nav-card__title">导航到这里</view>
-      <view class="nav-card__desc">点击后会根据当前环境自动选择微信地图或小程序内路线。</view>
+      <view class="nav-card__desc">直接开始导航</view>
       <button class="btn-primary nav-card__btn" bindtap="startNavigation">开始导航</button>
       <view class="navigation-error" wx:if="{{navigationError}}">{{navigationError}}</view>
     </view>
@@ -111,7 +101,7 @@
     wx:if="{{!loading && !detail}}"
     statusText="地点未找到"
     title="内容不存在"
-    description="请返回导览页重新选择地点"
+    description="请返回导览页重新选择"
     buttonText="返回导览"
     url="/pages/map/map"
   />

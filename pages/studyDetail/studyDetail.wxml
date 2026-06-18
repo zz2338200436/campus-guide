@@ -31,7 +31,7 @@
       <view>
         <view class="task-status-card__label">任务状态</view>
         <view class="task-status-card__title">{{completed ? '这条任务已经完成' : '读完后可以标记完成'}}</view>
-        <view class="task-status-card__desc">{{completed ? '完成记录会同步到学习页、首页和个人中心。' : '完成后会进入你的成长进度，并解锁路径徽章条件。'}}</view>
+        <view class="task-status-card__desc">{{completed ? '已加入学习记录。' : '完成后记录进度。'}}</view>
       </view>
       <button class="{{completed ? 'btn-secondary' : 'btn-primary'}} task-status-card__btn" bindtap="markCompleted">{{completed ? '已完成' : '标记完成'}}</button>
     </view>

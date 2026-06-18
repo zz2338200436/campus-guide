@@ -1,3 +1,7 @@
+.page {
+  padding-bottom: 184rpx;
+}
+
 .notice-hero,
 .notice-detail {
   margin-bottom: 20rpx;
@@ -14,9 +18,9 @@
   min-height: 38rpx;
   padding: 0 10rpx;
   border-radius: 8rpx;
-  background: #eff6ff;
-  color: #0369a1;
-  font-size: 21rpx;
+  background: #ecfdf5;
+  color: #0f766e;
+  font-size: 26rpx;
   font-weight: 800;
   line-height: 38rpx;
 }
@@ -31,8 +35,8 @@
 
 .notice-hero__meta {
   margin-top: 12rpx;
-  color: #64748b;
-  font-size: 23rpx;
+  color: #334155;
+  font-size: 26rpx;
   line-height: 1.5;
 }
 
@@ -57,7 +61,7 @@
   border-radius: 8rpx;
   background: #f8fafc;
   color: #475569;
-  font-size: 24rpx;
+  font-size: 26rpx;
   line-height: 1.6;
 }
 

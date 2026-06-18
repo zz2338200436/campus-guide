@@ -1,23 +1,29 @@
 <view class="page {{themeClass}}">
-  <view class="assistant-hero card">
-    <view class="assistant-hero__label">校园助手</view>
-    <view class="assistant-hero__desc">先用最短路径回答常见校园问题，需要交流或二手信息时再把你引到校园圈。</view>
-  </view>
+  <view class="assistant-shell">
+    <scroll-view class="assistant-messages" scroll-y scroll-with-animation scroll-into-view="{{scrollIntoView}}">
+      <view class="assistant-hero">
+        <view class="assistant-hero__title">校园助手</view>
+        <view class="assistant-hero__desc">问地点、服务、校园圈</view>
+        <view class="assistant-hero__hint" wx:if="{{connectionHint}}">{{connectionHint}}</view>
+      </view>
+      <view wx:for="{{messages}}" wx:key="id" id="{{item.id}}" class="assistant-message assistant-message--{{item.role}}">
+        <text>{{item.content}}</text>
+      </view>
+      <view wx:if="{{pending}}" class="assistant-message assistant-message--assistant assistant-message--pending">
+        <text>{{statusText}}</text>
+      </view>
+    </scroll-view>
 
-  <view class="assistant-messages card">
-    <view wx:for="{{messages}}" wx:key="id" class="assistant-message assistant-message--{{item.role}}">
-      <text>{{item.content}}</text>
+    <scroll-view class="assistant-quick" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="assistant-quick__row">
+        <text wx:for="{{quickQuestions}}" wx:key="*this" class="assistant-quick__item" data-question="{{item}}" bindtap="sendQuick">{{item}}</text>
+      </view>
+    </scroll-view>
+
+    <view class="assistant-bar">
+      <input class="assistant-bar__input" placeholder="问地点、问服务、问校园圈" value="{{inputText}}" bindinput="handleInput" bindconfirm="sendMessage" disabled="{{pending}}" />
+      <text wx:if="{{!canCancel}}" class="assistant-bar__send {{pending ? 'assistant-bar__send--disabled' : ''}}" bindtap="sendMessage">{{pending ? '...' : '发送'}}</text>
+      <text wx:if="{{canCancel}}" class="assistant-bar__cancel" bindtap="cancelRequest">取消</text>
     </view>
-  </view>
-
-  <scroll-view class="assistant-quick" scroll-x enhanced show-scrollbar="{{false}}">
-    <view class="assistant-quick__row">
-      <text wx:for="{{quickQuestions}}" wx:key="*this" class="assistant-quick__item" data-question="{{item}}" bindtap="sendQuick">{{item}}</text>
-    </view>
-  </scroll-view>
-
-  <view class="assistant-bar">
-    <input class="assistant-bar__input" placeholder="问地点、问服务、问校园圈" value="{{inputText}}" bindinput="handleInput" bindconfirm="sendMessage" />
-    <text class="assistant-bar__send" bindtap="sendMessage">发送</text>
   </view>
 </view>

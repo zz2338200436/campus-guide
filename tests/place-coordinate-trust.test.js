@@ -61,14 +61,13 @@ runTest('place detail data exposes coordinate trust for Amap POIs', () => {
   assert.equal(detail.coordinateTrust.reviewText, '需现场复核');
 });
 
-runTest('place detail page renders compact coordinate trust copy', () => {
+runTest('place detail page hides coordinate trust from student copy', () => {
   const wxml = read('pages/placeDetail/placeDetail.wxml');
   const wxss = read('pages/placeDetail/placeDetail.wxss');
 
-  assert.ok(wxml.includes('coordinate-trust'), 'detail page should render coordinate trust status');
-  assert.ok(wxml.includes('detail.coordinateTrust.label'), 'detail page should show coordinate trust label');
-  assert.ok(wxml.includes('detail.coordinateTrust.sourceText'), 'detail page should show coordinate source');
-  assert.ok(wxml.includes('detail.coordinateTrust.reviewText'), 'detail page should show review status');
+  assert.ok(!wxml.includes('coordinate-trust'), 'student detail page should not render coordinate trust status');
+  assert.ok(!wxml.includes('detail.coordinateTrust.sourceText'), 'student detail page should hide coordinate source');
+  assert.ok(!wxml.includes('detail.coordinateTrust.reviewText'), 'student detail page should hide review status');
   assert.ok(wxss.includes('.coordinate-trust'), 'detail page should style coordinate trust as a compact status row');
 });
 
@@ -295,7 +294,7 @@ runTest('map page exposes a review-only coordinate trust filter', () => {
 runTest('map search copy stays student-facing while review filter keeps maintenance access', () => {
   const wxml = read('pages/map/map.wxml');
 
-  assert.ok(wxml.includes('搜索地点、楼栋或高德来源'), 'search placeholder should use student-facing place search copy');
+  assert.ok(wxml.includes('搜索地点或楼栋'), 'search placeholder should use short student-facing place search copy');
   assert.ok(wxml.includes('待复核 {{reviewPlaceCount}}'), 'review-only filter should keep coordinate maintenance access');
   assert.ok(!wxml.includes('搜索地点、楼栋、坐标来源、待复核或高德'), 'search placeholder should not expose maintenance-heavy keywords');
   assert.ok(!wxml.includes('支持按地点、服务、楼栋、坐标来源和复核状态检索'), 'coordinate trust copy should not require a second helper row');

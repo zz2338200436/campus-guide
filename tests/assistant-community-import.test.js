@@ -27,10 +27,26 @@ runTest('assistant/community pages are registered and community replaces study i
   assert.ok(appConfig.pages.includes('pages/community-detail/community-detail'));
   assert.ok(appConfig.pages.includes('pages/community-post/community-post'));
   assert.ok(appConfig.pages.includes('pages/study/study'));
+  assert.equal(appConfig.tabBar.custom, true);
   assert.equal(appConfig.tabBar.list.length, 4);
   assert.equal(appConfig.tabBar.list[2].pagePath, 'pages/community/community');
   assert.equal(appConfig.tabBar.list[2].text, '校园圈');
+  assert.equal(appConfig.tabBar.list[2].iconPath, 'images/tab/community.png');
+  assert.equal(appConfig.tabBar.list[2].selectedIconPath, 'images/tab/community-active.png');
   assert.ok(!appConfig.tabBar.list.some((item) => item.pagePath === 'pages/study/study'));
+});
+
+runTest('custom tab bar uses four readable student-facing entries', () => {
+  const tabBarJs = read('custom-tab-bar/index.js');
+  const tabBarWxss = read('custom-tab-bar/index.wxss');
+
+  assert.ok(tabBarJs.includes("text: '首页'"));
+  assert.ok(tabBarJs.includes("text: '地图'"));
+  assert.ok(tabBarJs.includes("text: '校园圈'"));
+  assert.ok(tabBarJs.includes("text: '我的'"));
+  assert.ok(tabBarJs.includes('font-size: 26rpx;') === false);
+  assert.ok(tabBarWxss.includes('font-size: 26rpx;'));
+  assert.ok(tabBarWxss.includes('.custom-tab__item--active'));
 });
 
 runTest('homepage and user page expose community-first entry points while keeping study reachable', () => {
@@ -50,12 +66,20 @@ runTest('homepage and user page expose community-first entry points while keepin
   assert.equal(data.quickActions.find((item) => item.id === 'study').tab, false);
 });
 
-runTest('assistant page is student-facing and does not claim real AI integration', () => {
+runTest('assistant page is student-facing and keeps local fallback available', () => {
   const assistantWxml = read('pages/assistant/assistant.wxml');
   const aiEngine = require('../utils/aiEngine');
+  const requestJs = read('utils/request.js');
+  const proxyScript = read('scripts/xiaomi-ai-proxy.js');
 
   assert.ok(assistantWxml.includes('校园助手'));
+  assert.ok(!assistantWxml.includes('providerLabel'));
+  assert.ok(!assistantWxml.includes('真实模型'));
   assert.ok(aiEngine.quickQuestions.length >= 4);
+  assert.ok(requestJs.includes('getAssistantReply'));
+  assert.ok(requestJs.includes("provider: 'fallback'"));
+  assert.ok(proxyScript.includes('XIAOMI_API_KEY'));
+  assert.equal(proxyScript.includes('Bearer sk-'), false);
   assert.equal(aiEngine.ask('图书馆在哪').answer.includes('API'), false);
 });
 

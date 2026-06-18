@@ -4,23 +4,21 @@
     <view class="user-hero__top">
       <view class="user-hero__avatar">{{avatarText}}</view>
       <view class="user-hero__body">
-        <view class="user-hero__eyebrow">校园身份中心</view>
         <view class="user-hero__name">{{user.name}}</view>
         <view class="user-hero__meta">{{user.college}} · {{user.major}}</view>
-        <view class="user-hero__meta">学号：{{user.studentId}}</view>
+        <view class="user-hero__meta">学号 {{user.studentId}}</view>
       </view>
     </view>
     <view class="user-hero__status">
       <text class="tag" wx:if="{{user.role === 'admin'}}">内部运营身份</text>
-      <text class="user-hero__hint">收藏、学习和探索进度会同步到当前身份</text>
+      <text class="user-hero__hint">收藏、学习和探索进度同步到当前身份</text>
     </view>
   </view>
 
   <view class="login-card" wx:if="{{!user}}">
     <view class="theme-toggle {{isDarkTheme ? 'theme-toggle--dark' : ''}}" bindtap="toggleTheme"><image class="theme-toggle__image" src="{{themeIcon}}" mode="aspectFit" /></view>
-    <view class="login-card__eyebrow">校园身份入口</view>
     <view class="login-card__title">选择体验身份</view>
-    <view class="login-card__desc">输入体验学号后，可以查看收藏、学习记录和校园探索进度。</view>
+    <view class="login-card__desc">输入体验学号，查看收藏、学习和探索进度。</view>
     <input class="login-input" value="{{studentId}}" placeholder="请输入学号" bindinput="handleInput" />
     <view class="quick-accounts">
       <text class="quick-accounts__item" data-id="20260001" bindtap="quickFill">20260001</text>
@@ -45,24 +43,6 @@
     </view>
   </view>
 
-  <view class="identity-brief card" wx:if="{{user}}">
-    <view class="identity-brief__item"><text class="identity-brief__label">最近探索</text><text class="identity-brief__value">{{checkinHistory.length ? checkinHistory[0].name : '等待首次打卡'}}</text></view>
-    <view class="identity-brief__item"><text class="identity-brief__label">下一任务</text><text class="identity-brief__value">{{learningSummary && learningSummary.nextTask ? learningSummary.nextTask.title : '学习路径已同步'}}</text></view>
-  </view>
-
-  <view class="user-note card" wx:if="{{user && explorationSummary}}">
-    <view class="user-note__label">路线进度</view>
-    <view class="user-note__title">已到访 {{explorationSummary.completedCount}} / {{explorationSummary.totalCount}} 处校园地点</view>
-    <view class="user-note__desc">推荐路线完成 {{explorationSummary.routeCompletedCount}} / {{explorationSummary.routeTotalCount}}{{explorationSummary.hasCampusBadge ? '，已完成校园路线。' : '，完成后会更新路线状态。'}}</view>
-  </view>
-  <view class="user-note card" wx:if="{{user && learningSummary}}">
-    <view class="user-note__label">成长进度</view>
-    <view class="user-note__title">已完成 {{learningSummary.completedCount}} / {{learningSummary.totalCount}} 个学习任务</view>
-    <view class="user-note__desc">{{learningSummary.hasEntryBadge ? '已获得“入门路线”徽章，可以继续推进工具开发和项目进阶路径。' : '先完成入门路线，就能获得第一枚成长徽章。'}}</view>
-    <view class="growth-next" wx:if="{{learningSummary.nextTask}}" bindtap="openNextLearningTask"><view><view class="growth-next__label">下一项任务</view><view class="growth-next__title">{{learningSummary.nextTask.title}}</view></view><view class="growth-next__status">去学习</view></view>
-    <view class="growth-next growth-next--done" wx:else><view><view class="growth-next__label">成长路径已完成</view><view class="growth-next__title">当前学习任务已经全部完成</view></view><view class="growth-next__status">很稳</view></view>
-  </view>
-
   <view class="admin-entry card" wx:if="{{user && user.role === 'admin'}}" bindtap="goOperations">
     <view>
       <view class="admin-entry__label">管理员工具</view>
@@ -74,14 +54,12 @@
 
   <view class="section-title user-section-title">
     <text class="section-title__text">我的校园工作台</text>
-    <text class="section-title__action">{{user ? '四个高频入口' : '登录后可用'}}</text>
   </view>
 
   <view class="utility-grid">
     <view class="utility-card" wx:for="{{quickLinks}}" wx:key="id" data-type="{{item.id}}" bindtap="openQuickLink">
       <view class="utility-card__icon {{item.id === 'history' ? 'utility-card__icon--green' : ''}}">{{item.id === 'favorite' ? '藏' : item.id === 'history' ? '记' : item.id === 'continue' ? '续' : '告'}}</view>
       <view class="utility-card__body">
-        <view class="utility-card__eyebrow">入口 {{index + 1}}</view>
         <view class="utility-card__title">{{item.title}}</view>
         <view class="utility-card__desc">{{item.desc}}</view>
       </view>
@@ -90,7 +68,7 @@
     </view>
   </view>
 
-  <view class="helper-link-grid"><view class="helper-link-card" wx:for="{{helperLinks}}" wx:key="id" data-url="{{item.url}}" bindtap="openHelperLink"><view><view class="helper-link-card__title">{{item.title}}</view><view class="helper-link-card__desc">{{item.desc}}</view></view><view class="helper-link-card__action">进入</view></view></view>
+  <view class="helper-link-grid"><view class="helper-link-card" wx:for="{{visibleHelperLinks}}" wx:key="id" data-url="{{item.url}}" data-tab="{{item.tab}}" bindtap="openHelperLink"><view><view class="helper-link-card__title">{{item.title}}</view></view><view class="helper-link-card__action">进入</view></view></view>
 
   <button wx:if="{{user}}" class="btn-secondary logout-btn" bindtap="logout">退出登录</button>
 </view>

@@ -28,17 +28,17 @@
   min-height: 38rpx;
   padding: 0 10rpx;
   border-radius: 8rpx;
-  background: #eff6ff;
-  color: #0369a1;
-  font-size: 20rpx;
+  background: #ecfdf5;
+  color: #0f766e;
+  font-size: 26rpx;
   font-weight: 800;
   line-height: 38rpx;
 }
 
 .study-card__action {
   flex-shrink: 0;
-  color: #0369a1;
-  font-size: 22rpx;
+  color: #0f766e;
+  font-size: 26rpx;
   font-weight: 800;
   line-height: 1.4;
 }
@@ -53,8 +53,8 @@
 
 .study-card__summary {
   margin-top: 8rpx;
-  color: #64748b;
-  font-size: 24rpx;
+  color: #334155;
+  font-size: 26rpx;
   line-height: 1.55;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -72,5 +72,5 @@
 
 .study-card__keyword {
   background: #f8fafc;
-  color: #475569;
+  color: #334155;
 }

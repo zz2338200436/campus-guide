@@ -4,6 +4,7 @@
   "private": true,
   "description": "Enterprise-demo WeChat Mini Program for campus guidance and student services.",
   "scripts": {
-    "test": "node tests/run-all.js"
+    "test": "node tests/run-all.js",
+    "ai:proxy": "node scripts/xiaomi-ai-proxy.js"
   }
 }
