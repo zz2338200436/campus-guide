@@ -17,6 +17,7 @@ Page({
     overview: null,
     list: [],
     hotPosts: [],
+    hotExpanded: true,
     isLogin: false
   },
   onShow() {
@@ -77,5 +78,10 @@ Page({
     }
     communityStore.toggleLike(event.currentTarget.dataset.id);
     this.loadData();
+  },
+  toggleHotSection() {
+    this.setData({
+      hotExpanded: !this.data.hotExpanded
+    });
   }
 });

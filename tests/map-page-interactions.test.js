@@ -204,7 +204,6 @@ runTest('real device location keeps the actual off-campus coordinates', () => {
   assert.equal(page.data.currentLocation.name, '当前位置');
   assert.equal(page.data.currentLocation.latitude, 23.117);
   assert.equal(page.data.currentLocation.longitude, 113.264);
-  assert.equal(page.data.currentLocation.isFallback, false);
   assert.equal(page.wxMock.lastToast.title, '已获取当前位置');
 });
 
@@ -268,7 +267,6 @@ runTest('real device navigation uses the actual off-campus origin', () => {
   assert.equal(appliedOrigin.name, '当前位置');
   assert.equal(appliedOrigin.latitude, 23.117);
   assert.equal(appliedOrigin.longitude, 113.264);
-  assert.equal(appliedOrigin.isFallback, false);
 });
 
 if (process.exitCode) {

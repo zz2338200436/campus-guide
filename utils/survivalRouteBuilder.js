@@ -5,11 +5,11 @@ const SCENARIOS = [
     question: '今天刚到学校，先去哪？',
     oneLiner: '从官方办事到吃饭回宿舍，少走回头路。',
     routeTitle: '入学报到场景路线',
-    summary: '适合第一次到校的学生：先处理入学事务，再解决吃饭和住宿周边熟悉问题。',
+    summary: '先办入学手续，再熟悉食堂和宿舍。',
     placeIds: [6, 3, 5],
     serviceIds: [7, 2, 6],
     materials: ['身份证', '录取信息', '校园卡或学生证'],
-    finalTip: '先把证件、校园卡和食堂路线确认好，第一天会轻松很多。'
+    finalTip: '确认好证件、校园卡和食堂路线，第一天会轻松很多。'
   },
   {
     id: 'meal',
@@ -17,11 +17,11 @@ const SCENARIOS = [
     question: '饿了，去哪吃最稳？',
     oneLiner: '先到食堂，再顺手处理校园卡和生活补给。',
     routeTitle: '吃饭补给场景路线',
-    summary: '适合刚到饭点的学生：先找到一期桃园饭堂，再顺路熟悉菜鸟驿站和宿舍生活圈。',
+    summary: '先到食堂吃饭，顺路处理校园卡和生活补给。',
     placeIds: [3, 8, 5],
     serviceIds: [2, 6, 9],
     materials: ['校园卡', '支付记录截图', '取件码'],
-    finalTip: '饭点高峰建议错峰，第一次可以顺手记住食堂到宿舍的路线。'
+    finalTip: '饭点错峰就餐，顺路记住食堂到宿舍的路线。'
   },
   {
     id: 'study',
@@ -29,11 +29,11 @@ const SCENARIOS = [
     question: '想找地方学习，去哪？',
     oneLiner: '图书馆、教学楼、实训楼一次串起来。',
     routeTitle: '自习学习场景路线',
-    summary: '适合想快速进入学习状态的学生：先熟悉图书馆，再确认教室和实训空间。',
+    summary: '先熟悉图书馆，再确认教室和实训空间。',
     placeIds: [1, 2, 7],
     serviceIds: [1, 3, 5],
     materials: ['校园卡或学生证', '课程表', '电脑或学习资料'],
-    finalTip: '如果只是安静自习优先去图书馆，如果要找教学楼或调试代码优先确认格致楼、博雅楼或 S5 致用楼。'
+    finalTip: '安静自习优先去图书馆，上课或调试代码去格致楼、博雅楼或 S5 致用楼。'
   },
   {
     id: 'network',
@@ -41,11 +41,11 @@ const SCENARIOS = [
     question: '校园网连不上怎么办？',
     oneLiner: '先记录问题，再去技术支持点处理。',
     routeTitle: '网络报修场景路线',
-    summary: '适合遇到校园网、账号异常或设备问题的学生：先准备截图，再去对应值班点。',
+    summary: '先准备截图，再去对应值班点处理。',
     placeIds: [2, 11, 1],
     serviceIds: [5, 6, 1],
     materials: ['学号', '设备型号', '故障截图或错误提示'],
-    finalTip: '网络问题最好带上错误截图和设备型号，工作人员能更快判断原因。'
+    finalTip: '带上错误截图和设备型号，工作人员能更快判断。'
   },
   {
     id: 'lost',
@@ -53,11 +53,11 @@ const SCENARIOS = [
     question: '东西丢了，先找谁？',
     oneLiner: '登记失物、补充特征、保留联系方式。',
     routeTitle: '失物招领场景路线',
-    summary: '适合丢失物品或捡到物品的学生：先登记，再到高频地点补查。',
+    summary: '先登记失物信息，再到高频地点补查。',
     placeIds: [6, 14, 3],
     serviceIds: [9, 7, 2],
     materials: ['学生证', '物品照片或特征说明', '联系方式'],
-    finalTip: '越早记录丢失时间、地点和特征，找回概率越高。'
+    finalTip: '尽早记录丢失时间、地点和特征，找回概率更高。'
   }
 ];
 

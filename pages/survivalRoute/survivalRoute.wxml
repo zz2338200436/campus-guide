@@ -2,7 +2,6 @@
   <view class="route-hero">
     <view class="route-hero__eyebrow">事项路线服务</view>
     <view class="route-hero__title">按事项生成办理路线</view>
-    <view class="route-hero__desc">选择一个真实场景，系统会把地点、服务、准备材料和行动顺序整理成可执行路线。</view>
     <view class="route-hero__meta" wx:if="{{currentRoute}}">{{currentRoute.oneLiner}}</view>
   </view>
 
@@ -24,7 +23,6 @@
       >
         <view class="scene-card__question">{{item.question}}</view>
         <view class="scene-card__title">{{item.title}}</view>
-        <view class="scene-card__desc">{{item.oneLiner}}</view>
       </view>
     </view>
   </view>

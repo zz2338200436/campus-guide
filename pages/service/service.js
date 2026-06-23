@@ -16,7 +16,8 @@ Page({
     issueTabs: [],
     currentIssueId: 'newcomer',
     currentIssue: null,
-    issueServices: []
+    issueServices: [],
+    expandedItems: {}
   },
   onLoad() {
     themeManager.applyToPage(this);
@@ -47,8 +48,20 @@ Page({
     this.setData({
       currentCategory: category,
       list,
-      serviceGroups: serviceMatcher.groupByCategory(list)
+      serviceGroups: serviceMatcher.groupByCategory(list),
+      expandedItems: {}
     });
+  },
+  toggleServiceItem(event) {
+    const sid = event.currentTarget.dataset.sid;
+    const key = 's_' + sid;
+    const expandedItems = Object.assign({}, this.data.expandedItems);
+    if (expandedItems[key]) {
+      delete expandedItems[key];
+    } else {
+      expandedItems[key] = true;
+    }
+    this.setData({ expandedItems });
   },
   selectCategory(event) {
     this.filterBy(event.currentTarget.dataset.category);

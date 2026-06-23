@@ -7,32 +7,96 @@
     </view>
 
     <view class="post-switch">
-      <text class="post-switch__item {{postType === 'feed' ? 'post-switch__item--active' : ''}}" data-type="feed" bindtap="switchType">动态</text>
-      <text class="post-switch__item {{postType === 'marketplace' ? 'post-switch__item--active' : ''}}" data-type="marketplace" bindtap="switchType">集市</text>
+      <view class="post-switch__item {{postType === 'feed' ? 'post-switch__item--active' : ''}}" data-type="feed" bindtap="switchType">动态</view>
+      <view class="post-switch__item {{postType === 'marketplace' ? 'post-switch__item--active' : ''}}" data-type="marketplace" bindtap="switchType">集市</view>
+    </view>
+
+    <!-- 图片上传 -->
+    <view class="post-section">
+      <view class="post-section__title">添加照片</view>
+      <view class="post-images">
+        <view class="post-images__grid">
+          <block wx:for="{{images}}" wx:key="*this">
+            <view class="post-images__item">
+              <image class="post-images__img" src="{{item}}" mode="aspectFill" />
+              <view class="post-images__remove" data-index="{{index}}" bindtap="removeImage">×</view>
+            </view>
+          </block>
+          <view class="post-images__add" wx:if="{{images.length < 9}}" bindtap="chooseImage">
+            <view class="post-images__add-icon">+</view>
+            <view class="post-images__add-text">{{images.length === 0 ? '添加' : images.length + '/9'}}</view>
+          </view>
+        </view>
+      </view>
     </view>
 
     <view class="post-section">
       <view class="post-section__title">基础信息</view>
       <input class="post-input" data-field="title" placeholder="标题（可选）" value="{{title}}" bindinput="handleField" />
-      <textarea class="post-textarea" data-field="content" placeholder="写点内容（必填）" value="{{content}}" bindinput="handleField"></textarea>
-      <input class="post-input" data-field="tags" placeholder="标签，用空格或逗号分隔" value="{{tags}}" bindinput="handleField" />
-      <input class="post-input" data-field="location" placeholder="地点（可选）" value="{{location}}" bindinput="handleField" />
+      <view class="post-textarea-wrap">
+        <textarea class="post-textarea" data-field="content" placeholder="写点内容（必填）" value="{{content}}" bindinput="handleField"></textarea>
+      </view>
+    </view>
+
+    <!-- 标签与地点 — 独立于 textarea 容器，避免原生组件层级覆盖 -->
+    <view class="post-section" wx:if="{{postType === 'marketplace'}}">
+      <view class="post-section__title">标签与地点</view>
+      <view class="post-tags">
+        <view class="post-tags__label">标签</view>
+        <view class="post-tags__list">
+          <view
+            wx:for="{{availableTags}}"
+            wx:key="*this"
+            class="post-tag {{selectedTags.indexOf(item) !== -1 ? 'post-tag--active' : ''}}"
+            data-tag="{{item}}"
+            bindtap="toggleTag"
+          >{{item}}</view>
+        </view>
+      </view>
+
+      <view class="post-location">
+        <view class="post-location__label">地点</view>
+        <view class="post-location__body" bindtap="pickLocation">
+          <view class="post-location__icon"></view>
+          <text class="post-location__text {{location ? '' : 'post-location__text--placeholder'}}">{{location || '点击定位选择地点'}}</text>
+          <text class="post-location__arrow">›</text>
+        </view>
+      </view>
     </view>
 
     <view class="post-section marketplace-fields" wx:if="{{postType === 'marketplace'}}">
       <view class="post-section__title">集市信息</view>
-      <input class="post-input" data-field="price" placeholder="价格（必填）" value="{{price}}" bindinput="handleField" />
-      <view class="post-status-switch">
-        <view
-          wx:for="{{statusOptions}}"
-          wx:key="*this"
-          class="post-status-switch__item {{status === item ? 'post-status-switch__item--active' : ''}}"
-          data-status="{{item}}"
-          bindtap="switchStatus"
-        >
-          {{item}}
+      <input class="post-input" data-field="price" placeholder="价格，如 ¥50 或 面议（必填）" value="{{price}}" bindinput="handleField" />
+      <!-- 物品成色 -->
+      <view class="post-condition">
+        <view class="post-condition__label">成色</view>
+        <view class="post-condition__list">
+          <view
+            wx:for="{{conditionOptions}}"
+            wx:key="*this"
+            class="post-switch__item {{condition === item ? 'post-switch__item--active' : ''}}"
+            data-condition="{{item}}"
+            bindtap="switchCondition"
+          >{{item}}</view>
         </view>
       </view>
+      <!-- 交易状态 -->
+      <view class="post-status">
+        <view class="post-status__label">交易状态</view>
+        <view class="post-status-switch">
+          <view
+            wx:for="{{statusOptions}}"
+            wx:key="*this"
+            class="post-status-switch__item {{status === item ? 'post-status-switch__item--active' : ''}}"
+            data-status="{{item}}"
+            bindtap="switchStatus"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+      <!-- 联系方式 -->
+      <input class="post-input" data-field="contact" placeholder="联系方式，如手机号或微信号（可选）" value="{{contact}}" bindinput="handleField" />
     </view>
 
     <view class="post-submit-bar">

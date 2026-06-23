@@ -28,20 +28,6 @@
     <button class="btn-primary" bindtap="login">立即登录</button>
   </view>
 
-  <view class="momentum-grid" wx:if="{{studySummary}}">
-    <view class="flagship-stat">
-      <text class="flagship-stat__num">{{favoriteCount}}</text>
-      <text class="flagship-stat__label">我的收藏</text>
-    </view>
-    <view class="flagship-stat">
-      <text class="flagship-stat__num">{{historyCount}}</text>
-      <text class="flagship-stat__label">学习记录</text>
-    </view>
-    <view class="flagship-stat">
-      <text class="flagship-stat__num">{{studySummary.viewedCount}} / {{studySummary.totalCount}}</text>
-      <text class="flagship-stat__label">学习进度</text>
-    </view>
-  </view>
 
   <view class="admin-entry card" wx:if="{{user && user.role === 'admin'}}" bindtap="goOperations">
     <view>
@@ -58,17 +44,15 @@
 
   <view class="utility-grid">
     <view class="utility-card" wx:for="{{quickLinks}}" wx:key="id" data-type="{{item.id}}" bindtap="openQuickLink">
-      <view class="utility-card__icon {{item.id === 'history' ? 'utility-card__icon--green' : ''}}">{{item.id === 'favorite' ? '藏' : item.id === 'history' ? '记' : item.id === 'continue' ? '续' : '告'}}</view>
+      <view class="utility-card__icon">{{item.id === 'favorite' ? '藏' : item.id === 'posts' ? '发' : item.id === 'notice' ? '告' : '助'}}</view>
       <view class="utility-card__body">
         <view class="utility-card__title">{{item.title}}</view>
-        <view class="utility-card__desc">{{item.desc}}</view>
+        <view class="utility-card__desc" wx:if="{{item.desc}}">{{item.desc}}</view>
       </view>
-      <view class="utility-card__count" wx:if="{{item.countKey}}">{{item.countKey === 'favoriteCount' ? favoriteCount : historyCount}}</view>
+      <view class="utility-card__count" wx:if="{{item.countKey}}">{{item.countKey === 'favoriteCount' ? favoriteCount : item.countKey === 'historyCount' ? historyCount : postCount}}</view>
       <view class="utility-card__count utility-card__count--action" wx:else>进入</view>
     </view>
   </view>
-
-  <view class="helper-link-grid"><view class="helper-link-card" wx:for="{{visibleHelperLinks}}" wx:key="id" data-url="{{item.url}}" data-tab="{{item.tab}}" bindtap="openHelperLink"><view><view class="helper-link-card__title">{{item.title}}</view></view><view class="helper-link-card__action">进入</view></view></view>
 
   <button wx:if="{{user}}" class="btn-secondary logout-btn" bindtap="logout">退出登录</button>
 </view>

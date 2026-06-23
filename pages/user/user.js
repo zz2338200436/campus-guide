@@ -1,14 +1,9 @@
 const request = require('../../utils/request');
-const checkinHelper = require('../../utils/explorationCheckinHelper');
 const userManager = require('../../utils/userManager');
 const favoriteSubject = require('../../utils/favoriteSubject');
-const placeData = require('../../utils/placeData');
-const studyHistoryHelper = require('../../utils/studyHistoryHelper');
-const studyData = require('../../utils/studyData');
-const learningProgressHelper = require('../../utils/learningProgressHelper');
-const selectors = require('../../utils/flagshipSelectors');
 const themeManager = require('../../utils/themeManager');
 const tabBarHelper = require('../../utils/tabBarHelper');
+const communityStore = require('../../utils/communityStore');
 
 Page({
   data: {
@@ -21,27 +16,16 @@ Page({
     user: null,
     avatarText: '',
     favoriteCount: 0,
+    postCount: 0,
     historyCount: 0,
-    studySummary: null,
-    learningSummary: null,
-    explorationSummary: null,
-    checkinHistory: [],
     quickLinks: [
-      { id: 'favorite', title: '我的收藏', desc: '地点、学习和公告统一管理', countKey: 'favoriteCount' },
-      { id: 'history', title: '学习记录', desc: '保留最近 20 条学习浏览历史', countKey: 'historyCount' },
-      { id: 'continue', title: '继续学习', desc: '快速回到最近一次学习内容', countKey: '' },
-      { id: 'notice', title: '查看公告', desc: '及时回看校园提醒和活动动态', countKey: '' }
+      { id: 'favorite', title: '我的收藏', desc: '' },
+      { id: 'notice', title: '查看公告', desc: '' },
+      { id: 'posts', title: '我的发布', desc: '' },
+      { id: 'assistant', title: '校园助手', desc: '' }
     ],
-    helperLinks: [
-      { id: 'assistant', title: '校园助手', desc: '问路线和常见校园问题', url: '/pages/assistant/assistant' },
-      { id: 'community', title: '校园圈', desc: '看动态、发求助、逛二手', url: '/pages/community/community' },
-      { id: 'study', title: '学习资源', desc: '进入成长路径和知识卡片', url: '/pages/study/study' }
-    ],
-    visibleHelperLinks: [
-      { id: 'assistant', title: '校园助手', desc: '问路线和常见校园问题', url: '/pages/assistant/assistant' },
-      { id: 'community', title: '校园圈', desc: '看动态、发求助、逛二手', url: '/pages/community/community', tab: true },
-      { id: 'study', title: '学习资源', desc: '进入成长路径和知识卡片', url: '/pages/study/study' }
-    ]
+    helperLinks: [],
+    visibleHelperLinks: []
   },
   onLoad() {
     favoriteSubject.subscribe('user-page', () => {
@@ -80,18 +64,11 @@ Page({
   },
   refreshCounts() {
     const favorites = favoriteSubject.getFavorites();
-    const history = studyHistoryHelper.getHistory();
+    const currentUser = userManager.getUser();
+    const userPosts = currentUser ? communityStore.getPostsByUser(currentUser.studentId) : [];
     this.setData({
       favoriteCount: favorites.length,
-      historyCount: history.length,
-      explorationSummary: checkinHelper.getSummary(placeData),
-      checkinHistory: checkinHelper.getCheckinHistory(placeData, 4),
-      learningSummary: learningProgressHelper.getSummary(studyData),
-      studySummary: selectors.getStudyProgressSummary(
-        studyData,
-        history,
-        favorites.filter((item) => item.type === 'study')
-      )
+      postCount: userPosts.length
     });
   },
   handleInput(event) {
@@ -134,65 +111,31 @@ Page({
       url: '/pages/favorite/favorite'
     });
   },
-  goHistory() {
+  goMyPosts() {
     wx.navigateTo({
-      url: '/pages/studyHistory/studyHistory'
+      url: '/pages/my-posts/my-posts'
     });
+  },
+  openQuickLink(event) {
+    var type = event.currentTarget.dataset.type;
+    switch (type) {
+      case 'favorite':
+        this.goFavorite();
+        break;
+      case 'notice':
+        wx.navigateTo({ url: '/pages/notice/notice' });
+        break;
+      case 'posts':
+        wx.navigateTo({ url: '/pages/my-posts/my-posts' });
+        break;
+      case 'assistant':
+        wx.navigateTo({ url: '/pages/assistant/assistant' });
+        break;
+    }
   },
   goOperations() {
     wx.navigateTo({
       url: '/pages/operations/operations'
     });
-  },
-  openNextLearningTask() {
-    const summary = this.data.learningSummary;
-    if (!summary || !summary.nextTask) {
-      wx.showToast({
-        title: '暂无下一项任务',
-        icon: 'none'
-      });
-      return;
-    }
-    wx.navigateTo({
-      url: '/pages/studyDetail/studyDetail?id=' + summary.nextTask.id
-    });
-  },
-  openQuickLink(event) {
-    const type = event.currentTarget.dataset.type;
-    if (type === 'favorite') {
-      this.goFavorite();
-      return;
-    }
-    if (type === 'history') {
-      this.goHistory();
-      return;
-    }
-    if (type === 'continue') {
-      const history = studyHistoryHelper.getHistory();
-      if (!history.length) {
-        wx.showToast({ title: '暂无最近学习', icon: 'none' });
-        return;
-      }
-      wx.navigateTo({
-        url: '/pages/studyDetail/studyDetail?id=' + history[0].id
-      });
-      return;
-    }
-    if (type === 'notice') {
-      wx.navigateTo({
-        url: '/pages/notice/notice'
-      });
-    }
-  },
-  openHelperLink(event) {
-    const dataset = event.currentTarget ? event.currentTarget.dataset : {};
-    if (!dataset.url) {
-      return;
-    }
-    if (dataset.tab) {
-      wx.switchTab({ url: dataset.url });
-      return;
-    }
-    wx.navigateTo({ url: dataset.url });
   }
 });

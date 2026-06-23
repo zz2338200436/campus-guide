@@ -40,11 +40,14 @@
   </scroll-view>
 
   <view class="community-hot card" wx:if="{{hotPosts.length}}">
-    <view class="section-title">
+    <view class="section-title community-hot__header" bindtap="toggleHotSection">
       <text class="section-title__text">热门内容</text>
-      <text class="section-title__action">{{hotPosts.length}} 条</text>
+      <view class="community-hot__togglers">
+        <text class="section-title__action">{{hotPosts.length}} 条</text>
+        <text class="community-hot__arrow {{hotExpanded ? 'community-hot__arrow--open' : ''}}">‹</text>
+      </view>
     </view>
-    <view class="community-hot__list">
+    <view class="community-hot__list {{hotExpanded ? 'community-hot__list--open' : ''}}">
       <view
         wx:for="{{hotPosts}}"
         wx:key="id"
@@ -77,9 +80,21 @@
       <view class="community-card__title" wx:if="{{item.title}}">{{item.title}}</view>
       <view class="community-card__content">{{item.excerpt}}</view>
 
+      <view class="community-card__images" wx:if="{{item.images && item.images.length}}">
+        <image
+          wx:for="{{item.images}}"
+          wx:for-item="img"
+          wx:key="*this"
+          class="community-card__img"
+          src="{{img}}"
+          mode="aspectFill"
+        />
+      </view>
+
       <view class="community-card__market" wx:if="{{item.type === 'marketplace'}}">
         <text class="community-card__price">{{item.priceText}}</text>
         <text class="community-card__status">{{item.statusText}}</text>
+        <text class="community-card__condition" wx:if="{{item.conditionText}}">{{item.conditionText}}</text>
       </view>
 
       <view class="community-card__tags" wx:if="{{item.tags && item.tags.length}}">

@@ -100,12 +100,19 @@
 }
 
 .task-status-card__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   min-width: 160rpx;
   height: 68rpx;
   padding: 0 18rpx;
   font-size: 26rpx;
-  line-height: 68rpx;
+  line-height: 1;
+}
+
+.task-status-card__btn::after {
+  border: 0;
 }
 
 .code-panel {

@@ -1,29 +1,68 @@
 <view class="page {{themeClass}}">
-  <view class="assistant-shell">
-    <scroll-view class="assistant-messages" scroll-y scroll-with-animation scroll-into-view="{{scrollIntoView}}">
-      <view class="assistant-hero">
-        <view class="assistant-hero__title">校园助手</view>
-        <view class="assistant-hero__desc">问地点、服务、校园圈</view>
-        <view class="assistant-hero__hint" wx:if="{{connectionHint}}">{{connectionHint}}</view>
+  <view class="chat-shell">
+    <!-- 消息列表 -->
+    <scroll-view class="chat-messages" scroll-y scroll-into-view="{{scrollIntoView}}">
+      <!-- 欢迎区域（无消息时显示） -->
+      <view class="chat-hero" wx:if="{{messages.length === 0}}">
+        <view class="chat-hero__icon">AI</view>
+        <view class="chat-hero__title">校园助手</view>
+        <view class="chat-hero__desc">问地点、服务、校园圈</view>
+        <view class="chat-hero__hint" wx:if="{{connectionHint}}">{{connectionHint}}</view>
       </view>
-      <view wx:for="{{messages}}" wx:key="id" id="{{item.id}}" class="assistant-message assistant-message--{{item.role}}">
-        <text>{{item.content}}</text>
+
+      <!-- 消息列表 -->
+      <block wx:for="{{messages}}" wx:key="id">
+        <view class="chat-row" id="{{item.id}}">
+          <!-- 左侧：AI 头像 / 用户 spacer -->
+          <view wx:if="{{item.role === 'user'}}" class="chat-side chat-side--spacer"></view>
+          <view wx:else class="chat-avatar chat-avatar--assistant">AI</view>
+
+          <view class="chat-bubble-wrapper chat-bubble-wrapper--{{item.role}}">
+            <view class="chat-bubble chat-bubble--{{item.role}}">
+              <text>{{item.content}}</text>
+            </view>
+            <view class="chat-time">{{item.time}}</view>
+          </view>
+
+          <!-- 右侧：用户头像 / AI spacer -->
+          <view wx:if="{{item.role === 'assistant'}}" class="chat-side chat-side--spacer"></view>
+          <view wx:else class="chat-avatar chat-avatar--user">我</view>
+        </view>
+      </block>
+
+      <!-- 思考中 + 打字机（pending 状态） -->
+      <view wx:if="{{pending}}" class="chat-row">
+        <view class="chat-avatar chat-avatar--assistant">AI</view>
+        <view class="chat-bubble-wrapper chat-bubble-wrapper--assistant">
+          <view class="chat-bubble chat-bubble--assistant chat-bubble--thinking">
+            <view wx:if="{{!streamingContent}}" class="thinking-text">
+              <text>思考中</text>
+              <text class="thinking-dots">...</text>
+            </view>
+            <view wx:if="{{streamingContent}}" class="streaming-answer">
+              <text>{{streamingContent}}</text>
+              <text class="streaming-cursor" wx:if="{{!streamingDone}}">|</text>
+            </view>
+          </view>
+        </view>
+        <view class="chat-side chat-side--spacer"></view>
       </view>
-      <view wx:if="{{pending}}" class="assistant-message assistant-message--assistant assistant-message--pending">
-        <text>{{statusText}}</text>
+
+      <view id="msg_bottom_anchor" style="height:2rpx;opacity:0;pointer-events:none;"></view>
+    </scroll-view>
+
+    <!-- 快捷问题 -->
+    <scroll-view class="chat-quick" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="chat-quick__row">
+        <text wx:for="{{quickQuestions}}" wx:key="*this" class="chat-quick__item" data-question="{{item}}" bindtap="sendQuick">{{item}}</text>
       </view>
     </scroll-view>
 
-    <scroll-view class="assistant-quick" scroll-x enhanced show-scrollbar="{{false}}">
-      <view class="assistant-quick__row">
-        <text wx:for="{{quickQuestions}}" wx:key="*this" class="assistant-quick__item" data-question="{{item}}" bindtap="sendQuick">{{item}}</text>
-      </view>
-    </scroll-view>
-
-    <view class="assistant-bar">
-      <input class="assistant-bar__input" placeholder="问地点、问服务、问校园圈" value="{{inputText}}" bindinput="handleInput" bindconfirm="sendMessage" disabled="{{pending}}" />
-      <text wx:if="{{!canCancel}}" class="assistant-bar__send {{pending ? 'assistant-bar__send--disabled' : ''}}" bindtap="sendMessage">{{pending ? '...' : '发送'}}</text>
-      <text wx:if="{{canCancel}}" class="assistant-bar__cancel" bindtap="cancelRequest">取消</text>
+    <!-- 输入栏 -->
+    <view class="chat-bar">
+      <input class="chat-bar__input" placeholder="请输入您的问题..." value="{{inputText}}" bindinput="handleInput" bindconfirm="sendMessage" disabled="{{pending}}" />
+      <text wx:if="{{!canCancel}}" class="chat-bar__send {{pending ? 'chat-bar__send--disabled' : ''}}" bindtap="sendMessage">{{pending ? '...' : '发送'}}</text>
+      <text wx:if="{{canCancel}}" class="chat-bar__cancel" bindtap="cancelRequest">取消</text>
     </view>
   </view>
 </view>

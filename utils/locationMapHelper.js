@@ -3,14 +3,6 @@ const DEFAULT_CENTER = {
   longitude: 112.6801
 };
 
-const CAMPUS_GATE_LOCATION = {
-  name: '模拟位置（学校门口）',
-  latitude: 23.2645992,
-  longitude: 112.6802932,
-  speed: 0,
-  accuracy: 10
-};
-
 const CAMPUS_BOUNDS = {
   minLatitude: 23.2635,
   maxLatitude: 23.2750,
@@ -285,31 +277,17 @@ function formatSelectedLocation(location) {
   };
 }
 
-function resolveCampusTestLocation(location) {
-  return resolveCurrentLocation(location, {
-    useCampusFallback: true
-  });
-}
-
-function resolveCurrentLocation(location, options) {
+function resolveCurrentLocation(location) {
   const coordinate = normalizeCoordinate(location);
-  const useCampusFallback = !options || options.useCampusFallback !== false;
   if (!coordinate) {
-    if (!useCampusFallback) {
-      return null;
-    }
-    return Object.assign({ isFallback: true }, CAMPUS_GATE_LOCATION);
-  }
-  if (useCampusFallback && !isInsideCampusBounds(coordinate)) {
-    return Object.assign({ isFallback: true }, CAMPUS_GATE_LOCATION);
+    return null;
   }
   return {
     name: location && location.name ? location.name : '当前位置',
     latitude: coordinate.latitude,
     longitude: coordinate.longitude,
     speed: location && location.speed,
-    accuracy: location && location.accuracy,
-    isFallback: false
+    accuracy: location && location.accuracy
   };
 }
 
@@ -449,7 +427,6 @@ function getPolygonFillColor(type) {
 
 module.exports = {
   DEFAULT_CENTER,
-  CAMPUS_GATE_LOCATION,
   CAMPUS_BOUNDS,
   buildMarkers,
   buildIncludePoints,
@@ -462,7 +439,6 @@ module.exports = {
   buildNavigationState,
   buildNavigationViewportState,
   resolveCurrentLocation,
-  resolveCampusTestLocation,
   isInsideCampusBounds,
   calculateDistance,
   buildCampusDetailLayer,

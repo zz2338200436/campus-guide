@@ -1,7 +1,6 @@
 {
   "navigationBarTitleText": "校园导览",
   "usingComponents": {
-    "place-card": "/components/place-card/place-card",
     "empty-state": "/components/empty-state/empty-state"
   }
 }

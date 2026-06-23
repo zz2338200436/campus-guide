@@ -25,7 +25,6 @@
       bindtap="selectType">
       <view class="map-stats-item__icon">{{item.icon}}</view>
       <view class="map-stats-item__count">{{item.count}}</view>
-      <view class="map-stats-item__label">{{item.shortLabel}}</view>
     </view>
   </view>
 
@@ -87,27 +86,27 @@
 
       <!-- Navigation panel -->
       <view class="nav-info-panel map-focus-panel" wx:if="{{navigating && navDestination}}">
-        <view class="nav-info-panel__header">
-          <view class="nav-info-panel__dest">
-            <view class="nav-info-panel__label">导航目的地</view>
-            <view class="nav-info-panel__name">{{navDestination.name}}</view>
-            <view class="nav-info-panel__address">{{navDestination.address}}</view>
+        <view class="nav-info-panel__body">
+          <view class="nav-info-panel__header">
+            <view class="nav-info-panel__dest">
+              <view class="nav-info-panel__label">导航目的地</view>
+              <view class="nav-info-panel__name">{{navDestination.name}}</view>
+              <view class="nav-info-panel__address">{{navDestination.address}}</view>
+            </view>
+            <view class="nav-info-panel__distance" wx:if="{{navDistance}}">
+              <text class="nav-info-panel__distance-num">{{navDistance}}</text>
+              <text class="nav-info-panel__distance-label">直线距离</text>
+            </view>
           </view>
-          <view class="nav-info-panel__distance" wx:if="{{navDistance}}">
-            <text class="nav-info-panel__distance-num">{{navDistance}}</text>
-            <text class="nav-info-panel__distance-label">直线距离</text>
-          </view>
-        </view>
-        <view class="nav-info-panel__actions">
-          <view class="nav-info-panel__primary-actions">
+          <view class="nav-info-panel__actions">
             <button class="btn-primary nav-info-panel__btn" bindtap="openNativeNavigation">开始导航</button>
+            <view class="nav-info-panel__secondary-actions">
+              <text class="nav-info-panel__link" bindtap="refreshNavigation">刷新</text>
+              <text class="nav-info-panel__link nav-info-panel__link--danger" bindtap="cancelNavigation">退出</text>
+            </view>
           </view>
-          <view class="nav-info-panel__secondary-actions">
-            <text class="nav-info-panel__link" bindtap="refreshNavigation">刷新</text>
-            <text class="nav-info-panel__link nav-info-panel__link--danger" bindtap="cancelNavigation">退出</text>
-          </view>
+          <view class="nav-info-panel__hint">真机可直接拉起微信地图</view>
         </view>
-        <view class="nav-info-panel__hint">真机可直接拉起微信地图</view>
       </view>
 
       <!-- Location bar -->
@@ -162,12 +161,13 @@
   </view>
 
   <!-- ═══ 4. Directory ═══ -->
-  <view class="section-title">
+  <view class="section-title" bindtap="toggleDirectory">
     <text class="section-title__text">地点目录</text>
     <text class="section-title__action">{{currentType}}</text>
+    <view class="section-title__arrow {{directoryCollapsed ? 'section-title__arrow--collapsed' : ''}}">∨</view>
   </view>
 
-  <view class="directory-card">
+  <view class="directory-card" wx:if="{{!directoryCollapsed}}">
     <!-- Directory toolbar -->
     <view class="directory-toolbar">
       <text class="directory-toolbar__count">共 {{filteredPlaces.length}} 个地点</text>

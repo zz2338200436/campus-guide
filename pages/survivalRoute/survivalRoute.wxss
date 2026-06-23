@@ -35,7 +35,6 @@
   line-height: 1.32;
 }
 
-.route-hero__desc,
 .route-hero__meta,
 .route-card__summary,
 .final-tip__text,
@@ -110,7 +109,6 @@
 
 .scene-card__question,
 .scene-card__title,
-.scene-card__desc,
 .route-progress__next,
 .timeline-step__service,
 .timeline-step__footer,
@@ -132,14 +130,6 @@
   font-weight: 800;
   line-height: 1.35;
   -webkit-line-clamp: 1;
-}
-
-.scene-card__desc {
-  margin-top: 6rpx;
-  color: #475569;
-  font-size: 26rpx;
-  line-height: 1.45;
-  -webkit-line-clamp: 2;
 }
 
 .route-progress,

@@ -6,7 +6,6 @@
       <image class="detail-hero__image" wx:if="{{detail.image}}" src="{{detail.image}}" mode="aspectFill" />
       <view class="detail-hero__eyebrow">{{detail.type}}</view>
       <view class="detail-hero__title">{{detail.name}}</view>
-      <view class="detail-hero__desc">{{detail.description}}</view>
     </view>
 
     <view class="detail-card">
@@ -32,47 +31,27 @@
         </view>
         <button class="{{checkedIn ? 'btn-secondary' : 'btn-primary'}} detail-checkin__btn" bindtap="checkInPlace">{{checkedIn ? '已完成到访' : '记录到访'}}</button>
       </view>
-      <view class="detail-card__item">地点位置：{{detail.address}}</view>
-      <view class="detail-card__item">开放时间：{{detail.openTime}}</view>
-      <view class="detail-card__item">温馨提示：{{detail.tips}}</view>
-    </view>
-
-    <view class="detail-guide card">
-      <view class="detail-card__title">到访建议</view>
-      <view class="detail-guide__row">适合人群：{{detail.bestFor}}</view>
-      <view class="detail-guide__row">推荐时段：{{detail.bestTime}}</view>
-      <view class="detail-guide__row">周边可顺路看：{{detail.nearby.join('、')}}</view>
+      <view class="detail-guide__row" wx:if="{{detail.bestFor}}">适合 {{detail.bestFor}} · {{detail.bestTime}}</view>
+      <view class="detail-guide__row" wx:if="{{detail.nearby.length}}">周边：{{detail.nearby.join('、')}}</view>
     </view>
 
     <view class="detail-services card" wx:if="{{relatedServices.length}}">
       <view class="detail-card__title">这里能办什么</view>
       <view class="detail-service" wx:for="{{relatedServices}}" wx:key="id">
         <view class="detail-service__head">
-          <view>
-            <view class="detail-service__title">{{item.title}}</view>
-            <view class="detail-service__desc">{{item.content}}</view>
-          </view>
-          <view class="detail-service__tag">{{item.category}}</view>
+          <view class="detail-service__title">{{item.title}}</view>
+          <view class="detail-service__desc">{{item.content}}</view>
         </view>
-        <view class="detail-service__meta">准备：{{item.materials.join('、')}}</view>
         <view class="detail-service__footer">
-          <view class="detail-service__action">{{item.actionText}}</view>
           <view
             class="detail-service__call"
             data-phone="{{item.phone}}"
             bindtap="callServicePhone"
           >
-            拨打 {{item.phone}}
+            {{item.phone}}
           </view>
         </view>
       </view>
-    </view>
-
-    <view class="nav-card">
-      <view class="nav-card__title">导航到这里</view>
-      <view class="nav-card__desc">直接开始导航</view>
-      <button class="btn-primary nav-card__btn" bindtap="startNavigation">开始导航</button>
-      <view class="navigation-error" wx:if="{{navigationError}}">{{navigationError}}</view>
     </view>
 
     <view class="detail-next card" wx:if="{{relatedPlaces.length}}">

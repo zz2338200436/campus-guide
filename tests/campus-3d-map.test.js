@@ -45,7 +45,7 @@ runTest('map page avoids unstable satellite tiles in developer tools', () => {
   assert.ok(js.includes('enableSatellite: false'), 'map page should keep satellite layer disabled by default');
   assert.ok(!js.includes("satellite: { enableSatellite: true"), 'map page should not expose satellite mode in developer tools');
   assert.ok(!wxml.includes('卫星感'), 'map page should not show a satellite mode that triggers hybrid tile requests');
-  assert.ok(js.includes('enableBuilding: !isDeveloperTool'), 'map page should disable building tiles in developer tools');
+  assert.ok(js.includes('enableBuilding: !navigationHelper.isDeveloperTool(systemInfo)'), 'map page should disable building tiles in developer tools');
 });
 
 runTest('map page exposes a complete location tool flow', () => {
@@ -53,15 +53,6 @@ runTest('map page exposes a complete location tool flow', () => {
 
   assert.ok(wxml.includes('bindtap="chooseLocation"'), 'map tools should allow users to choose a location');
   assert.ok(wxml.includes('bindtap="openSelectedLocation"'), 'map tools should allow users to open the chosen or current location');
-});
-
-runTest('map page uses campus gate as developer tool fallback location', () => {
-  const js = read('pages/map/map.js');
-
-  assert.ok(js.includes('locationMapHelper.CAMPUS_GATE_LOCATION'), 'map page should reuse the shared campus gate fallback');
-  assert.ok(js.includes('已使用模拟位置（学校门口）'), 'map page should tell users when the gate fallback is used');
-  assert.ok(!js.includes('模拟位置（图书馆附近）'), 'map page should not label the fallback as library location');
-  assert.ok(!js.includes('校区图书馆坐标作为模拟位置'), 'map page should not keep the old library fallback comment');
 });
 
 runTest('map page hides selected place card while navigating', () => {

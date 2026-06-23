@@ -139,12 +139,12 @@ runTest('location map helper builds complete navigation layer state', () => {
   assert.match(state.distanceText, /m$/);
 });
 
-runTest('location map helper labels simulated current location clearly', () => {
+runTest('location map helper passes origin name through navigation callout', () => {
   const state = locationMapHelper.buildNavigationState(
     {
       latitude: 23.2720399,
       longitude: 112.6800859,
-      name: '模拟位置（图书馆附近）'
+      name: '当前位置'
     },
     {
       name: '行政中心',
@@ -153,46 +153,12 @@ runTest('location map helper labels simulated current location clearly', () => {
     }
   );
 
-  assert.equal(state.markers[0].callout.content, '模拟位置（图书馆附近）');
+  assert.equal(state.markers[0].callout.content, '当前位置');
   assert.equal(state.markers[1].callout.content, '行政中心');
 });
 
-runTest('location map helper exposes campus gate fallback location', () => {
-  assert.equal(locationMapHelper.CAMPUS_GATE_LOCATION.name, '模拟位置（学校门口）');
-  assert.equal(locationMapHelper.CAMPUS_GATE_LOCATION.latitude, 23.2645992);
-  assert.equal(locationMapHelper.CAMPUS_GATE_LOCATION.longitude, 112.6802932);
-});
-
-runTest('location map helper uses gate fallback for off-campus developer locations', () => {
-  const location = locationMapHelper.resolveCampusTestLocation({
-    latitude: 23.117,
-    longitude: 113.264,
-    accuracy: 65
-  });
-
-  assert.equal(location.name, '模拟位置（学校门口）');
-  assert.equal(location.latitude, 23.2645992);
-  assert.equal(location.longitude, 112.6802932);
-  assert.equal(location.isFallback, true);
-});
-
-runTest('location map helper keeps off-campus real device locations when fallback is disabled', () => {
+runTest('location map helper resolves real device coordinates without fallback', () => {
   const location = locationMapHelper.resolveCurrentLocation({
-    latitude: 23.117,
-    longitude: 113.264,
-    accuracy: 65
-  }, {
-    useCampusFallback: false
-  });
-
-  assert.equal(location.name, '当前位置');
-  assert.equal(location.latitude, 23.117);
-  assert.equal(location.longitude, 113.264);
-  assert.equal(location.isFallback, false);
-});
-
-runTest('location map helper keeps real campus locations', () => {
-  const location = locationMapHelper.resolveCampusTestLocation({
     latitude: 23.2647,
     longitude: 112.6802,
     accuracy: 18
@@ -201,7 +167,15 @@ runTest('location map helper keeps real campus locations', () => {
   assert.equal(location.name, '当前位置');
   assert.equal(location.latitude, 23.2647);
   assert.equal(location.longitude, 112.6802);
-  assert.equal(location.isFallback, false);
+});
+
+runTest('location map helper returns null for invalid coordinates', () => {
+  const location = locationMapHelper.resolveCurrentLocation({
+    latitude: '',
+    longitude: ''
+  });
+
+  assert.equal(location, null);
 });
 
 runTest('location map helper builds a stable navigation viewport', () => {

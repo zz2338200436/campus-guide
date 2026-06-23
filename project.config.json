@@ -35,6 +35,34 @@
       {
         "type": "folder",
         "value": "/minitest"
+      },
+      {
+        "type": "folder",
+        "value": "/docs"
+      },
+      {
+        "type": "folder",
+        "value": "/tests"
+      },
+      {
+        "type": "folder",
+        "value": "/scripts"
+      },
+      {
+        "type": "folder",
+        "value": "/generated"
+      },
+      {
+        "type": "file",
+        "value": "/overview.md"
+      },
+      {
+        "type": "file",
+        "value": "/README.md"
+      },
+      {
+        "type": "file",
+        "value": "/package.json"
       }
     ],
     "include": []

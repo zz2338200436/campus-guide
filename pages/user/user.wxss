@@ -145,13 +145,6 @@
   line-height: 42rpx;
 }
 
-.momentum-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12rpx;
-  margin-bottom: 18rpx;
-}
-
 .user-section-title {
   margin-top: 4rpx;
 }
@@ -292,10 +285,6 @@
     width: 88rpx;
     height: 88rpx;
     font-size: 34rpx;
-  }
-
-  .momentum-grid {
-    gap: 8rpx;
   }
 
   .utility-card__count {

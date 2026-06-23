@@ -1,0 +1,95 @@
+<view class="page my-posts-page {{themeClass}}">
+  <!-- 头部概览 -->
+  <view class="my-posts-hero card">
+    <view class="my-posts-hero__head">
+      <view>
+        <view class="my-posts-hero__title">我的发布</view>
+        <view class="my-posts-hero__desc">管理你发布的动态和集市信息</view>
+      </view>
+      <button class="btn-primary my-posts-hero__button" bindtap="goPublish">发一条</button>
+    </view>
+    <view class="my-posts-overview">
+      <view class="my-posts-overview__item">
+        <text class="my-posts-overview__num">{{totalCount}}</text>
+        <text class="my-posts-overview__label">全部发布</text>
+      </view>
+      <view wx:for="{{tabs}}" wx:key="value" wx:if="{{item.value !== 'all'}}" class="my-posts-overview__item">
+        <text class="my-posts-overview__num">{{item.count}}</text>
+        <text class="my-posts-overview__label">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 登录提醒 -->
+  <view class="my-posts-empty card" wx:if="{{!isLogin}}">
+    <view class="my-posts-empty__title">请先登录</view>
+    <view class="my-posts-empty__desc">登录后可查看你发布的内容</view>
+  </view>
+
+  <!-- 标签切换 -->
+  <scroll-view wx:if="{{isLogin}}" class="my-posts-tabs" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="my-posts-tabs__row">
+      <view
+        wx:for="{{tabs}}"
+        wx:key="value"
+        class="my-posts-tab {{currentTab === item.value ? 'my-posts-tab--active' : ''}}"
+        data-value="{{item.value}}"
+        bindtap="switchTab"
+      >
+        <text>{{item.label}}</text>
+        <text class="my-posts-tab__count">{{item.count}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 帖子列表 -->
+  <view class="my-posts-list" wx:if="{{isLogin && list.length}}">
+    <view wx:for="{{list}}" wx:key="id" class="my-posts-card card" data-id="{{item.id}}" bindtap="openDetail">
+      <view class="my-posts-card__head">
+        <view>
+          <view class="my-posts-card__author">{{item.author.name}}</view>
+          <view class="my-posts-card__meta">{{item.location || '校园里'}} · {{item.createdAt}}</view>
+        </view>
+        <view class="my-posts-card__badge {{item.type === 'marketplace' ? 'my-posts-card__badge--marketplace' : ''}}">
+          {{item.typeLabel}}
+        </view>
+      </view>
+
+      <view class="my-posts-card__title" wx:if="{{item.title}}">{{item.title}}</view>
+      <view class="my-posts-card__content">{{item.excerpt}}</view>
+
+      <view class="my-posts-card__images" wx:if="{{item.images && item.images.length}}">
+        <image
+          wx:for="{{item.images}}"
+          wx:for-item="img"
+          wx:key="*this"
+          class="my-posts-card__img"
+          src="{{img}}"
+          mode="aspectFill"
+        />
+      </view>
+
+      <view class="my-posts-card__market" wx:if="{{item.type === 'marketplace'}}">
+        <text class="my-posts-card__price">{{item.priceText}}</text>
+        <text class="my-posts-card__status">{{item.statusText}}</text>
+      </view>
+
+      <view class="my-posts-card__tags" wx:if="{{item.tags && item.tags.length}}">
+        <text wx:for="{{item.tags}}" wx:key="*this" class="my-posts-card__tag">{{item}}</text>
+      </view>
+
+      <view class="my-posts-card__actions">
+        <text class="my-posts-card__action" catchtap="toggleLike" data-id="{{item.id}}">赞 {{item.likeCount}}</text>
+        <text class="my-posts-card__action" catchtap="openDetail" data-id="{{item.id}}">评论 {{item.commentCount}}</text>
+        <text class="my-posts-card__action my-posts-card__action--primary" catchtap="openDetail" data-id="{{item.id}}">详情</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="my-posts-empty card" wx:if="{{isLogin && !list.length}}">
+    <view class="my-posts-empty__title">还没有发布内容</view>
+    <view class="my-posts-empty__desc">去校园圈发布第一条动态或集市信息吧</view>
+    <button class="btn-primary my-posts-empty__button" bindtap="goPublish">去发布</button>
+  </view>
+</view>

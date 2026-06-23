@@ -19,9 +19,26 @@
       <view class="detail-card__title" wx:if="{{post.title}}">{{post.title}}</view>
       <view class="detail-card__content">{{post.content}}</view>
 
+      <view class="detail-card__images" wx:if="{{post.images && post.images.length}}">
+        <image
+          wx:for="{{post.images}}"
+          wx:for-item="img"
+          wx:key="*this"
+          class="detail-card__img"
+          src="{{img}}"
+          mode="aspectFill"
+        />
+      </view>
+
       <view class="detail-card__market" wx:if="{{post.type === 'marketplace'}}">
         <text class="detail-card__price">{{post.priceText}}</text>
         <text class="detail-card__status">{{post.statusText}}</text>
+        <text class="detail-card__condition" wx:if="{{post.conditionText}}">{{post.conditionText}}</text>
+      </view>
+
+      <view class="detail-card__contact" wx:if="{{post.contactText}}">
+        <text class="detail-card__contact-label">联系方式</text>
+        <text class="detail-card__contact-value">{{post.contactText}}</text>
       </view>
 
       <view class="community-post-summary">

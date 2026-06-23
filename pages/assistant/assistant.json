@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "校园助手"
+  "navigationBarTitleText": "AI 智能助手",
+  "navigationBarBackgroundColor": "#0f766e",
+  "navigationBarTextStyle": "white"
 }

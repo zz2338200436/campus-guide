@@ -1,9 +1,18 @@
 <view class="page service-hall-page {{themeClass}}">
 
   <view class="service-hero">
-    <view class="service-hero__eyebrow">Campus Service Desk</view>
-    <view class="service-hero__title">校园服务问题解决中心</view>
-    <view class="service-hero__desc">报到、报修、证明、失物、应急一站查看</view>
+    <view class="service-hero__title">校园服务</view>
+    <view class="service-hero__chips">
+      <view class="service-hero__chip">
+        <view class="service-hero__chip-icon service-hero__chip-icon--nav"></view>导航
+      </view>
+      <view class="service-hero__chip">
+        <view class="service-hero__chip-icon service-hero__chip-icon--repair"></view>报修
+      </view>
+      <view class="service-hero__chip">
+        <view class="service-hero__chip-icon service-hero__chip-icon--phone"></view>电话
+      </view>
+    </view>
     <view class="service-hero__stats">
       <view class="service-hero__stat">
         <text class="service-hero__stat-num">{{list.length}}</text>
@@ -24,35 +33,35 @@
     <view class="ticket-bar__main">
       <view class="ticket-bar__icon-dot"></view>
       <view class="ticket-bar__info">
-        <view class="ticket-bar__label">咨询与报修</view>
-        <view class="ticket-bar__status">演示通道</view>
+        <view class="ticket-bar__label">咨询报修</view>
+        <view class="ticket-bar__status">工作日 8:00-18:00</view>
       </view>
     </view>
     <view class="ticket-bar__actions">
-      <view class="ticket-bar__action ticket-bar__action--primary" bindtap="openConsultEntry">我要咨询</view>
-      <view class="ticket-bar__action ticket-bar__action--outline" data-scene="repair" bindtap="openSurvivalRoute">我要报修</view>
-      <view class="ticket-bar__action ticket-bar__action--ghost" bindtap="openTicketProgress">办理进度</view>
+      <view class="ticket-bar__action ticket-bar__action--primary" bindtap="openConsultEntry">咨询</view>
+      <view class="ticket-bar__action ticket-bar__action--outline" data-scene="repair" bindtap="openSurvivalRoute">报修</view>
+      <view class="ticket-bar__action ticket-bar__action--ghost" bindtap="openTicketProgress">进度</view>
     </view>
   </view>
 
   <view class="service-promise">
     <view class="service-promise__item">
       <view class="service-promise__icon">
-        <view class="service-promise__icon-bar service-promise__icon-bar--place"></view>
+        <view class="service-promise__icon-pin"></view>
       </view>
       <text class="service-promise__label">去哪办</text>
       <text class="service-promise__value">关联地点</text>
     </view>
     <view class="service-promise__item">
       <view class="service-promise__icon">
-        <view class="service-promise__icon-bar service-promise__icon-bar--item"></view>
+        <view class="service-promise__icon-clipboard"></view>
       </view>
       <text class="service-promise__label">带什么</text>
       <text class="service-promise__value">材料清单</text>
     </view>
     <view class="service-promise__item">
       <view class="service-promise__icon">
-        <view class="service-promise__icon-bar service-promise__icon-bar--phone"></view>
+        <view class="service-promise__icon-phone"></view>
       </view>
       <text class="service-promise__label">联系谁</text>
       <text class="service-promise__value">电话直达</text>
@@ -62,10 +71,9 @@
   <view class="issue-solver" wx:if="{{issueTabs.length}}">
     <view class="issue-solver__head">
       <view>
-        <view class="issue-solver__label">服务导航</view>
-        <view class="issue-solver__title">按问题找到办理入口</view>
+        <view class="issue-solver__label">常见问题</view>
       </view>
-      <view class="issue-solver__count">{{issueTabs.length}} 类问题</view>
+      <view class="issue-solver__count">{{issueTabs.length}} 类</view>
     </view>
     <scroll-view class="issue-tabs" scroll-x enable-flex>
       <view
@@ -96,10 +104,10 @@
             <view class="issue-service__tag">{{item.category}} / {{item.tag}}</view>
             <view class="issue-service__title">{{item.title}}</view>
             <view class="issue-service__desc">{{item.content}}</view>
-            <view class="issue-service__meta">地点：{{item.location}} / 开放时间：{{item.time}}</view>
+            <view class="issue-service__meta">{{item.location}} · {{item.time}}</view>
           </view>
           <view class="issue-service__actions">
-            <view class="issue-service__action">{{item.primaryPlaceName ? '查看地点' : item.actionText}}</view>
+            <view class="issue-service__action">{{item.primaryPlaceName || item.actionText}}</view>
             <view class="issue-service__phone" data-phone="{{item.phone}}" catchtap="callServicePhone">拨打</view>
           </view>
         </view>
@@ -113,7 +121,6 @@
         <view class="service-alert__label">
           <view class="service-alert__label-dot"></view>安全应急
         </view>
-        <view class="service-alert__title">失物、断网、设备异常和紧急联系</view>
       </view>
       <view class="service-alert__count">{{urgentList.length}} 项</view>
     </view>
@@ -127,7 +134,7 @@
       >
         <view class="service-alert-row__main">
           <view class="service-alert-row__name">{{item.title}}</view>
-          <view class="service-alert-row__meta">开放时间：{{item.time}}</view>
+          <view class="service-alert-row__meta">{{item.time}}</view>
         </view>
         <view class="service-alert-row__actions">
           <view class="service-alert-row__action">{{item.actionText}}</view>
@@ -137,45 +144,51 @@
     </view>
   </view>
 
-  <scroll-view class="type-scroll filter-scroll" scroll-x enable-flex>
-    <view
-      wx:for="{{categoryTabs}}"
-      wx:key="*this"
-      class="type-pill {{currentCategory === item ? 'type-pill--active' : ''}}"
-      data-category="{{item}}"
-      bindtap="selectCategory"
-    >
-      {{item}}
-    </view>
-  </scroll-view>
+  <view class="type-scroll">
+    <scroll-view class="filter-scroll" scroll-x>
+      <view
+        wx:for="{{categoryTabs}}"
+        wx:key="*this"
+        class="type-pill {{currentCategory === item ? 'type-pill--active' : ''}}"
+        data-category="{{item}}"
+        bindtap="selectCategory"
+      >
+        {{item}}
+      </view>
+    </scroll-view>
+  </view>
 
   <view class="panel-grid">
     <view class="service-group" wx:for="{{serviceGroups}}" wx:key="title">
       <view class="service-group__head">
-        <view>
-          <view class="service-group__label">办理事项</view>
-          <view class="service-group__title">{{item.title}}</view>
-        </view>
+        <view class="service-group__title">{{item.title}}</view>
         <view class="service-group__count">{{item.items.length}} 项</view>
       </view>
       <view
-        class="service-row"
+        class="service-row {{expandedItems['s_' + item.id] ? 'service-row--expanded' : ''}}"
         wx:for="{{item.items}}"
         wx:key="id"
-        data-place-id="{{item.primaryPlaceId}}"
-        bindtap="openServicePlace"
+        data-sid="{{item.id}}"
+        bindtap="toggleServiceItem"
       >
         <view class="service-row__main">
           <view class="service-row__head">
             <view class="service-row__title">{{item.title}}</view>
             <text class="service-row__tag">{{item.tag}}</text>
           </view>
-          <view class="service-row__meta">地点：{{item.location}} / 开放时间：{{item.time}}</view>
-          <view class="service-row__materials">所需材料：{{item.materials.join('、')}}</view>
-        </view>
-        <view class="service-row__actions">
-          <text class="service-row__action">{{item.primaryPlaceName ? '查看地点' : item.actionText}}</text>
-          <text class="service-row__call" data-phone="{{item.phone}}" catchtap="callServicePhone">拨打</text>
+          <view class="service-row__summary" wx:if="{{!expandedItems['s_' + item.id]}}">
+            <text class="service-row__loc-pin"></text>
+            <text class="service-row__loc">{{item.location}}</text>
+            <view class="service-row__expand-hint">详情</view>
+          </view>
+          <view class="service-row__detail" wx:if="{{expandedItems['s_' + item.id]}}">
+            <view class="service-row__meta">{{item.location}} · {{item.time}}</view>
+            <view class="service-row__materials" wx:if="{{item.materials.length}}">{{item.materials.join('、')}}</view>
+            <view class="service-row__actions-inline">
+              <view class="service-row__action" catchtap="openServicePlace" data-place-id="{{item.primaryPlaceId}}">{{item.primaryPlaceName || item.actionText}}</view>
+              <view class="service-row__call" data-phone="{{item.phone}}" catchtap="callServicePhone">拨打</view>
+            </view>
+          </view>
         </view>
       </view>
     </view>
@@ -187,4 +200,24 @@
     title="当前分类暂无服务"
     description="切换分类后再试"
   />
+
+  <view class="skeleton-shell" wx:if="{{loading}}">
+    <view class="skeleton-hero">
+      <view class="skeleton-line skeleton-line--w50"></view>
+      <view class="skeleton-line skeleton-line--w80"></view>
+      <view class="skeleton-line skeleton-line--w40"></view>
+    </view>
+    <view class="skeleton-card">
+      <view class="skeleton-line skeleton-line--w60"></view>
+      <view class="skeleton-line skeleton-line--w100"></view>
+    </view>
+    <view class="skeleton-card">
+      <view class="skeleton-line skeleton-line--w70"></view>
+      <view class="skeleton-line skeleton-line--w90"></view>
+    </view>
+    <view class="skeleton-card">
+      <view class="skeleton-line skeleton-line--w50"></view>
+      <view class="skeleton-line skeleton-line--w80"></view>
+    </view>
+  </view>
 </view>

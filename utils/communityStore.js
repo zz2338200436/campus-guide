@@ -74,6 +74,8 @@ function buildCustomPost(postData, user) {
     tags: Array.isArray(postData.tags) ? postData.tags : [],
     location: postData.location || '',
     price: type === 'marketplace' ? (postData.price || '') : '',
+    condition: type === 'marketplace' ? (postData.condition || '') : '',
+    contact: type === 'marketplace' ? (postData.contact || '') : '',
     status: type === 'marketplace' ? normalizeStatus(postData.status) : '',
     likes: [],
     comments: [],
@@ -165,6 +167,8 @@ function buildDisplayPost(post) {
     commentCount,
     typeLabel,
     priceText: post.type === 'marketplace' ? (post.price || '面议') : '',
+    conditionText: post.type === 'marketplace' ? (post.condition || '') : '',
+    contactText: post.type === 'marketplace' ? (post.contact || '') : '',
     statusText: post.type === 'marketplace' ? normalizeStatus(post.status) : '',
     excerpt: (post.content || '').slice(0, 56)
   };
@@ -342,6 +346,21 @@ function addReply(postId, commentId, content, replyTo) {
   return { code: 0, msg: '回复成功', data: reply };
 }
 
+function getPostsByUser(studentId) {
+  if (!studentId) {
+    return [];
+  }
+  return getAllPosts().filter((item) => item.author && item.author.studentId === studentId);
+}
+
+function getDisplayPostsByUser(studentId, type) {
+  let posts = getPostsByUser(studentId);
+  if (type === 'feed' || type === 'marketplace') {
+    posts = posts.filter((item) => item.type === type);
+  }
+  return posts.map((post) => buildDisplayPost(post));
+}
+
 function getHotPosts() {
   return getAllPosts()
     .map((post) => ({
@@ -416,6 +435,8 @@ module.exports = {
   toggleLike,
   addComment,
   addReply,
+  getPostsByUser,
+  getDisplayPostsByUser,
   getHotPosts,
   getHotPostSummaries
 };

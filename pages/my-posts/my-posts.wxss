@@ -1,0 +1,208 @@
+.page {
+  padding-bottom: 184rpx;
+}
+
+.my-posts-page {
+  padding-bottom: 176rpx;
+}
+
+/* ===== Hero 头部 ===== */
+.my-posts-hero,
+.my-posts-card,
+.my-posts-empty {
+  margin-bottom: 18rpx;
+  padding: 24rpx;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 24rpx rgba(15, 23, 42, 0.04);
+}
+
+.my-posts-hero__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18rpx;
+}
+
+.my-posts-hero__title,
+.my-posts-card__title,
+.my-posts-card__author,
+.my-posts-empty__title {
+  margin-top: 8rpx;
+  color: #0f172a;
+  font-size: 30rpx;
+  font-weight: 800;
+  line-height: 1.38;
+}
+
+.my-posts-hero__desc,
+.my-posts-card__meta,
+.my-posts-card__content,
+.my-posts-empty__desc {
+  margin-top: 8rpx;
+  color: #334155;
+  font-size: 26rpx;
+  line-height: 1.55;
+}
+
+.my-posts-hero__button {
+  flex-shrink: 0;
+}
+
+/* ===== 概览统计 ===== */
+.my-posts-overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12rpx;
+  margin-top: 18rpx;
+}
+
+.my-posts-overview__item {
+  padding: 16rpx;
+  border-radius: 8rpx;
+  background: #f8fafc;
+  border: 1rpx solid #e5e7eb;
+}
+
+.my-posts-overview__num {
+  color: #0f172a;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.my-posts-overview__label {
+  display: block;
+  margin-top: 6rpx;
+  color: #334155;
+  font-size: 26rpx;
+}
+
+/* ===== 标签切换 ===== */
+.my-posts-tabs {
+  margin-bottom: 18rpx;
+}
+
+.my-posts-tabs__row {
+  display: flex;
+  gap: 10rpx;
+}
+
+.my-posts-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;
+  min-width: 132rpx;
+  height: 58rpx;
+  padding: 0 18rpx;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 26rpx;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.my-posts-tab--active {
+  border-color: #0f766e;
+  background: #ecfdf5;
+  color: #0f766e;
+}
+
+.my-posts-tab__count {
+  color: #334155;
+  font-size: 24rpx;
+}
+
+/* ===== 帖子列表 ===== */
+.my-posts-list {
+  display: grid;
+  gap: 12rpx;
+}
+
+/* ===== 帖子卡片 ===== */
+.my-posts-card__head,
+.my-posts-card__actions,
+.my-posts-card__market {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12rpx;
+}
+
+.my-posts-card__badge,
+.my-posts-card__status {
+  color: #0f766e;
+  font-size: 26rpx;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.my-posts-card__badge {
+  padding: 6rpx 12rpx;
+  border-radius: 8rpx;
+  background: #ecfdf5;
+}
+
+.my-posts-card__badge--marketplace {
+  background: #ecfeff;
+  color: #0f766e;
+}
+
+.my-posts-card__market {
+  margin-top: 12rpx;
+}
+
+.my-posts-card__price {
+  color: #0f172a;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.my-posts-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-top: 10rpx;
+}
+
+.my-posts-card__tag {
+  padding: 4rpx 10rpx;
+  border-radius: 8rpx;
+  background: #ecfdf5;
+  color: #0f766e;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.my-posts-card__images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-top: 12rpx;
+}
+
+.my-posts-card__img {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.my-posts-card__action {
+  color: #0f766e;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.my-posts-card__action--primary {
+  text-align: right;
+  color: #0f172a;
+}
+
+/* ===== 空状态 ===== */
+.my-posts-empty__button {
+  margin-top: 16rpx;
+}

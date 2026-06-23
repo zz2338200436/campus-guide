@@ -27,7 +27,8 @@
 
 .community-hot-card__badge,
 .community-card__badge,
-.community-card__status {
+.community-card__status,
+.community-card__condition {
   color: #0f766e;
   font-size: 26rpx;
   font-weight: 800;
@@ -121,7 +122,6 @@
   font-size: 24rpx;
 }
 
-.community-hot__list,
 .community-list {
   display: grid;
   gap: 12rpx;
@@ -181,6 +181,21 @@
   font-weight: 700;
 }
 
+.community-card__images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-top: 12rpx;
+}
+
+.community-card__img {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #e5e7eb;
+  flex-shrink: 0;
+}
+
 .community-card__action {
   color: #0f766e;
   font-size: 24rpx;
@@ -195,4 +210,49 @@
 .community-empty__button,
 .community-hero__button {
   margin-top: 16rpx;
+}
+
+/* 热门内容折叠 */
+.community-hot__header {
+  cursor: pointer;
+}
+
+.community-hot__togglers {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.community-hot__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: rgba(15, 118, 110, 0.1);
+  color: #0f766e;
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 1;
+  transform: rotate(90deg);
+  transition: transform 0.25s ease;
+}
+
+.community-hot__arrow--open {
+  transform: rotate(-90deg);
+}
+
+.community-hot__list {
+  display: grid;
+  gap: 12rpx;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.community-hot__list--open {
+  max-height: 600rpx;
+  opacity: 1;
 }

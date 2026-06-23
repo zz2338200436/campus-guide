@@ -9,7 +9,6 @@ const userManager = require('../../utils/userManager');
 const themeManager = require('../../utils/themeManager');
 const tabBarHelper = require('../../utils/tabBarHelper');
 const systemInfo = wx.getSystemInfoSync ? wx.getSystemInfoSync() : {};
-const isDeveloperTool = navigationHelper.isDeveloperTool(systemInfo);
 
 Page({
   data: {
@@ -38,7 +37,7 @@ Page({
     },
     currentMapMode: 'standard',
     enableSatellite: false,
-    enableBuilding: !isDeveloperTool,
+    enableBuilding: !navigationHelper.isDeveloperTool(systemInfo),
     mapModes: [
       { id: 'standard', title: '标准' },
       { id: 'follow', title: '跟随' }
@@ -77,7 +76,8 @@ Page({
     pendingNavigationTarget: null,
     coordinateReviewReturnTarget: null,
     coordinateReviewReturnText: '回运维复查',
-    showCoordinateReviewReturn: false
+    showCoordinateReviewReturn: false,
+    directoryCollapsed: false
   },
   onLoad() {
     this.syncInternalTools();
@@ -204,6 +204,11 @@ Page({
     });
     this.applyFilter(this.data.currentType, this.data.keyword, nextReviewOnly ? 'review' : '全部');
   },
+  toggleDirectory() {
+    this.setData({
+      directoryCollapsed: !this.data.directoryCollapsed
+    });
+  },
   switchMapMode(event) {
     const mode = event.currentTarget ? event.currentTarget.dataset.mode : 'standard';
     const modeSettings = {
@@ -313,14 +318,14 @@ Page({
   getCurrentLocation() {
     wx.getLocation({
       type: 'gcj02',
+      isHighAccuracy: true,
+      highAccuracyExpireTime: 5000,
       success: (res) => {
         const currentLocation = locationMapHelper.resolveCurrentLocation({
           latitude: res.latitude,
           longitude: res.longitude,
           speed: res.speed,
           accuracy: res.accuracy
-        }, {
-          useCampusFallback: isDeveloperTool
         });
         if (!currentLocation) {
           this.setData({
@@ -340,33 +345,38 @@ Page({
           mapCenterText: currentLocation.name + '：' + formatCoordinate(currentLocation.latitude) + ', ' + formatCoordinate(currentLocation.longitude)
         });
         wx.showToast({
-          title: currentLocation.isFallback ? '已使用模拟位置（学校门口）' : '已获取当前位置',
+          title: '已获取当前位置',
           icon: 'none'
         });
       },
-      fail: () => {
-        if (!isDeveloperTool) {
-          this.setData({
-            currentLocation: null,
-            mapCenterText: '定位失败，请检查位置授权后重试'
-          });
-          wx.showToast({
-            title: '定位失败，请检查授权',
-            icon: 'none'
-          });
-          return;
-        }
-        // 开发者工具定位失败时，使用学校门口作为模拟位置，便于测试校内导航。
-        const mockLocation = locationMapHelper.CAMPUS_GATE_LOCATION;
-        this.setData({
-          currentLocation: mockLocation,
-          latitude: mockLocation.latitude,
-          longitude: mockLocation.longitude,
-          mapCenterText: '模拟位置：' + formatCoordinate(mockLocation.latitude) + ', ' + formatCoordinate(mockLocation.longitude)
-        });
-        wx.showToast({
-          title: '已使用模拟位置（学校门口）',
-          icon: 'none'
+      fail: (err) => {
+        // 高精度失败时降级为普通定位再试一次
+        wx.getLocation({
+          type: 'gcj02',
+          success: (lowRes) => {
+            const fallback = locationMapHelper.resolveCurrentLocation({
+              latitude: lowRes.latitude,
+              longitude: lowRes.longitude,
+              speed: lowRes.speed,
+              accuracy: lowRes.accuracy
+            });
+            if (fallback) {
+              this.setData({
+                currentLocation: fallback,
+                latitude: fallback.latitude,
+                longitude: fallback.longitude,
+                mapCenterText: fallback.name + '（低精度）: ' + formatCoordinate(fallback.latitude) + ', ' + formatCoordinate(fallback.longitude)
+              });
+              wx.showToast({ title: '已获取位置（精度较低）', icon: 'none' });
+            } else {
+              this.setData({ currentLocation: null, mapCenterText: '定位失败，请检查位置授权后重试' });
+              wx.showToast({ title: '定位失败，请检查授权', icon: 'none' });
+            }
+          },
+          fail: () => {
+            this.setData({ currentLocation: null, mapCenterText: '定位失败，请检查位置授权后重试' });
+            wx.showToast({ title: '定位失败，请检查授权', icon: 'none' });
+          }
         });
       }
     });
@@ -668,14 +678,14 @@ Page({
     }
     wx.getLocation({
       type: 'gcj02',
+      isHighAccuracy: true,
+      highAccuracyExpireTime: 5000,
       success: (res) => {
         const current = locationMapHelper.resolveCurrentLocation({
           latitude: res.latitude,
           longitude: res.longitude,
           speed: res.speed,
           accuracy: res.accuracy
-        }, {
-          useCampusFallback: isDeveloperTool
         });
         if (!current) {
           wx.showToast({ title: '定位失败，请检查授权', icon: 'none' });
@@ -684,14 +694,26 @@ Page({
         this._applyNavigation(current, destination);
       },
       fail: () => {
-        if (!isDeveloperTool) {
-          wx.showToast({ title: '定位失败，请检查授权', icon: 'none' });
-          return;
-        }
-        // 开发者工具定位失败时，使用学校门口作为模拟位置，便于测试校内导航。
-        const mockCurrent = locationMapHelper.CAMPUS_GATE_LOCATION;
-        this._applyNavigation(mockCurrent, destination);
-        wx.showToast({ title: '已使用模拟位置导航', icon: 'none' });
+        // 高精度失败时降级为普通定位再试一次
+        wx.getLocation({
+          type: 'gcj02',
+          success: (lowRes) => {
+            const fallback = locationMapHelper.resolveCurrentLocation({
+              latitude: lowRes.latitude,
+              longitude: lowRes.longitude,
+              speed: lowRes.speed,
+              accuracy: lowRes.accuracy
+            });
+            if (fallback) {
+              this._applyNavigation(fallback, destination);
+            } else {
+              wx.showToast({ title: '定位失败，请检查授权', icon: 'none' });
+            }
+          },
+          fail: () => {
+            wx.showToast({ title: '定位失败，请检查授权', icon: 'none' });
+          }
+        });
       }
     });
   },

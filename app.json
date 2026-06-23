@@ -16,7 +16,8 @@
     "pages/assistant/assistant",
     "pages/community/community",
     "pages/community-detail/community-detail",
-    "pages/community-post/community-post"
+    "pages/community-post/community-post",
+    "pages/my-posts/my-posts"
   ],
   "window": {
     "navigationBarTitleText": "校园通",
@@ -63,11 +64,16 @@
   "lazyCodeLoading": "requiredComponents",
   "permission": {
     "scope.userLocation": {
-      "desc": "用于在校园导览中定位当前位置、展示附近地点和打开地图导航"
+      "desc": "用于在校园导览中高精度定位当前位置、展示附近地点和打开地图导航"
+    },
+    "scope.userLocationBackground": {
+      "desc": "用于在小程序后台持续获取精准位置以支持校园实时导航"
     }
   },
   "requiredPrivateInfos": [
     "getLocation",
-    "chooseLocation"
+    "chooseLocation",
+    "startLocationUpdateBackground",
+    "onLocationChange"
   ]
 }

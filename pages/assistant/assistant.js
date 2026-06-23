@@ -14,6 +14,29 @@ function normalizeAssistantText(text) {
     .trim();
 }
 
+// ── 时间格式化 ──
+function formatTime(date) {
+  var now = new Date();
+  var d = new Date(date);
+  var hours = d.getHours();
+  var minutes = d.getMinutes();
+  var hh = hours < 10 ? '0' + hours : '' + hours;
+  var mm = minutes < 10 ? '0' + minutes : '' + minutes;
+
+  // 同一天 → 只显示时间
+  if (d.toDateString() === now.toDateString()) {
+    return hh + ':' + mm;
+  }
+  // 昨天
+  var yesterday = new Date(now);
+  yesterday.setDate(yesterday.getDate() - 1);
+  if (d.toDateString() === yesterday.toDateString()) {
+    return '昨天 ' + hh + ':' + mm;
+  }
+  // 更早 → 显示日期+时间
+  return (d.getMonth() + 1) + '/' + d.getDate() + ' ' + hh + ':' + mm;
+}
+
 // ── 消息历史持久化 key ──
 const HISTORY_KEY = 'assistant-messages';
 const MAX_STORED_MESSAGES = 20;
@@ -30,7 +53,10 @@ Page({
     canCancel: false,      // 是否可取消（仅云端请求）
     scrollIntoView: '',
     statusText: '已就绪',
-    connectionHint: ''     // 连接状态提示
+    connectionHint: '',    // 连接状态提示
+    // ── 思考与打字机 ──
+    streamingContent: '',   // 打字机输出中的内容
+    streamingDone: false    // 打字机是否完成
   },
 
   onLoad() {
@@ -93,7 +119,7 @@ Page({
     var text = (this.data.inputText || '').trim();
     if (!text || this.data.pending) return;
     this.addMessage('user', text);
-    this.setData({ inputText: '', pending: true, canCancel: true, statusText: '正在思考...' });
+    this.setData({ inputText: '', pending: true, canCancel: true });
     this.requestReply(text);
   },
 
@@ -102,57 +128,102 @@ Page({
     var text = event.currentTarget.dataset.question;
     if (!text || this.data.pending) return;
     this.addMessage('user', text);
-    this.setData({ pending: true, canCancel: true, statusText: '正在思考...' });
+    this.setData({ pending: true, canCancel: true });
     this.requestReply(text);
   },
 
   // ── 取消请求 ──
   cancelRequest() {
     aiService.cancelActive();
+    this._clearAllTimers();
     this.setData({
       pending: false,
       canCancel: false,
-      statusText: '已取消'
+      statusText: '已取消',
+      streamingContent: '',
+      streamingDone: false
     });
   },
 
-  // ── 核心：发起 AI 回复请求 ──
+  // ── 清理所有定时器 ──
+  _clearAllTimers() {
+    if (this._typewriterTimer) { clearInterval(this._typewriterTimer); this._typewriterTimer = null; }
+    if (this._scrollTimer) { clearInterval(this._scrollTimer); this._scrollTimer = null; }
+  },
+
+  // ── 核心：发起 AI 回复请求（直接打字机效果）──
   requestReply(text) {
     var self = this;
-    var historyMessages = this.data.messages
+
+    // 显示"思考中"状态
+    self.setData({ streamingContent: '', streamingDone: false });
+
+    // 准备历史消息
+    var historyMessages = self.data.messages
+      .filter(function (item) { return !item.pending; })
       .slice(-10)
       .map(function (item) { return { role: item.role, content: item.content }; });
 
-    // 显示策略信息
-    var strategy = aiService.getStrategy();
-    if (strategy !== aiService.STRATEGY.LOCAL_ONLY) {
-      self.setData({ statusText: '正在连接云端...' });
-    }
-
+    // 发起 AI 请求，完成后直接开始打字机
     aiService.chat(text, historyMessages).then(function (result) {
       var answer = normalizeAssistantText(result.answer);
-      var providerInfo = result.provider === 'local' ? ' (本地回复)' : '';
-      self.addMessage('assistant', answer);
-      self.setData({
-        pending: false,
-        canCancel: false,
-        statusText: '已就绪' + providerInfo
+      self._startTypewriter(answer, function () {
+        var providerInfo = result.provider === 'local' ? ' (本地回复)' : '';
+        self.addMessage('assistant', answer);
+        self.setData({
+          pending: false, canCancel: false,
+          streamingContent: '', streamingDone: false,
+          statusText: '已就绪' + providerInfo
+        });
       });
     }).catch(function () {
-      // aiService 内部已有回退逻辑，这里是最后的兜底
+      self._clearAllTimers();
       self.setData({
-        pending: false,
-        canCancel: false,
+        pending: false, canCancel: false,
+        streamingContent: '', streamingDone: false,
         statusText: '已就绪'
       });
       wx.showToast({ title: '回复失败，请重试', icon: 'none' });
     });
   },
 
+  // ── 打字机效果 ──
+  _startTypewriter(fullText, onComplete) {
+    var self = this;
+    var idx = 0;
+    var len = fullText.length;
+
+    // 打字速度：中文字约 40ms/字，英文约 15ms/字，这里统一 30ms
+    self._typewriterTimer = setInterval(function () {
+      if (idx < len) {
+        idx++;
+        self.setData({ streamingContent: fullText.slice(0, idx) });
+      } else {
+        clearInterval(self._typewriterTimer);
+        self._typewriterTimer = null;
+        // 清除滚动定时器
+        if (self._scrollTimer) { clearInterval(self._scrollTimer); self._scrollTimer = null; }
+        self.setData({ streamingDone: true });
+        // 短暂停顿后回调
+        setTimeout(onComplete, 200);
+      }
+    }, 30);
+
+    // 每 250ms 触发一次滚动到底部
+    self._scrollTimer = setInterval(function () {
+      self.setData({ scrollIntoView: 'msg_bottom_anchor' });
+    }, 250);
+  },
+
   // ── 添加消息到列表 ──
   addMessage(role, content) {
     var id = 'msg_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
-    var messages = this.data.messages.concat({ id: id, role: role, content: content });
+    var messages = this.data.messages.concat({
+      id: id,
+      role: role,
+      content: content,
+      time: formatTime(Date.now())
+    });
     this.setData({ messages: messages, scrollIntoView: id });
     // 延迟持久化，避免频繁写入
     this._persistTimer && clearTimeout(this._persistTimer);

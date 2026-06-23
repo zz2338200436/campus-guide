@@ -1,4 +1,4 @@
-const API_MODE = 'mock';
+const API_MODE = 'http';
 
 module.exports = {
   mode: API_MODE,
